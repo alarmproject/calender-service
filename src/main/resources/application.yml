@@ -1,0 +1,37 @@
+logging:
+  level:
+    org:
+      springframework:
+        r2dbc: DEBUG
+
+jjwt:
+  access-token:
+    expired-time: 720
+    secret-key: access_secret
+  refresh-token:
+    expired-time: 1440
+    secret-key: refresh_secret
+
+security:
+  un-security:
+    list:
+      - GET /specification/index.html
+      - GET /healthcheck
+
+mail:
+  username: universitycafeterialife@gmail.com
+  password: unicafelife12
+  smtp-host: smtp.gmail.com
+  smtp-port: 465
+  smtp-auth: true
+  smtp-socketFactory-port: 465
+  smtp-socketFactory-class: javax.net.ssl.SSLSocketFactory
+
+spring:
+  r2dbc:
+    url: r2dbc:mariadb://125.240.27.115:17001/alarm-project
+    username: root
+    password: 1234
+
+server:
+  image-url: http://mysend.co.kr:8080/api/image/
