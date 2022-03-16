@@ -18,15 +18,6 @@ security:
       - GET /specification/index.html
       - GET /healthcheck
 
-mail:
-  username: universitycafeterialife@gmail.com
-  password: unicafelife12
-  smtp-host: smtp.gmail.com
-  smtp-port: 465
-  smtp-auth: true
-  smtp-socketFactory-port: 465
-  smtp-socketFactory-class: javax.net.ssl.SSLSocketFactory
-
 spring:
   r2dbc:
     url: r2dbc:mariadb://125.240.27.115:17001/alarm-project
