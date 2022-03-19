@@ -17,9 +17,11 @@ public class Calender extends BaseEntity {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Long classTimeId;
-    private Long personelCalenderTimeId;
+    private Long personelCalenderId;
 
     @Transient
     private ClassTime classTime;
+    @Transient
+    private PersonelCalender personelCalender;
 
 }

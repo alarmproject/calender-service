@@ -36,3 +36,14 @@ include::{snippets}/classrestdocstest/createclass/http-request.adoc[]
 include::{snippets}/classrestdocstest/createclass/http-response.adoc[]
 include::{snippets}/classrestdocstest/createclass/curl-request.adoc[]
 
+=== Personel Calender
+
+[[resources-calender-personel-calender]]
+==== 개인 일정 생성 API
+
+include::{snippets}/personelcalenderrestdocstest/createpersonelcalender/request-fields.adoc[]
+include::{snippets}/personelcalenderrestdocstest/createpersonelcalender/response-fields.adoc[]
+include::{snippets}/personelcalenderrestdocstest/createpersonelcalender/http-request.adoc[]
+include::{snippets}/personelcalenderrestdocstest/createpersonelcalender/http-response.adoc[]
+include::{snippets}/personelcalenderrestdocstest/createpersonelcalender/curl-request.adoc[]
+

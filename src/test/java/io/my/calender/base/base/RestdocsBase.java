@@ -3,6 +3,7 @@ package io.my.calender.base.base;
 import io.my.calender.base.context.JwtContextWebFilter;
 import io.my.calender.base.util.JwtUtil;
 import io.my.calender.calender.ClassService;
+import io.my.calender.calender.PersonelCalenderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,9 @@ public class RestdocsBase {
 
     @MockBean
     protected ClassService classService;
+
+    @MockBean
+    protected PersonelCalenderService personelCalenderService;
 
     @BeforeEach
     void setUp(ApplicationContext applicationContext,
