@@ -2,10 +2,12 @@ package io.my.calender.base.base;
 
 import io.my.calender.base.context.JwtContextWebFilter;
 import io.my.calender.base.util.JwtUtil;
+import io.my.calender.calender.ClassService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -47,6 +49,9 @@ public class RestdocsBase {
 
     @Autowired
     protected JwtContextWebFilter jwtContextWebFilter;
+
+    @MockBean
+    protected ClassService classService;
 
     @BeforeEach
     void setUp(ApplicationContext applicationContext,

@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CalenderService {
+public class PersonelCalenderService {
     private final DateUtil dateUtil;
-
-
 }

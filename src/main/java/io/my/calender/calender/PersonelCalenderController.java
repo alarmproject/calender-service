@@ -6,12 +6,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/calender")
-public class CalenderController {
-    private final CalenderService calenderService;
-
-
-
+@RequestMapping("/calender/personel")
+public class PersonelCalenderController {
+    private final PersonelCalenderService personelCalenderService;
 
 
 }

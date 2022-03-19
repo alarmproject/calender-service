@@ -25,3 +25,14 @@ include::{snippets}/healthcheckrestdocstest/healthcheck/http-request.adoc[]
 include::{snippets}/healthcheckrestdocstest/healthcheck/http-response.adoc[]
 include::{snippets}/healthcheckrestdocstest/healthcheck/curl-request.adoc[]
 
+=== Calender Class
+
+[[resources-calender-class]]
+==== 수업 생성 API
+
+include::{snippets}/classrestdocstest/createclass/request-fields.adoc[]
+include::{snippets}/classrestdocstest/createclass/response-fields.adoc[]
+include::{snippets}/classrestdocstest/createclass/http-request.adoc[]
+include::{snippets}/classrestdocstest/createclass/http-response.adoc[]
+include::{snippets}/classrestdocstest/createclass/curl-request.adoc[]
+

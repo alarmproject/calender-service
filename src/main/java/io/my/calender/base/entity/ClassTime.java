@@ -12,8 +12,8 @@ import org.springframework.data.relational.core.mapping.Table;
 public class ClassTime extends BaseEntity{
     @Id
     private Long id;
-    private String startTime;
-    private String endTime;
+    private Integer startTime;
+    private Integer endTime;
     private String day;
     private Long classId;
 
