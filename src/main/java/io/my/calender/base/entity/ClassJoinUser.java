@@ -14,6 +14,7 @@ public class ClassJoinUser extends BaseEntity {
     private Long id;
     private Long userId;
     private Long classId;
+    private Boolean accept;
 
     @Transient
     private User user;
