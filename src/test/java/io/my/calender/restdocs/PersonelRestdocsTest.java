@@ -3,7 +3,7 @@ package io.my.calender.restdocs;
 import io.my.calender.base.base.RestDocAttributes;
 import io.my.calender.base.base.RestdocsBase;
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender.calender.payload.request.personel.CreatePersonelCalenderRequest;
+import io.my.calender.calender.payload.request.personel.CreatePersonelRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -13,12 +13,12 @@ import reactor.core.publisher.Mono;
 
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 
-class PersonelCalenderRestdocsTest extends RestdocsBase {
+class PersonelRestdocsTest extends RestdocsBase {
 
     @Test
     @DisplayName("개인 일정 생성 API")
-    void createPersonelCalender() {
-        CreatePersonelCalenderRequest requestBody = new CreatePersonelCalenderRequest();
+    void createPersonel() {
+        CreatePersonelRequest requestBody = new CreatePersonelRequest();
         requestBody.setTitle("사진동아리 신입생 환영회");
         requestBody.setContent("신입생 환영회입니다.");
         requestBody.setLocation("사진동아리 동아리실");
@@ -26,7 +26,7 @@ class PersonelCalenderRestdocsTest extends RestdocsBase {
         requestBody.setEndTime(1647658613000L);
         requestBody.setOpen(Boolean.TRUE);
 
-        Mockito.when(personelCalenderService.createPersonelCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+        Mockito.when(personelService.createPersonelCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
         RequestFieldsSnippet requestFieldsSnippet =
                 requestFields(
@@ -71,6 +71,6 @@ class PersonelCalenderRestdocsTest extends RestdocsBase {
         postWebTestClient(requestBody, "/calender/personel").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/createPersonelCalender", requestFieldsSnippet, responseFieldsSnippet));
+                .consumeWith(createConsumer("/createpersonel", requestFieldsSnippet, responseFieldsSnippet));
     }
 }

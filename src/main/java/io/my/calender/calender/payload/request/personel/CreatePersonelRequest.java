@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class CreatePersonelCalenderRequest {
+public class CreatePersonelRequest {
     private String title;
     private String content;
     private String location;

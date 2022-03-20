@@ -8,7 +8,7 @@ import io.my.calender.base.repository.CalenderRepository;
 import io.my.calender.base.repository.PersonelCalenderJoinUserRepository;
 import io.my.calender.base.repository.PersonelCalenderRepository;
 import io.my.calender.base.util.DateUtil;
-import io.my.calender.calender.payload.request.personel.CreatePersonelCalenderRequest;
+import io.my.calender.calender.payload.request.personel.CreatePersonelRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -17,14 +17,14 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class PersonelCalenderService {
+public class PersonelService {
     private final DateUtil dateUtil;
     private final CalenderRepository calenderRepository;
     private final PersonelCalenderRepository personelCalenderRepository;
     private final PersonelCalenderJoinUserRepository personelCalenderJoinUserRepository;
 
     public Mono<BaseResponse> createPersonelCalender(
-            CreatePersonelCalenderRequest requestBody) {
+            CreatePersonelRequest requestBody) {
 
         PersonelCalender personelCalender = new PersonelCalender();
         personelCalender.setTitle(requestBody.getTitle());

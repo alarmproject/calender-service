@@ -41,9 +41,9 @@ include::{snippets}/classrestdocstest/createclass/curl-request.adoc[]
 [[resources-calender-personel-calender]]
 ==== 개인 일정 생성 API
 
-include::{snippets}/personelcalenderrestdocstest/createpersonelcalender/request-fields.adoc[]
-include::{snippets}/personelcalenderrestdocstest/createpersonelcalender/response-fields.adoc[]
-include::{snippets}/personelcalenderrestdocstest/createpersonelcalender/http-request.adoc[]
-include::{snippets}/personelcalenderrestdocstest/createpersonelcalender/http-response.adoc[]
-include::{snippets}/personelcalenderrestdocstest/createpersonelcalender/curl-request.adoc[]
+include::{snippets}/personelrestdocstest/createpersonel/request-fields.adoc[]
+include::{snippets}/personelrestdocstest/createpersonel/response-fields.adoc[]
+include::{snippets}/personelrestdocstest/createpersonel/http-request.adoc[]
+include::{snippets}/personelrestdocstest/createpersonel/http-response.adoc[]
+include::{snippets}/personelrestdocstest/createpersonel/curl-request.adoc[]
 

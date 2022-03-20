@@ -1,7 +1,7 @@
 package io.my.calender.calender;
 
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender.calender.payload.request.personel.CreatePersonelCalenderRequest;
+import io.my.calender.calender.payload.request.personel.CreatePersonelRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,13 +12,13 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/calender/personel")
-public class PersonelCalenderController {
-    private final PersonelCalenderService personelCalenderService;
+public class PersonelController {
+    private final PersonelService personelService;
 
     @PostMapping
     public Mono<BaseResponse> createPersonelCalender(
-            @RequestBody CreatePersonelCalenderRequest requestBody) {
-        return this.personelCalenderService.createPersonelCalender(requestBody);
+            @RequestBody CreatePersonelRequest requestBody) {
+        return this.personelService.createPersonelCalender(requestBody);
     }
 
 
