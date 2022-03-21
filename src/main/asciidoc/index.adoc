@@ -36,6 +36,26 @@ include::{snippets}/classrestdocstest/createclass/http-request.adoc[]
 include::{snippets}/classrestdocstest/createclass/http-response.adoc[]
 include::{snippets}/classrestdocstest/createclass/curl-request.adoc[]
 
+[[resources-calender-class-invite]]
+==== 수업 초대 API
+
+include::{snippets}/classrestdocstest/inviteclass/request-fields.adoc[]
+include::{snippets}/classrestdocstest/inviteclass/response-fields.adoc[]
+include::{snippets}/classrestdocstest/inviteclass/http-request.adoc[]
+include::{snippets}/classrestdocstest/inviteclass/http-response.adoc[]
+include::{snippets}/classrestdocstest/inviteclass/curl-request.adoc[]
+
+[[resources-calender-class-invite]]
+==== 수업 참가 API
+
+include::{snippets}/classrestdocstest/joinclass/request-parameters.adoc[]
+include::{snippets}/classrestdocstest/joinclass/response-fields.adoc[]
+include::{snippets}/classrestdocstest/joinclass/http-request.adoc[]
+include::{snippets}/classrestdocstest/joinclass/http-response.adoc[]
+include::{snippets}/classrestdocstest/joinclass/curl-request.adoc[]
+
+
+
 === Personel Calender
 
 [[resources-calender-personel-calender]]
@@ -46,4 +66,22 @@ include::{snippets}/personelrestdocstest/createpersonel/response-fields.adoc[]
 include::{snippets}/personelrestdocstest/createpersonel/http-request.adoc[]
 include::{snippets}/personelrestdocstest/createpersonel/http-response.adoc[]
 include::{snippets}/personelrestdocstest/createpersonel/curl-request.adoc[]
+
+[[resources-calender-personel-invite]]
+==== 일정 초대 API
+
+include::{snippets}/personelrestdocstest/invitepersonelcalender/request-fields.adoc[]
+include::{snippets}/personelrestdocstest/invitepersonelcalender/response-fields.adoc[]
+include::{snippets}/personelrestdocstest/invitepersonelcalender/http-request.adoc[]
+include::{snippets}/personelrestdocstest/invitepersonelcalender/http-response.adoc[]
+include::{snippets}/personelrestdocstest/invitepersonelcalender/curl-request.adoc[]
+
+[[resources-calender-personel-invite]]
+==== 일정 참가 API
+
+include::{snippets}/personelrestdocstest/joinpersonelcalender/request-parameters.adoc[]
+include::{snippets}/personelrestdocstest/joinpersonelcalender/response-fields.adoc[]
+include::{snippets}/personelrestdocstest/joinpersonelcalender/http-request.adoc[]
+include::{snippets}/personelrestdocstest/joinpersonelcalender/http-response.adoc[]
+include::{snippets}/personelrestdocstest/joinpersonelcalender/curl-request.adoc[]
 

@@ -5,17 +5,21 @@ import io.my.calender.base.base.RestdocsBase;
 import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.calender.payload.request._class.CreateClassRequest;
 import io.my.calender.calender.payload.request._class.CreateClassTimeRequest;
+import io.my.calender.calender.payload.request._class.InviteClassRequeset;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.restdocs.payload.RequestFieldsSnippet;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
+import org.springframework.restdocs.request.RequestParametersSnippet;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 
 class ClassRestdocsTest extends RestdocsBase {
 
@@ -104,6 +108,85 @@ class ClassRestdocsTest extends RestdocsBase {
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/createclass", requestFieldsSnippet, responseFieldsSnippet));
+    }
+
+    @Test
+    @DisplayName("수업 초대 API")
+    public void inviteClass() {
+        var requestBody = new InviteClassRequeset();
+        requestBody.setClassId(3L);
+
+        List<Long> userList = new ArrayList<>();
+        userList.add(1L);
+        userList.add(2L);
+        requestBody.setUserList(userList);
+
+        Mockito.when(classService.inviteUser(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+
+        RequestFieldsSnippet requestFieldsSnippet =
+                requestFields(
+                        fieldWithPath("classId").description("수업 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("userList.[]").description("초대할 회원 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+
+        postWebTestClient(requestBody, "/calender/class/invite").expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/inviteclass", requestFieldsSnippet, responseFieldsSnippet));
+    }
+
+    @Test
+    @DisplayName("수업 참가 API")
+    public void joinClass() {
+        Mockito.when(classService.joinClass(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+
+        RequestParametersSnippet requestParametersSnippet =
+                requestParameters(
+                        parameterWithName("classId").description("수업 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")
+                                )
+                );
+
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+
+        String params = "?classId=3";
+
+        postWebTestClient("/calender/class/join" + params).expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/joinclass", requestParametersSnippet, responseFieldsSnippet));
+
     }
 
 }

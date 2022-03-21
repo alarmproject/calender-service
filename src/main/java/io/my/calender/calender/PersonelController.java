@@ -3,12 +3,9 @@ package io.my.calender.calender;
 import io.my.calender.base.annotation.Logger;
 import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.calender.payload.request.personel.CreatePersonelRequest;
+import io.my.calender.calender.payload.request.personel.InvitePersonelRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.flogger.Flogger;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -22,6 +19,20 @@ public class PersonelController {
     public Mono<BaseResponse> createPersonelCalender(
             @RequestBody CreatePersonelRequest requestBody) {
         return this.personelService.createPersonelCalender(requestBody);
+    }
+
+    @Logger
+    @PostMapping("/invite")
+    public Mono<BaseResponse> invitePersonelCalender(
+            @RequestBody InvitePersonelRequest requestBody) {
+        return this.personelService.invitePersonelCalender(requestBody);
+    }
+
+    @Logger
+    @PatchMapping("join")
+    public Mono<BaseResponse> joinPersonelCalender(
+            @RequestParam("personelCalenderId") Long personelCalenderId) {
+        return this.personelService.joinPersonelCalender(personelCalenderId);
     }
 
 
