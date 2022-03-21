@@ -78,4 +78,47 @@ class DateUtilTest {
         assertThrows(RuntimeException.class, () -> this.dateUtil.getDayOfWeek("?"));
     }
 
+    @Test
+    void findWeekStart() {
+        LocalDate weekStartDate = LocalDate.of(2022, 03, 21);
+        LocalDate randomDate = LocalDate.of(2022, 03, 25);
+
+        assertEquals(weekStartDate, this.dateUtil.findWeekStart(randomDate));
+    }
+
+    @Test
+    void findWeekEnd() {
+        LocalDate weekEndDate = LocalDate.of(2022, 03, 27);
+        LocalDate randomDate = LocalDate.of(2022, 03, 25);
+        assertEquals(weekEndDate, this.dateUtil.findWeekEnd(randomDate));
+    }
+
+    @Test
+    void findMonthStart() {
+        LocalDate monthStartDate = LocalDate.of(2022, 03, 01);
+        LocalDate randomDate = LocalDate.of(2022, 03, 21);
+        assertEquals(monthStartDate, this.dateUtil.findMonthStart(randomDate));
+
+        randomDate = LocalDate.of(2022, 03, 3);
+        assertEquals(monthStartDate, this.dateUtil.findMonthStart(randomDate));
+
+        randomDate = LocalDate.of(2022, 03, 31);
+        assertEquals(monthStartDate, this.dateUtil.findMonthStart(randomDate));
+    }
+
+    @Test
+    void findMonthEnd() {
+        LocalDate monthEndDate = LocalDate.of(2022, 03, 31);
+        LocalDate randomDate = LocalDate.of(2022, 03, 22);
+        assertEquals(monthEndDate, this.dateUtil.findMonthEnd(randomDate));
+
+        randomDate = LocalDate.of(2022, 03, 21);
+        assertEquals(monthEndDate, this.dateUtil.findMonthEnd(randomDate));
+
+        randomDate = LocalDate.of(2022, 03, 1);
+        assertEquals(monthEndDate, this.dateUtil.findMonthEnd(randomDate));
+    }
+
+
+
 }

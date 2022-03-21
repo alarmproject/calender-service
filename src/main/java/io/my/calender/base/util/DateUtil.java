@@ -2,10 +2,7 @@ package io.my.calender.base.util;
 
 import org.springframework.stereotype.Component;
 
-import java.time.DayOfWeek;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 
 @Component
 public class DateUtil {
@@ -66,5 +63,21 @@ public class DateUtil {
         else if (day.equals("금")) return DayOfWeek.FRIDAY;
         else if (day.equals("토")) return DayOfWeek.SATURDAY;
         throw new RuntimeException("Day is wrong");
+    }
+
+    public LocalDate findWeekStart(LocalDate date) {
+        return date.minusDays(date.getDayOfWeek().getValue() - 1);
+    }
+
+    public LocalDate findWeekEnd(LocalDate date) {
+        return date.plusDays(7 - date.getDayOfWeek().getValue());
+    }
+
+    public LocalDate findMonthStart(LocalDate date) {
+        return date.withDayOfMonth(1);
+    }
+
+    public LocalDate findMonthEnd(LocalDate date) {
+        return date.withDayOfMonth(date.lengthOfMonth());
     }
 }

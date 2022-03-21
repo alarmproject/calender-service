@@ -25,10 +25,21 @@ include::{snippets}/healthcheckrestdocstest/healthcheck/http-request.adoc[]
 include::{snippets}/healthcheckrestdocstest/healthcheck/http-response.adoc[]
 include::{snippets}/healthcheckrestdocstest/healthcheck/curl-request.adoc[]
 
-=== Calender Class
+=== Calender
+
+[[resources-get-calender]]
+==== 일정 조회
+
+include::{snippets}/calenderrestdocstest/getcalender/request-parameters.adoc[]
+include::{snippets}/calenderrestdocstest/getcalender/response-fields.adoc[]
+include::{snippets}/calenderrestdocstest/getcalender/http-request.adoc[]
+include::{snippets}/calenderrestdocstest/getcalender/http-response.adoc[]
+include::{snippets}/calenderrestdocstest/getcalender/curl-request.adoc[]
+
+=== Class Calender
 
 [[resources-calender-class]]
-==== 수업 생성 API
+==== 수업 생성
 
 include::{snippets}/classrestdocstest/createclass/request-fields.adoc[]
 include::{snippets}/classrestdocstest/createclass/response-fields.adoc[]
@@ -37,7 +48,7 @@ include::{snippets}/classrestdocstest/createclass/http-response.adoc[]
 include::{snippets}/classrestdocstest/createclass/curl-request.adoc[]
 
 [[resources-calender-class-invite]]
-==== 수업 초대 API
+==== 수업 초대
 
 include::{snippets}/classrestdocstest/inviteclass/request-fields.adoc[]
 include::{snippets}/classrestdocstest/inviteclass/response-fields.adoc[]
@@ -46,7 +57,7 @@ include::{snippets}/classrestdocstest/inviteclass/http-response.adoc[]
 include::{snippets}/classrestdocstest/inviteclass/curl-request.adoc[]
 
 [[resources-calender-class-join]]
-==== 수업 참가 API
+==== 수업 참가
 
 include::{snippets}/classrestdocstest/joinclass/request-parameters.adoc[]
 include::{snippets}/classrestdocstest/joinclass/response-fields.adoc[]
@@ -59,7 +70,7 @@ include::{snippets}/classrestdocstest/joinclass/curl-request.adoc[]
 === Personel Calender
 
 [[resources-calender-personel-calender]]
-==== 개인 일정 생성 API
+==== 개인 일정 생성
 
 include::{snippets}/personelrestdocstest/createpersonel/request-fields.adoc[]
 include::{snippets}/personelrestdocstest/createpersonel/response-fields.adoc[]
@@ -68,7 +79,7 @@ include::{snippets}/personelrestdocstest/createpersonel/http-response.adoc[]
 include::{snippets}/personelrestdocstest/createpersonel/curl-request.adoc[]
 
 [[resources-calender-personel-invite]]
-==== 일정 초대 API
+==== 일정 초대
 
 include::{snippets}/personelrestdocstest/invitepersonelcalender/request-fields.adoc[]
 include::{snippets}/personelrestdocstest/invitepersonelcalender/response-fields.adoc[]
@@ -77,7 +88,7 @@ include::{snippets}/personelrestdocstest/invitepersonelcalender/http-response.ad
 include::{snippets}/personelrestdocstest/invitepersonelcalender/curl-request.adoc[]
 
 [[resources-calender-personel-join]]
-==== 일정 참가 API
+==== 일정 참가
 
 include::{snippets}/personelrestdocstest/joinpersonelcalender/request-parameters.adoc[]
 include::{snippets}/personelrestdocstest/joinpersonelcalender/response-fields.adoc[]

@@ -2,6 +2,7 @@ package io.my.calender.base.base;
 
 import io.my.calender.base.context.JwtContextWebFilter;
 import io.my.calender.base.util.JwtUtil;
+import io.my.calender.calender.CalenderService;
 import io.my.calender.calender.ClassService;
 import io.my.calender.calender.PersonelService;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,6 +57,9 @@ public class RestdocsBase {
 
     @MockBean
     protected PersonelService personelService;
+
+    @MockBean
+    protected CalenderService calenderService;
 
     @BeforeEach
     void setUp(ApplicationContext applicationContext,
