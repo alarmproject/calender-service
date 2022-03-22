@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Component
 @RequiredArgsConstructor
-public class CustomCalenderQuery {
+public class CalenderQuery {
     private final DatabaseClient client;
 
     public DatabaseClient.GenericExecuteSpec findCalenderListResponse(Long userId, LocalDate startDate, LocalDate endDate) {

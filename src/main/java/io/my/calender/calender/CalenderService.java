@@ -2,7 +2,7 @@ package io.my.calender.calender;
 
 import io.my.calender.base.context.JwtContextHolder;
 import io.my.calender.base.payload.BaseExtentionResponse;
-import io.my.calender.base.repository.custom.CustomCalenderRepository;
+import io.my.calender.base.repository.dao.CalenderDAO;
 import io.my.calender.base.util.DateUtil;
 import io.my.calender.calender.payload.response.CalenderListResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CalenderService {
     private final DateUtil dateUtil;
-    private final CustomCalenderRepository customCalenderRepository;
+    private final CalenderDAO calenderDAO;
 
     public Mono<BaseExtentionResponse<List<CalenderListResponse>>> getCalender(String type) {
         return JwtContextHolder.getMonoUserId().flatMapMany(userId -> {
@@ -34,7 +34,7 @@ public class CalenderService {
                 throw new IllegalArgumentException();
             }
 
-            return customCalenderRepository.findCalenderListResponse(userId, startDate, endDate);
+            return calenderDAO.findCalenderListResponse(userId, startDate, endDate);
         }).collectList()
         .map(list -> {
             var responseBody = new BaseExtentionResponse<List<CalenderListResponse>>();

@@ -1,7 +1,7 @@
-package io.my.calender.base.repository.custom;
+package io.my.calender.base.repository.dao;
 
 import io.my.calender.base.properties.ServerProperties;
-import io.my.calender.base.repository.query.CustomCalenderQuery;
+import io.my.calender.base.repository.query.CalenderQuery;
 import io.my.calender.base.util.DateUtil;
 import io.my.calender.calender.payload.response.CalenderListResponse;
 import lombok.RequiredArgsConstructor;
@@ -10,19 +10,22 @@ import reactor.core.publisher.Flux;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Repository
 @RequiredArgsConstructor
-public class CustomCalenderRepository {
+public class CalenderDAO {
     private final DateUtil dateUtil;
     private final ServerProperties serverProperties;
-    private final CustomCalenderQuery customCalenderQuery;
+    private final CalenderQuery calenderQuery;
 
     public Flux<CalenderListResponse> findCalenderListResponse(Long userId, LocalDate startDate, LocalDate endDate) {
-        return this.customCalenderQuery.findCalenderListResponse(userId, startDate, endDate)
+        return this.calenderQuery.findCalenderListResponse(userId, startDate, endDate)
                 .map((row, rowMetadata) -> {
-                    Long startTime = dateUtil.localDateTimeToUnixTime(row.get("start_time", LocalDateTime.class));
-                    Long endTime = dateUtil.localDateTimeToUnixTime(row.get("end_time", LocalDateTime.class));
+                    Long startTime = dateUtil.localDateTimeToUnixTime(
+                            Objects.requireNonNull(row.get("start_time", LocalDateTime.class)));
+                    Long endTime = dateUtil.localDateTimeToUnixTime(
+                            Objects.requireNonNull(row.get("end_time", LocalDateTime.class)));
 
                     Long classId = row.get("class_id", Long.class);
                     Long personelCalenderId = row.get("personel_calender_id", Long.class);
