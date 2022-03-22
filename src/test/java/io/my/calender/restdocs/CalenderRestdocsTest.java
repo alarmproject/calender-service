@@ -24,35 +24,79 @@ class CalenderRestdocsTest extends RestdocsBase {
     @DisplayName("개인 일정 조회")
     void getCalender() {
         var list = new ArrayList<CalenderListResponse>();
-        for (int index=1; index<5; index++) {
-            var response = new CalenderListResponse();
-            response.setId((long) index);
-            response.setClassId((long) index);
-            response.setClassTitle("경제학원론");
-            response.setClassLocation("인문관 101호");
-            list.add(response);
-        }
 
-        list.get(0).setStartTime(1647824400000L);
-        list.get(0).setEndTime(1647831600000L);
+        list.add(
+                CalenderListResponse.builder()
+                    .id(1L)
+                    .startTime(1647824400000L)
+                    .endTime(1647831600000L)
+                    .classId(1L)
+                    .classTitle("경제학원론")
+                    .classLocation("인문관 101호")
+                    .userName("Kim Bosung")
+                    .imageUrl("http://mysend.co.kr:8080/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg")
+                    .inviteUserCount(15)
+                    .acceptUserCount(14)
+                    .build())
+                ;
 
-        list.get(1).setStartTime(1648429200000L);
-        list.get(1).setEndTime(1648436400000L);
+        list.add(
+                CalenderListResponse.builder()
+                        .id(1L)
+                        .startTime(1648429200000L)
+                        .endTime(1648436400000L)
+                        .classId(1L)
+                        .classTitle("경제학원론")
+                        .classLocation("인문관 101호")
+                        .userName("Kim Bosung")
+                        .imageUrl("http://mysend.co.kr:8080/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg")
+                        .inviteUserCount(15)
+                        .acceptUserCount(14)
+                        .build())
+        ;
 
-        list.get(2).setStartTime(1648000800000L);
-        list.get(2).setEndTime(1648004400000L);
-
-        list.get(3).setStartTime(1648605600000L);
-        list.get(3).setEndTime(1648609200000L);
-
-        var response = new CalenderListResponse();
-        response.setId(5L);
-        response.setPersonelCalenderId(5L);
-        response.setPersonelCalenderTitle("사진동아리 신입생 환영회");
-        response.setPersonelCalenderLocation("동아리실");
-        response.setStartTime(1647652678000L);
-        response.setEndTime(1647658613000L);
-        list.add(response);
+        list.add(
+                CalenderListResponse.builder()
+                        .id(1L)
+                        .startTime(1648000800000L)
+                        .endTime(1648004400000L)
+                        .classId(1L)
+                        .classTitle("경제학원론")
+                        .classLocation("인문관 101호")
+                        .userName("Kim Bosung")
+                        .imageUrl("http://mysend.co.kr:8080/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg")
+                        .inviteUserCount(15)
+                        .acceptUserCount(14)
+                        .build())
+        ;
+        list.add(
+                CalenderListResponse.builder()
+                        .id(1L)
+                        .startTime(1648605600000L)
+                        .endTime(1648609200000L)
+                        .classId(1L)
+                        .classTitle("경제학원론")
+                        .classLocation("인문관 101호")
+                        .userName("Kim Bosung")
+                        .imageUrl("http://mysend.co.kr:8080/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg")
+                        .inviteUserCount(15)
+                        .acceptUserCount(14)
+                        .build())
+        ;
+        list.add(
+                CalenderListResponse.builder()
+                        .id(1L)
+                        .startTime(1647652678000L)
+                        .endTime(1647658613000L)
+                        .personelCalenderId(1L)
+                        .personelCalenderTitle("사진동아리 신입생 환영회")
+                        .personelCalenderLocation("동아리실")
+                        .userName("Kim Bosung")
+                        .imageUrl("http://mysend.co.kr:8080/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg")
+                        .inviteUserCount(15)
+                        .acceptUserCount(14)
+                        .build())
+        ;
 
         Mockito.when(calenderService.getCalender(Mockito.any())).thenReturn(Mono.just(new BaseExtentionResponse<>(list)));
 
@@ -110,7 +154,23 @@ class CalenderRestdocsTest extends RestdocsBase {
                         fieldWithPath("returnValue.[].personelCalenderLocation").description("개인 일정 장소").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("String"))
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].userName").description("일정 생성자").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].imageUrl").description("일정 생성자 프로필 사진").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].inviteUserCount").description("일정 초대 인원").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.[].acceptUserCount").description("일정 수락 인원").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
                 );
 
         String params = "?type=month";

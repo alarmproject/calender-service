@@ -1,9 +1,11 @@
 package io.my.calender.calender.payload.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter @Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CalenderListResponse {
     private Long id;
     private Long startTime;
@@ -16,4 +18,9 @@ public class CalenderListResponse {
     private Long personelCalenderId;
     private String personelCalenderTitle;
     private String personelCalenderLocation;
+
+    private String userName;
+    private String imageUrl;
+    private Integer inviteUserCount;
+    private Integer acceptUserCount;
 }

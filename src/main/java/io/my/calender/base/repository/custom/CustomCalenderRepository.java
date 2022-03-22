@@ -1,9 +1,10 @@
 package io.my.calender.base.repository.custom;
 
+import io.my.calender.base.properties.ServerProperties;
+import io.my.calender.base.repository.query.CustomCalenderQuery;
 import io.my.calender.base.util.DateUtil;
 import io.my.calender.calender.payload.response.CalenderListResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
@@ -14,51 +15,50 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class CustomCalenderRepository {
     private final DateUtil dateUtil;
-    private final DatabaseClient client;
+    private final ServerProperties serverProperties;
+    private final CustomCalenderQuery customCalenderQuery;
 
     public Flux<CalenderListResponse> findCalenderListResponse(Long userId, LocalDate startDate, LocalDate endDate) {
-        String query = "" +
-                "select " +
-                "c.id " +
-                ", c.start_time  " +
-                ", c.end_time  " +
-                ", class.id as class_id " +
-                ", class.title as class_title " +
-                ", pc.id as personel_calender_id  " +
-                ", pc.title as personel_calender_title " +
-                ", class.location as class_location " +
-                ", pc.location as personel_calender_location " +
-                "from " +
-                "calender c  " +
-                "left join class_time ct on c.class_time_id = ct.id  " +
-                "left join class on class.id = ct.class_id  " +
-                "left join class_join_user cju on cju.class_id = class.id and cju.user_id = :userId " +
-                "left join personel_calender pc on c.personel_calender_id = pc.id " +
-                "left join personel_calender_join_user pcju on pcju.personel_calender_id = pc.id and pcju.user_id = :userId " +
-                "where " +
-                "c.start_time > :startDate " +
-                "and " +
-                "c.end_time < :endDate " +
-                "and " +
-                "(cju.accept = 1 or pcju.accept = 1)";
-
-
-        return client.sql(query).bind("userId", userId)
-                .bind("startDate", startDate)
-                .bind("endDate", endDate).map((row, rowMetadata) -> {
-                    var entity = new CalenderListResponse();
+        return this.customCalenderQuery.findCalenderListResponse(userId, startDate, endDate)
+                .map((row, rowMetadata) -> {
                     Long startTime = dateUtil.localDateTimeToUnixTime(row.get("start_time", LocalDateTime.class));
                     Long endTime = dateUtil.localDateTimeToUnixTime(row.get("end_time", LocalDateTime.class));
-                    entity.setId(row.get("id", Long.class));
-                    entity.setStartTime(startTime);
-                    entity.setEndTime(endTime);
-                    entity.setClassId(row.get("class_id", Long.class));
-                    entity.setClassTitle(row.get("class_title", String.class));
-                    entity.setClassLocation(row.get("class_location", String.class));
-                    entity.setPersonelCalenderId(row.get("personel_calender_id", Long.class));
-                    entity.setPersonelCalenderTitle(row.get("personel_calender_title", String.class));
-                    entity.setPersonelCalenderLocation(row.get("personel_calender_location", String.class));
-                    return entity;
+
+                    Long classId = row.get("class_id", Long.class);
+                    Long personelCalenderId = row.get("personel_calender_id", Long.class);
+
+                    Integer inviteUserCount = 0;
+                    Integer acceptUserCount = 0;
+
+                    if (classId != null) {
+                        inviteUserCount = row.get("class_invite_count", Integer.class);
+                        acceptUserCount = row.get("class_accept_count", Integer.class);
+                    } else if (personelCalenderId != null) {
+                        inviteUserCount = row.get("personel_calender_invite_count", Integer.class);
+                        acceptUserCount = row.get("personel_calender_accept_count", Integer.class);
+                    }
+
+                    String imageUrl = row.get("filename", String.class);
+                    if (imageUrl != null) {
+                        imageUrl = serverProperties.getImageUrl() + "?fileName=" + imageUrl;
+                    }
+
+                    return CalenderListResponse.builder()
+                            .id(row.get("id", Long.class))
+                            .startTime(startTime)
+                            .endTime(endTime)
+                            .classId(classId)
+                            .classTitle(row.get("class_title", String.class))
+                            .classLocation(row.get("class_location", String.class))
+                            .personelCalenderId(personelCalenderId)
+                            .personelCalenderTitle(row.get("personel_calender_title", String.class))
+                            .personelCalenderLocation(row.get("personel_calender_location", String.class))
+                            .userName(row.get("user_name", String.class))
+                            .imageUrl(imageUrl)
+                            .inviteUserCount(inviteUserCount)
+                            .acceptUserCount(acceptUserCount)
+                            .build()
+                            ;
                 }).all()
                 ;
 
