@@ -36,6 +36,24 @@ include::{snippets}/calenderrestdocstest/getcalender/http-request.adoc[]
 include::{snippets}/calenderrestdocstest/getcalender/http-response.adoc[]
 include::{snippets}/calenderrestdocstest/getcalender/curl-request.adoc[]
 
+[[resources-calender-modify]]
+==== 일정 수정
+
+include::{snippets}/calenderrestdocstest/modifycalender/request-fields.adoc[]
+include::{snippets}/calenderrestdocstest/modifycalender/response-fields.adoc[]
+include::{snippets}/calenderrestdocstest/modifycalender/http-request.adoc[]
+include::{snippets}/calenderrestdocstest/modifycalender/http-response.adoc[]
+include::{snippets}/calenderrestdocstest/modifycalender/curl-request.adoc[]
+
+[[resources-calender-remove]]
+==== 일정 삭제
+
+include::{snippets}/calenderrestdocstest/removecalender/path-parameters.adoc[]
+include::{snippets}/calenderrestdocstest/removecalender/response-fields.adoc[]
+include::{snippets}/calenderrestdocstest/removecalender/http-request.adoc[]
+include::{snippets}/calenderrestdocstest/removecalender/http-response.adoc[]
+include::{snippets}/calenderrestdocstest/removecalender/curl-request.adoc[]
+
 === Class Calender
 
 [[resources-calender-class]]

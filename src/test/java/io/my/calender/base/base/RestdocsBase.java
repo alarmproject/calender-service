@@ -18,6 +18,7 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.payload.RequestFieldsSnippet;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
+import org.springframework.restdocs.request.PathParametersSnippet;
 import org.springframework.restdocs.request.RequestParametersSnippet;
 import org.springframework.restdocs.request.RequestPartsSnippet;
 import org.springframework.restdocs.snippet.Snippet;
@@ -132,6 +133,10 @@ public class RestdocsBase {
         return this.webTestClient.delete().uri(uri).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).exchange();
     }
 
+    protected WebTestClient.ResponseSpec deleteWebTestClient(Object body, String uri) {
+        return this.webTestClient.delete().uri(uri, body).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).exchange();
+    }
+
     protected WebTestClient.ResponseSpec getWebTestClientNotAuth(String uri) {
         return this.webTestClient.get().uri(uri).accept(MediaType.APPLICATION_JSON).exchange();
     }
@@ -241,6 +246,19 @@ public class RestdocsBase {
                 defaultRequestHeader,
                 responseHeader,
                 responseSnippet);
+    }
+
+    protected Consumer<EntityExchangeResult<byte[]>> createConsumer(
+            String fileName,
+            PathParametersSnippet pathParametersSnippet,
+            ResponseFieldsSnippet responseFieldsSnippet) {
+        return document(
+                this.getClass().getSimpleName().toLowerCase() + fileName,
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                defaultRequestHeader,
+                pathParametersSnippet,
+                responseFieldsSnippet);
     }
 
 

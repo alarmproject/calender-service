@@ -135,5 +135,4 @@ public class ClassService {
         return this.classJoinUserRepository.save(entity);
     }
 
-
 }
