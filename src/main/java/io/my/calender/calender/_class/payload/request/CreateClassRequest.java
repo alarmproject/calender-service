@@ -1,4 +1,4 @@
-package io.my.calender.calender.payload.request._class;
+package io.my.calender.calender._class.payload.request;
 
 import lombok.Getter;
 import lombok.Setter;

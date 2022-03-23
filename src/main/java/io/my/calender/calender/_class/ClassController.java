@@ -1,9 +1,9 @@
-package io.my.calender.calender;
+package io.my.calender.calender._class;
 
 import io.my.calender.base.annotation.Logger;
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender.calender.payload.request._class.CreateClassRequest;
-import io.my.calender.calender.payload.request._class.InviteClassRequeset;
+import io.my.calender.calender._class.payload.request.CreateClassRequest;
+import io.my.calender.calender._class.payload.request.InviteClassRequeset;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;

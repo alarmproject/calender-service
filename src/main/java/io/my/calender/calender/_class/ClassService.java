@@ -1,4 +1,4 @@
-package io.my.calender.calender;
+package io.my.calender.calender._class;
 
 import io.my.calender.base.context.JwtContextHolder;
 import io.my.calender.base.entity.Calender;
@@ -11,8 +11,8 @@ import io.my.calender.base.repository.ClassJoinUserRepository;
 import io.my.calender.base.repository.ClassRepository;
 import io.my.calender.base.repository.ClassTimeRepository;
 import io.my.calender.base.util.DateUtil;
-import io.my.calender.calender.payload.request._class.CreateClassRequest;
-import io.my.calender.calender.payload.request._class.InviteClassRequeset;
+import io.my.calender.calender._class.payload.request.CreateClassRequest;
+import io.my.calender.calender._class.payload.request.InviteClassRequeset;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
