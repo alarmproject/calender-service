@@ -80,4 +80,8 @@ public class DateUtil {
     public LocalDate findMonthEnd(LocalDate date) {
         return date.withDayOfMonth(date.lengthOfMonth());
     }
+
+    public Integer diffrentDay(DayOfWeek day1, DayOfWeek day2) {
+        return day1.getValue() - day2.getValue();
+    }
 }
