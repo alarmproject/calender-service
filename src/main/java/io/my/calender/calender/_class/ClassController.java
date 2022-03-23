@@ -35,4 +35,10 @@ public class ClassController {
         return this.classService.joinClass(classId);
     }
 
+    @Logger
+    @DeleteMapping("/refuse")
+    public Mono<BaseResponse> refuseClass(@RequestParam("classId") Long classId) {
+        return this.classService.refuseClass(classId);
+    }
+
 }

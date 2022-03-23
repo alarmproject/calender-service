@@ -135,4 +135,9 @@ public class ClassService {
         return this.classJoinUserRepository.save(entity);
     }
 
+    public Mono<BaseResponse> refuseClass(Long classId) {
+        return JwtContextHolder.getMonoUserId().flatMap(userId ->
+                classJoinUserRepository.deleteByUserIdAndClassId(userId, classId))
+        .map(o -> new BaseResponse());
+    }
 }

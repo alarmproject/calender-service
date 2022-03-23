@@ -189,4 +189,38 @@ class ClassRestdocsTest extends RestdocsBase {
 
     }
 
+    @Test
+    @DisplayName("수업 참가 취소 API")
+    void refuseClass() {
+        Mockito.when(classService.refuseClass(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+
+        RequestParametersSnippet requestParametersSnippet =
+                requestParameters(
+                        parameterWithName("classId").description("수업 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")
+                                )
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+
+        String params = "?classId=3";
+
+        deleteWebTestClient("/calender/class/refuse" + params).expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/refuseclass", requestParametersSnippet, responseFieldsSnippet));
+    }
+
 }

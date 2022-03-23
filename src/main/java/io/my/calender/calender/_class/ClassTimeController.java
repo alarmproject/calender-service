@@ -17,14 +17,14 @@ public class ClassTimeController {
     @PatchMapping
     public Mono<BaseResponse> modifyClassTime(
             @RequestBody ModifyClassTime requestBody) {
-        return classTimeService.modifyClassTime(requestBody);
+        return this.classTimeService.modifyClassTime(requestBody);
     }
 
     @Logger
     @DeleteMapping("/{id}")
     public Mono<BaseResponse> removeClassTime(
             @PathVariable("id") Long id) {
-        return classTimeService.removeClassTime(id);
+        return this.classTimeService.removeClassTime(id);
     }
 
 }
