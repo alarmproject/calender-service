@@ -4,6 +4,7 @@ import io.my.calender.base.context.JwtContextWebFilter;
 import io.my.calender.base.util.JwtUtil;
 import io.my.calender.calender.CalenderService;
 import io.my.calender.calender._class.ClassService;
+import io.my.calender.calender._class.ClassTimeService;
 import io.my.calender.calender.personel.PersonelService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -61,6 +62,9 @@ public class RestdocsBase {
 
     @MockBean
     protected CalenderService calenderService;
+
+    @MockBean
+    protected ClassTimeService classTimeService;
 
     @BeforeEach
     void setUp(ApplicationContext applicationContext,

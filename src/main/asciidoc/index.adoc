@@ -83,6 +83,26 @@ include::{snippets}/classrestdocstest/joinclass/http-request.adoc[]
 include::{snippets}/classrestdocstest/joinclass/http-response.adoc[]
 include::{snippets}/classrestdocstest/joinclass/curl-request.adoc[]
 
+=== Class Time Calender
+
+[[resources-calender-class-time-modify]]
+==== 수업 요일 및 시간 수정
+
+include::{snippets}/classtimerestdocstest/modifyclasstime/request-fields.adoc[]
+include::{snippets}/classtimerestdocstest/modifyclasstime/response-fields.adoc[]
+include::{snippets}/classtimerestdocstest/modifyclasstime/http-request.adoc[]
+include::{snippets}/classtimerestdocstest/modifyclasstime/http-response.adoc[]
+include::{snippets}/classtimerestdocstest/modifyclasstime/curl-request.adoc[]
+
+[[resources-calender-class-time-remove]]
+==== 수업 일정 삭제
+
+include::{snippets}/classtimerestdocstest/removeclasstime/path-parameters.adoc[]
+include::{snippets}/classtimerestdocstest/removeclasstime/response-fields.adoc[]
+include::{snippets}/classtimerestdocstest/removeclasstime/http-request.adoc[]
+include::{snippets}/classtimerestdocstest/removeclasstime/http-response.adoc[]
+include::{snippets}/classtimerestdocstest/removeclasstime/curl-request.adoc[]
+
 
 
 === Personel Calender
