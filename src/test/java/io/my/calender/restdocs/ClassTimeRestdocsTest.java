@@ -3,7 +3,7 @@ package io.my.calender.restdocs;
 import io.my.calender.base.base.RestDocAttributes;
 import io.my.calender.base.base.RestdocsBase;
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender.calender._class.payload.request.ModifyClassTime;
+import io.my.calender.calender._class.payload.request.ModifyClassTimeRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -22,7 +22,7 @@ class ClassTimeRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("수업 일정 수정 API")
     void modifyClassTime() {
-        var requestBody = new ModifyClassTime();
+        var requestBody = new ModifyClassTimeRequest();
         requestBody.setStartTime(10);
         requestBody.setEndTime(12);
         requestBody.setDay("수");
@@ -76,7 +76,7 @@ class ClassTimeRestdocsTest extends RestdocsBase {
                 parameterWithName("id").description("수업 일정 번호")
                         .attributes(
                                 RestDocAttributes.length(0),
-                                RestDocAttributes.format("String"))
+                                RestDocAttributes.format("Integer"))
         );
 
         ResponseFieldsSnippet responseFieldsSnippet =

@@ -9,8 +9,10 @@ import io.my.calender.base.repository.CalenderRepository;
 import io.my.calender.base.repository.PersonelCalenderJoinUserRepository;
 import io.my.calender.base.repository.PersonelCalenderRepository;
 import io.my.calender.base.util.DateUtil;
+import io.my.calender.calender.personel.payload.request.AcceptPersoneCalenderRequest;
 import io.my.calender.calender.personel.payload.request.CreatePersonelRequest;
 import io.my.calender.calender.personel.payload.request.InvitePersonelRequest;
+import io.my.calender.calender.personel.payload.request.ModifyPersonelCalenderRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -69,16 +71,29 @@ public class PersonelService {
                 .map(list -> new BaseResponse());
     }
 
-    public Mono<BaseResponse> joinPersonelCalender(Long personelCalenderId) {
+    public Mono<BaseResponse> removePersonelCalender(Long personelCalenderId) {
+        return personelCalenderRepository.deleteById(personelCalenderId)
+                .map(o -> new BaseResponse());
+    }
+
+    public Mono<BaseResponse> acceeptPersonelCalender(AcceptPersoneCalenderRequest requestBody) {
         return JwtContextHolder.getMonoUserId().flatMap(userId ->
-            this.personelCalenderJoinUserRepository
-                    .findByUserIdAndPersonelCalenderId(userId, personelCalenderId)
-        )
-        .flatMap(entity -> {
-            entity.setAccept(Boolean.TRUE);
-            return this.personelCalenderJoinUserRepository.save(entity);
-        })
-        .map(entity -> new BaseResponse())
-        ;
+                personelCalenderJoinUserRepository.findByUserIdAndPersonelCalenderId(userId, requestBody.getPersonelCalenderId()))
+                .flatMap(entity -> {
+                    entity.setAccept(requestBody.getAccept());
+                    return personelCalenderJoinUserRepository.save(entity);
+                }).map(entity -> new BaseResponse());
+    }
+
+    public Mono<BaseResponse> modifyPersonelCalenderInfo(ModifyPersonelCalenderRequest requestBody) {
+        return personelCalenderRepository.findById(requestBody.getPersonelCalenderId())
+                .flatMap(entity -> {
+                    entity.setTitle(requestBody.getTitle());
+                    entity.setContent(requestBody.getContent());
+                    entity.setLocation(requestBody.getLocation());
+                    entity.setOpen(requestBody.getOpen());
+                    return personelCalenderRepository.save(entity);
+                })
+                .map(entity -> new BaseResponse());
     }
 }

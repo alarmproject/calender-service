@@ -3,22 +3,23 @@ package io.my.calender.restdocs;
 import io.my.calender.base.base.RestDocAttributes;
 import io.my.calender.base.base.RestdocsBase;
 import io.my.calender.base.payload.BaseResponse;
+import io.my.calender.calender.personel.payload.request.AcceptPersoneCalenderRequest;
 import io.my.calender.calender.personel.payload.request.CreatePersonelRequest;
 import io.my.calender.calender.personel.payload.request.InvitePersonelRequest;
+import io.my.calender.calender.personel.payload.request.ModifyPersonelCalenderRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.restdocs.payload.RequestFieldsSnippet;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
-import org.springframework.restdocs.request.RequestParametersSnippet;
+import org.springframework.restdocs.request.PathParametersSnippet;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 
 class PersonelRestdocsTest extends RestdocsBase {
 
@@ -125,19 +126,16 @@ class PersonelRestdocsTest extends RestdocsBase {
     }
 
     @Test
-    @DisplayName("일정 초대 수락 API")
-    void joinPersonelCalender() {
-        Mockito.when(personelService.joinPersonelCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+    @DisplayName("개인 일정 삭제")
+    void removePersonelCalender() {
+        Mockito.when(personelService.removePersonelCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
-        RequestParametersSnippet requestParametersSnippet =
-                requestParameters(
-                        parameterWithName("personelCalenderId").description("일정 번호")
-                                .attributes(
-                                        RestDocAttributes.length(0),
-                                        RestDocAttributes.format("Integer")
-                                )
-                );
-
+        PathParametersSnippet pathParametersSnippet = pathParameters(
+                parameterWithName("id").description("개인 일정 번호")
+                        .attributes(
+                                RestDocAttributes.length(0),
+                                RestDocAttributes.format("Integer"))
+        );
 
         ResponseFieldsSnippet responseFieldsSnippet =
                 responseFields(
@@ -150,12 +148,100 @@ class PersonelRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer"))
                 );
-        String params = "?personelCalenderId=3";
 
-        patchWebTestClient("/calender/personel/join" + params).expectStatus()
+        deleteWebTestClient(1, "/calender/personel/{id}").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/joinpersonelcalender", requestParametersSnippet, responseFieldsSnippet));
+                .consumeWith(createConsumer("/removepersonelcalender", pathParametersSnippet, responseFieldsSnippet));
+    }
 
+    @Test
+    @DisplayName("개인 일정 수락 or 거절")
+    void acceptPersonelCalender() {
+        var requestBody = new AcceptPersoneCalenderRequest();
+        requestBody.setAccept(Boolean.FALSE);
+        requestBody.setPersonelCalenderId(1L);
+
+        Mockito.when(personelService.acceeptPersonelCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+
+        RequestFieldsSnippet requestFieldsSnippet =
+                requestFields(
+                        fieldWithPath("personelCalenderId").description("일정 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("accept").description("수락 여부")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean"))
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+        patchWebTestClient(requestBody, "/calender/personel/accept").expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/acceptpersonelcalender", requestFieldsSnippet, responseFieldsSnippet));
+    }
+
+    @Test
+    @DisplayName("개인 일정 정보 수정")
+    void modifyPersonelCalenderInfo() {
+        var requestBody = new ModifyPersonelCalenderRequest();
+        requestBody.setPersonelCalenderId(1L);
+        requestBody.setContent("신입생 환영회");
+        requestBody.setTitle("사진동아리 신입생 환영회");
+        requestBody.setLocation("사진동아리 동아리실");
+        requestBody.setOpen(Boolean.TRUE);
+        Mockito.when(personelService.modifyPersonelCalenderInfo(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+
+        RequestFieldsSnippet requestFieldsSnippet =
+                requestFields(
+                        fieldWithPath("personelCalenderId").description("일정 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("title").description("일정 제목")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("content").description("설명")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("location").description("장소")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("open").description("일정 공개 여부")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean"))
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+        patchWebTestClient(requestBody, "/calender/personel/info").expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/modifypersonelcalenderinfo", requestFieldsSnippet, responseFieldsSnippet));
     }
 }

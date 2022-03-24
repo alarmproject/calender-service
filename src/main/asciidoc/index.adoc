@@ -65,6 +65,15 @@ include::{snippets}/classrestdocstest/createclass/http-request.adoc[]
 include::{snippets}/classrestdocstest/createclass/http-response.adoc[]
 include::{snippets}/classrestdocstest/createclass/curl-request.adoc[]
 
+[[resources-calender-class-info-modify]]
+==== 수업 정보 수정
+
+include::{snippets}/classrestdocstest/modifyclassinfo/request-fields.adoc[]
+include::{snippets}/classrestdocstest/modifyclassinfo/response-fields.adoc[]
+include::{snippets}/classrestdocstest/modifyclassinfo/http-request.adoc[]
+include::{snippets}/classrestdocstest/modifyclassinfo/http-response.adoc[]
+include::{snippets}/classrestdocstest/modifyclassinfo/curl-request.adoc[]
+
 [[resources-calender-class-invite]]
 ==== 수업 초대
 
@@ -134,12 +143,30 @@ include::{snippets}/personelrestdocstest/invitepersonelcalender/http-request.ado
 include::{snippets}/personelrestdocstest/invitepersonelcalender/http-response.adoc[]
 include::{snippets}/personelrestdocstest/invitepersonelcalender/curl-request.adoc[]
 
-[[resources-calender-personel-join]]
-==== 일정 참가
+[[resources-calender-personel-accept]]
+==== 일정 수락 or 거절
 
-include::{snippets}/personelrestdocstest/joinpersonelcalender/request-parameters.adoc[]
-include::{snippets}/personelrestdocstest/joinpersonelcalender/response-fields.adoc[]
-include::{snippets}/personelrestdocstest/joinpersonelcalender/http-request.adoc[]
-include::{snippets}/personelrestdocstest/joinpersonelcalender/http-response.adoc[]
-include::{snippets}/personelrestdocstest/joinpersonelcalender/curl-request.adoc[]
+include::{snippets}/personelrestdocstest/acceptpersonelcalender/request-fields.adoc[]
+include::{snippets}/personelrestdocstest/acceptpersonelcalender/response-fields.adoc[]
+include::{snippets}/personelrestdocstest/acceptpersonelcalender/http-request.adoc[]
+include::{snippets}/personelrestdocstest/acceptpersonelcalender/http-response.adoc[]
+include::{snippets}/personelrestdocstest/acceptpersonelcalender/curl-request.adoc[]
+
+[[resources-calender-personel-remove]]
+==== 개인 일정 삭제
+
+include::{snippets}/personelrestdocstest/removepersonelcalender/path-parameters.adoc[]
+include::{snippets}/personelrestdocstest/removepersonelcalender/response-fields.adoc[]
+include::{snippets}/personelrestdocstest/removepersonelcalender/http-request.adoc[]
+include::{snippets}/personelrestdocstest/removepersonelcalender/http-response.adoc[]
+include::{snippets}/personelrestdocstest/removepersonelcalender/curl-request.adoc[]
+
+[[resources-calender-personel-info-modify]]
+==== 개인 일정 정보 수
+
+include::{snippets}/personelrestdocstest/modifypersonelcalenderinfo/request-fields.adoc[]
+include::{snippets}/personelrestdocstest/modifypersonelcalenderinfo/response-fields.adoc[]
+include::{snippets}/personelrestdocstest/modifypersonelcalenderinfo/http-request.adoc[]
+include::{snippets}/personelrestdocstest/modifypersonelcalenderinfo/http-response.adoc[]
+include::{snippets}/personelrestdocstest/modifypersonelcalenderinfo/curl-request.adoc[]
 

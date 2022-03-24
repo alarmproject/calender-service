@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class ModifyClassTime {
+public class ModifyClassTimeRequest {
     private Long id;
     private String day;
     private Integer startTime;

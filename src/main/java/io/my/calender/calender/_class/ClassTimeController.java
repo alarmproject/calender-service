@@ -2,7 +2,7 @@ package io.my.calender.calender._class;
 
 import io.my.calender.base.annotation.Logger;
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender.calender._class.payload.request.ModifyClassTime;
+import io.my.calender.calender._class.payload.request.ModifyClassTimeRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -16,7 +16,7 @@ public class ClassTimeController {
     @Logger
     @PatchMapping
     public Mono<BaseResponse> modifyClassTime(
-            @RequestBody ModifyClassTime requestBody) {
+            @RequestBody ModifyClassTimeRequest requestBody) {
         return this.classTimeService.modifyClassTime(requestBody);
     }
 

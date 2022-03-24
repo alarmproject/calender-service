@@ -6,6 +6,7 @@ import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.calender._class.payload.request.CreateClassRequest;
 import io.my.calender.calender._class.payload.request.CreateClassTimeRequest;
 import io.my.calender.calender._class.payload.request.InviteClassRequeset;
+import io.my.calender.calender._class.payload.request.ModifyClassInfoRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -221,6 +222,51 @@ class ClassRestdocsTest extends RestdocsBase {
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/refuseclass", requestParametersSnippet, responseFieldsSnippet));
+    }
+
+    @Test
+    @DisplayName("수업 정보 변경")
+    void modifyClassInfo() {
+        var requestBody = new ModifyClassInfoRequest();
+        Mockito.when(classService.modifyClassInfo(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+
+        RequestFieldsSnippet requestFieldsSnippet =
+                requestFields(
+                        fieldWithPath("id").description("수업 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("title").description("수업 제목")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("content").description("수업 설명")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("location").description("수업 장소")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String"))
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+
+        patchWebTestClient(requestBody, "/calender/class/info").expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/modifyclassinfo", requestFieldsSnippet, responseFieldsSnippet));
+
     }
 
 }

@@ -2,8 +2,10 @@ package io.my.calender.calender.personel;
 
 import io.my.calender.base.annotation.Logger;
 import io.my.calender.base.payload.BaseResponse;
+import io.my.calender.calender.personel.payload.request.AcceptPersoneCalenderRequest;
 import io.my.calender.calender.personel.payload.request.CreatePersonelRequest;
 import io.my.calender.calender.personel.payload.request.InvitePersonelRequest;
+import io.my.calender.calender.personel.payload.request.ModifyPersonelCalenderRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -29,10 +31,24 @@ public class PersonelController {
     }
 
     @Logger
-    @PatchMapping("join")
-    public Mono<BaseResponse> joinPersonelCalender(
-            @RequestParam("personelCalenderId") Long personelCalenderId) {
-        return this.personelService.joinPersonelCalender(personelCalenderId);
+    @DeleteMapping("/{id}")
+    public Mono<BaseResponse> removePersonelCalender(
+            @PathVariable("id") Long personelCalenderId) {
+        return this.personelService.removePersonelCalender(personelCalenderId);
+    }
+
+    @Logger
+    @PatchMapping("/accept")
+    public Mono<BaseResponse> acceeptPersonelCalender(
+            @RequestBody AcceptPersoneCalenderRequest requestBody) {
+        return this.personelService.acceeptPersonelCalender(requestBody);
+    }
+
+    @Logger
+    @PatchMapping("/info")
+    public Mono<BaseResponse> modifyPersonelCalenderInfo(
+            @RequestBody ModifyPersonelCalenderRequest requestBody) {
+        return this.personelService.modifyPersonelCalenderInfo(requestBody);
     }
 
 

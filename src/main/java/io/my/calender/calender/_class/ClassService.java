@@ -5,15 +5,17 @@ import io.my.calender.base.entity.Calender;
 import io.my.calender.base.entity.Class;
 import io.my.calender.base.entity.ClassJoinUser;
 import io.my.calender.base.entity.ClassTime;
+import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender.base.repository.CalenderRepository;
-import io.my.calender.base.repository.ClassJoinUserRepository;
-import io.my.calender.base.repository.ClassRepository;
-import io.my.calender.base.repository.ClassTimeRepository;
+import io.my.calender.base.repository.*;
+import io.my.calender.base.repository.dao.ClassDAO;
 import io.my.calender.base.util.DateUtil;
 import io.my.calender.calender._class.payload.request.CreateClassRequest;
 import io.my.calender.calender._class.payload.request.InviteClassRequeset;
+import io.my.calender.calender._class.payload.request.ModifyClassInfoRequest;
+import io.my.calender.calender._class.payload.response.SearchClassResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -29,6 +31,8 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequiredArgsConstructor
 public class ClassService {
     private final DateUtil dateUtil;
+    private final ClassDAO classDAO;
+    private final UserRepository userRepository;
     private final ClassRepository classRepository;
     private final CalenderRepository calenderRepository;
     private final ClassTimeRepository classTimeRepository;
@@ -139,5 +143,25 @@ public class ClassService {
         return JwtContextHolder.getMonoUserId().flatMap(userId ->
                 classJoinUserRepository.deleteByUserIdAndClassId(userId, classId))
         .map(o -> new BaseResponse());
+    }
+
+    public Mono<BaseResponse> modifyClassInfo(ModifyClassInfoRequest requestBody) {
+        return classRepository.findById(requestBody.getId())
+                .flatMap(entity -> {
+                    entity.setTitle(requestBody.getTitle());
+                    entity.setContent(requestBody.getContent());
+                    entity.setLocation(requestBody.getLocation());
+                    return classRepository.save(entity);
+                })
+                .map(entity -> new BaseResponse())
+                ;
+    }
+
+    public Mono<BaseExtentionResponse<List<SearchClassResponse>>> searchClasses(Long classId, Integer perPage, String title) {
+        return JwtContextHolder.getMonoUserId().flatMap(userRepository::findById)
+                .flatMapMany(user -> classDAO.searchClasses(classId, user.getCollegeId(), title, perPage))
+                .collectList()
+                .map(BaseExtentionResponse::new)
+        ;
     }
 }

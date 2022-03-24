@@ -4,7 +4,7 @@ import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.base.repository.CalenderRepository;
 import io.my.calender.base.repository.ClassTimeRepository;
 import io.my.calender.base.util.DateUtil;
-import io.my.calender.calender._class.payload.request.ModifyClassTime;
+import io.my.calender.calender._class.payload.request.ModifyClassTimeRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -21,7 +21,7 @@ public class ClassTimeService {
     private final CalenderRepository calenderRepository;
     private final ClassTimeRepository classTimeRepository;
 
-    public Mono<BaseResponse> modifyClassTime(ModifyClassTime requestBody) {
+    public Mono<BaseResponse> modifyClassTime(ModifyClassTimeRequest requestBody) {
         return this.classTimeRepository.findById(requestBody.getId())
                 .flatMap(entity -> {
                     entity.setStartTime(requestBody.getStartTime());
