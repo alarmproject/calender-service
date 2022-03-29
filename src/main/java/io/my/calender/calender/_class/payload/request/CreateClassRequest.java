@@ -15,6 +15,7 @@ public class CreateClassRequest {
     private String location;
 
     private Long collegeId;
+    private Long professorId;
 
     private List<CreateClassTimeRequest> classTimeList;
 }

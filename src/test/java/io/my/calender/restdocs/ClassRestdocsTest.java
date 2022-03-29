@@ -34,6 +34,7 @@ class ClassRestdocsTest extends RestdocsBase {
         requestBody.setCollegeId(1L);
         requestBody.setStartDate(1647652678000L);
         requestBody.setEndDate(1658193478000L);
+        requestBody.setProfessorId(1L);
 
         List<CreateClassTimeRequest> list = new ArrayList<>();
         CreateClassTimeRequest classTimeRequest1 = new CreateClassTimeRequest();
@@ -70,7 +71,11 @@ class ClassRestdocsTest extends RestdocsBase {
                         fieldWithPath("collegeId").description("대학교 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("String")),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("professorId").description("교수님 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
                         fieldWithPath("startDate").description("시작일")
                                 .attributes(
                                         RestDocAttributes.length(0),
@@ -228,6 +233,12 @@ class ClassRestdocsTest extends RestdocsBase {
     @DisplayName("수업 정보 변경")
     void modifyClassInfo() {
         var requestBody = new ModifyClassInfoRequest();
+        requestBody.setId(1L);
+        requestBody.setProfessorId(1L);
+        requestBody.setLocation("인문관 1호");
+        requestBody.setTitle("경제학원론");
+        requestBody.setContent("경제학과 1학년 필수 수업입니다.");
+
         Mockito.when(classService.modifyClassInfo(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
         RequestFieldsSnippet requestFieldsSnippet =
@@ -247,7 +258,11 @@ class ClassRestdocsTest extends RestdocsBase {
                         fieldWithPath("location").description("수업 장소")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("String"))
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("professorId").description("교수님 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
                 );
 
         ResponseFieldsSnippet responseFieldsSnippet =

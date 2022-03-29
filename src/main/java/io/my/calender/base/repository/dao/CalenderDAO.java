@@ -46,6 +46,9 @@ public class CalenderDAO {
                         imageUrl = serverProperties.getImageUrl() + "?fileName=" + imageUrl;
                     }
 
+                    String userName = row.get("professor_name", String.class);
+                    if (userName == null) userName = row.get("user_name", String.class);
+
                     return CalenderListResponse.builder()
                             .id(row.get("id", Long.class))
                             .startTime(startTime)
@@ -56,7 +59,7 @@ public class CalenderDAO {
                             .personelCalenderId(personelCalenderId)
                             .personelCalenderTitle(row.get("personel_calender_title", String.class))
                             .personelCalenderLocation(row.get("personel_calender_location", String.class))
-                            .userName(row.get("user_name", String.class))
+                            .userName(userName)
                             .imageUrl(imageUrl)
                             .inviteUserCount(inviteUserCount)
                             .acceptUserCount(acceptUserCount)

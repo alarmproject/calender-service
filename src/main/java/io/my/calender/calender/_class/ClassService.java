@@ -48,6 +48,7 @@ public class ClassService {
                 this.dateUtil.unixTimeToLocalDateTime(requestBody.getStartDate()).toLocalDate());
         _class.setEndDate(
                 this.dateUtil.unixTimeToLocalDateTime(requestBody.getEndDate()).toLocalDate());
+        _class.setProfessorId(requestBody.getProfessorId());
 
         return JwtContextHolder.getMonoUserId().flatMap(userId -> {
             _class.setUserId(userId);
@@ -151,6 +152,7 @@ public class ClassService {
                     entity.setTitle(requestBody.getTitle());
                     entity.setContent(requestBody.getContent());
                     entity.setLocation(requestBody.getLocation());
+                    entity.setProfessorId(requestBody.getProfessorId());
                     return classRepository.save(entity);
                 })
                 .map(entity -> new BaseResponse())
