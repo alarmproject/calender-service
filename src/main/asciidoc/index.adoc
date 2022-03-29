@@ -83,6 +83,14 @@ include::{snippets}/classrestdocstest/modifyclassinfo/http-request.adoc[]
 include::{snippets}/classrestdocstest/modifyclassinfo/http-response.adoc[]
 include::{snippets}/classrestdocstest/modifyclassinfo/curl-request.adoc[]
 
+[[resources-calender-class-find-invite-list]]
+==== 초대받은 수업 목록 조회
+
+include::{snippets}/classrestdocstest/findinviteclasslist/response-fields.adoc[]
+include::{snippets}/classrestdocstest/findinviteclasslist/http-request.adoc[]
+include::{snippets}/classrestdocstest/findinviteclasslist/http-response.adoc[]
+include::{snippets}/classrestdocstest/findinviteclasslist/curl-request.adoc[]
+
 [[resources-calender-class-invite]]
 ==== 수업 초대
 

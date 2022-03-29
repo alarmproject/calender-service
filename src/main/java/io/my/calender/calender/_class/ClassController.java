@@ -6,6 +6,7 @@ import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.calender._class.payload.request.CreateClassRequest;
 import io.my.calender.calender._class.payload.request.InviteClassRequeset;
 import io.my.calender.calender._class.payload.request.ModifyClassInfoRequest;
+import io.my.calender.calender._class.payload.response.InviteClassListResponse;
 import io.my.calender.calender._class.payload.response.SearchClassResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -62,6 +63,12 @@ public class ClassController {
             @RequestParam("title") String title) {
 
         return this.classService.searchClasses(classId, perPage, title);
+    }
+
+    @Logger
+    @GetMapping("/invite")
+    public Mono<BaseExtentionResponse<List<InviteClassListResponse>>> findInviteClassList() {
+        return this.classService.findInviteClassList();
     }
 
 }

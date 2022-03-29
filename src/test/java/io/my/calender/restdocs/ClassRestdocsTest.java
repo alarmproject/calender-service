@@ -8,6 +8,7 @@ import io.my.calender.calender._class.payload.request.CreateClassRequest;
 import io.my.calender.calender._class.payload.request.CreateClassTimeRequest;
 import io.my.calender.calender._class.payload.request.InviteClassRequeset;
 import io.my.calender.calender._class.payload.request.ModifyClassInfoRequest;
+import io.my.calender.calender._class.payload.response.InviteClassListResponse;
 import io.my.calender.calender._class.payload.response.SearchClassResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -391,6 +392,63 @@ class ClassRestdocsTest extends RestdocsBase {
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/searchclasses", requestParametersSnippet, responseFieldsSnippet));
+    }
+
+    @Test
+    @DisplayName("초대받은 수업 목록 조회")
+    void findInviteClassList() {
+        List<InviteClassListResponse> list = new ArrayList<>();
+        list.add(InviteClassListResponse.builder()
+                .id(1L)
+                .title("경제학원론")
+                .content("경제학 1학년 수업")
+                .location("인문관 1호")
+                .professorName("김교수")
+                .imageUrl(null)
+                .build());
+
+        Mockito.when(classService.findInviteClassList()).thenReturn(Mono.just(new BaseExtentionResponse<>(list)));
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.[].id").description("수업 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.[].title").description("수업명")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].content").description("수업 소개(메모)")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].location").description("수업 장소")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].professorName").description("교수명")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].imageUrl").description("이미지 주소")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String"))
+                );
+
+        getWebTestClient("/calender/class/invite").expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/findinviteclasslist", responseFieldsSnippet));
 
     }
 

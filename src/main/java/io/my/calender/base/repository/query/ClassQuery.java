@@ -46,4 +46,24 @@ public class ClassQuery {
                 .bind("perPage", perPage)
                 ;
     }
+
+    public DatabaseClient.GenericExecuteSpec findInviteClassList(Long userId) {
+
+        String query = "" +
+                "SELECT " +
+                "c.id " +
+                ", c.title " +
+                ", c.content " +
+                ", c.location " +
+                ", p.name as professor_name " +
+                ", i.file_name " +
+                "from " +
+                "class_join_user cju " +
+                "join class c on cju.class_id = c.id " +
+                "left join professor p on c.professor_id = p.id " +
+                "left join image i on p.image_id = i.id " +
+                "where cju.user_id = :userId and cju.accept = 0";
+
+        return this.client.sql(query).bind("userId", userId);
+    }
 }

@@ -3,6 +3,7 @@ package io.my.calender.base.repository.dao;
 import io.my.calender.base.properties.ServerProperties;
 import io.my.calender.base.repository.query.ClassQuery;
 import io.my.calender.base.util.DateUtil;
+import io.my.calender.calender._class.payload.response.InviteClassListResponse;
 import io.my.calender.calender._class.payload.response.SearchClassResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -48,6 +49,21 @@ public class ClassDAO {
                 }))
                 .all()
                 ;
+    }
+
+    public Flux<InviteClassListResponse> findInviteClassList(Long userId) {
+        return this.classQuery.findInviteClassList(userId)
+                .map((row, rowMetadata) -> {
+                    String imageUrl = serverProperties.ImageUrl(row.get("file_name", String.class));
+                    return InviteClassListResponse.builder()
+                            .id(row.get("id", Long.class))
+                            .title(row.get("title", String.class))
+                            .content(row.get("content", String.class))
+                            .location(row.get("location", String.class))
+                            .professorName(row.get("professor_name", String.class))
+                            .imageUrl(imageUrl)
+                            .build();
+        }).all();
     }
 
 

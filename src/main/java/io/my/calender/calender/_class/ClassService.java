@@ -13,6 +13,7 @@ import io.my.calender.base.util.DateUtil;
 import io.my.calender.calender._class.payload.request.CreateClassRequest;
 import io.my.calender.calender._class.payload.request.InviteClassRequeset;
 import io.my.calender.calender._class.payload.request.ModifyClassInfoRequest;
+import io.my.calender.calender._class.payload.response.InviteClassListResponse;
 import io.my.calender.calender._class.payload.response.SearchClassResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -164,5 +165,13 @@ public class ClassService {
                 .collectList()
                 .map(BaseExtentionResponse::new)
         ;
+    }
+
+    public Mono<BaseExtentionResponse<List<InviteClassListResponse>>> findInviteClassList() {
+        return JwtContextHolder.getMonoUserId()
+                .flatMapMany(classDAO::findInviteClassList)
+                .collectList()
+                .map(BaseExtentionResponse::new)
+                ;
     }
 }
