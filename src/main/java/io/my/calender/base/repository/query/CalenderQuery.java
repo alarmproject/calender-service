@@ -38,7 +38,7 @@ public class CalenderQuery {
                 "left join personel_calender pc on c.personel_calender_id = pc.id " +
                 "left join personel_calender_join_user pcju on pcju.personel_calender_id = pc.id and pcju.user_id = :userId " +
                 "left join user u on pc.user_id = u.id " +
-                "left join professor p on c.professor_id = p.id " +
+                "left join professor p on class.professor_id = p.id " +
                 "left join image i on u.image_id = i.id or p.image_id = i.id" +
                 "where " +
                 "c.start_time > :startDate " +
