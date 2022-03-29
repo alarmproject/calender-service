@@ -15,7 +15,6 @@ import io.my.calender.calender._class.payload.request.InviteClassRequeset;
 import io.my.calender.calender._class.payload.request.ModifyClassInfoRequest;
 import io.my.calender.calender._class.payload.response.SearchClassResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 

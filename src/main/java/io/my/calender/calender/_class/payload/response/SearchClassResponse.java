@@ -11,5 +11,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SearchClassResponse {
     private Long id;
-
+    private Long startDate;
+    private Long endDate;
+    private String title;
+    private String content;
+    private String location;
+    private String professorName;
+    private String imageUrl;
+    private Integer inviteUserCount;
+    private Integer acceptUserCount;
+    private String day;
 }

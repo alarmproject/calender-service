@@ -56,6 +56,15 @@ include::{snippets}/calenderrestdocstest/removecalender/curl-request.adoc[]
 
 === Class Calender
 
+[[resources-search-classes]]
+==== 수업 검색
+
+include::{snippets}/classrestdocstest/searchclasses/request-parameters.adoc[]
+include::{snippets}/classrestdocstest/searchclasses/response-fields.adoc[]
+include::{snippets}/classrestdocstest/searchclasses/http-request.adoc[]
+include::{snippets}/classrestdocstest/searchclasses/http-response.adoc[]
+include::{snippets}/classrestdocstest/searchclasses/curl-request.adoc[]
+
 [[resources-calender-class]]
 ==== 수업 생성
 

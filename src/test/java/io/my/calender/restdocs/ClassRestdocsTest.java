@@ -2,11 +2,13 @@ package io.my.calender.restdocs;
 
 import io.my.calender.base.base.RestDocAttributes;
 import io.my.calender.base.base.RestdocsBase;
+import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.calender._class.payload.request.CreateClassRequest;
 import io.my.calender.calender._class.payload.request.CreateClassTimeRequest;
 import io.my.calender.calender._class.payload.request.InviteClassRequeset;
 import io.my.calender.calender._class.payload.request.ModifyClassInfoRequest;
+import io.my.calender.calender._class.payload.response.SearchClassResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -281,6 +283,114 @@ class ClassRestdocsTest extends RestdocsBase {
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/modifyclassinfo", requestFieldsSnippet, responseFieldsSnippet));
+
+    }
+
+    @Test
+    @DisplayName("강의 검색")
+    void searchClasses() {
+        List<SearchClassResponse> list = new ArrayList<>();
+
+        SearchClassResponse response = SearchClassResponse.builder()
+                .id(1L)
+                .startDate(1647652678000L)
+                .endDate(1658193478000L)
+                .title("경제학원론")
+                .content("경제학원론 수업입니다.")
+                .location("인문관 1호")
+                .professorName("김교수")
+                .inviteUserCount(30)
+                .acceptUserCount(2)
+                .day("수,월")
+                .imageUrl("http://mysend.co.kr:8080/image/image?fileName=c91a6281-d9bd-4119-95ac-d57c17c0451a_charactor.jpeg")
+                .build()
+                ;
+
+        list.add(response);
+
+        Mockito.when(classService.searchClasses(Mockito.any(), Mockito.any(), Mockito.any()))
+                .thenReturn(Mono.just(new BaseExtentionResponse<>(list)));
+
+        RequestParametersSnippet requestParametersSnippet =
+                requestParameters(
+                        parameterWithName("title").description("수업 제목검색")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")
+                                ),
+                        parameterWithName("classId").description("수업 번호(페이징용도)").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")
+                                ),
+                        parameterWithName("perPage").description("페이지당 개수(default: 10)").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")
+                                )
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.[].id").description("수업 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.[].startDate").description("수업 시작일자")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("unixtime")),
+                        fieldWithPath("returnValue.[].endDate").description("수업 종료일자")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("unixtime")),
+                        fieldWithPath("returnValue.[].title").description("수업명")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].content").description("수업 소개(메모)")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].location").description("수업 장소")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].professorName").description("교수명")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].imageUrl").description("이미지 주소")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].day").description("수업 요일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].inviteUserCount").description("수업 초대 인원")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.[].acceptUserCount").description("수업 초대 수락 인원")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+        String params = "?title=경제";
+
+        getWebTestClient("/calender/class" + params).expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/searchclasses", requestParametersSnippet, responseFieldsSnippet));
 
     }
 

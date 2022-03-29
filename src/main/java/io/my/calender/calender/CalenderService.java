@@ -1,7 +1,6 @@
 package io.my.calender.calender;
 
 import io.my.calender.base.context.JwtContextHolder;
-import io.my.calender.base.entity.Calender;
 import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.base.repository.CalenderRepository;
