@@ -43,7 +43,8 @@ public class CalenderDAO {
 
                     String imageUrl = row.get("filename", String.class);
                     if (imageUrl != null) {
-                        imageUrl = serverProperties.getImageUrl() + "?fileName=" + imageUrl;
+                        imageUrl = serverProperties.getImageUrl() +
+                                serverProperties.getImagePath() + imageUrl;
                     }
 
                     String userName = row.get("professor_name", String.class);

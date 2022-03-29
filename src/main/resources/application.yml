@@ -26,3 +26,4 @@ spring:
 
 server:
   image-url: http://mysend.co.kr:8080/image
+  image-path: /image?fileName=
