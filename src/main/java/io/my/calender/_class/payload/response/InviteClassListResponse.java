@@ -1,4 +1,4 @@
-package io.my.calender.calender._class.payload.response;
+package io.my.calender._class.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,16 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchClassResponse {
+public class InviteClassListResponse {
     private Long id;
-    private Long startDate;
-    private Long endDate;
     private String title;
     private String content;
-    private String location;
     private String professorName;
+    private String location;
     private String imageUrl;
-    private Integer inviteUserCount;
-    private Integer acceptUserCount;
-    private String day;
 }

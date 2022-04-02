@@ -3,7 +3,7 @@ package io.my.calender.restdocs;
 import io.my.calender.base.base.RestDocAttributes;
 import io.my.calender.base.base.RestdocsBase;
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender.calender._class.payload.request.ModifyClassTimeRequest;
+import io.my.calender._class.payload.request.ModifyClassTimeRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

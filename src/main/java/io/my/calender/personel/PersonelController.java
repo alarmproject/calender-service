@@ -1,11 +1,11 @@
-package io.my.calender.calender.personel;
+package io.my.calender.personel;
 
 import io.my.calender.base.annotation.Logger;
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender.calender.personel.payload.request.AcceptPersoneCalenderRequest;
-import io.my.calender.calender.personel.payload.request.CreatePersonelRequest;
-import io.my.calender.calender.personel.payload.request.InvitePersonelRequest;
-import io.my.calender.calender.personel.payload.request.ModifyPersonelCalenderRequest;
+import io.my.calender.personel.payload.request.AcceptPersoneCalenderRequest;
+import io.my.calender.personel.payload.request.CreatePersonelRequest;
+import io.my.calender.personel.payload.request.InvitePersonelRequest;
+import io.my.calender.personel.payload.request.ModifyPersonelCalenderRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;

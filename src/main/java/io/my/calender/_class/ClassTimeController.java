@@ -1,8 +1,8 @@
-package io.my.calender.calender._class;
+package io.my.calender._class;
 
+import io.my.calender._class.payload.request.ModifyClassTimeRequest;
 import io.my.calender.base.annotation.Logger;
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender.calender._class.payload.request.ModifyClassTimeRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;

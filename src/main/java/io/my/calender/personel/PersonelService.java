@@ -1,4 +1,4 @@
-package io.my.calender.calender.personel;
+package io.my.calender.personel;
 
 import io.my.calender.base.context.JwtContextHolder;
 import io.my.calender.base.entity.Calender;
@@ -9,10 +9,10 @@ import io.my.calender.base.repository.CalenderRepository;
 import io.my.calender.base.repository.PersonelCalenderJoinUserRepository;
 import io.my.calender.base.repository.PersonelCalenderRepository;
 import io.my.calender.base.util.DateUtil;
-import io.my.calender.calender.personel.payload.request.AcceptPersoneCalenderRequest;
-import io.my.calender.calender.personel.payload.request.CreatePersonelRequest;
-import io.my.calender.calender.personel.payload.request.InvitePersonelRequest;
-import io.my.calender.calender.personel.payload.request.ModifyPersonelCalenderRequest;
+import io.my.calender.personel.payload.request.AcceptPersoneCalenderRequest;
+import io.my.calender.personel.payload.request.CreatePersonelRequest;
+import io.my.calender.personel.payload.request.InvitePersonelRequest;
+import io.my.calender.personel.payload.request.ModifyPersonelCalenderRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

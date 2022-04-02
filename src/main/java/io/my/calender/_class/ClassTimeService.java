@@ -1,10 +1,10 @@
-package io.my.calender.calender._class;
+package io.my.calender._class;
 
 import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.base.repository.CalenderRepository;
 import io.my.calender.base.repository.ClassTimeRepository;
 import io.my.calender.base.util.DateUtil;
-import io.my.calender.calender._class.payload.request.ModifyClassTimeRequest;
+import io.my.calender._class.payload.request.ModifyClassTimeRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

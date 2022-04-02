@@ -1,13 +1,13 @@
-package io.my.calender.calender._class;
+package io.my.calender._class;
 
+import io.my.calender._class.payload.request.CreateClassRequest;
+import io.my.calender._class.payload.response.SearchClassResponse;
 import io.my.calender.base.annotation.Logger;
 import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender.calender._class.payload.request.CreateClassRequest;
-import io.my.calender.calender._class.payload.request.InviteClassRequeset;
-import io.my.calender.calender._class.payload.request.ModifyClassInfoRequest;
-import io.my.calender.calender._class.payload.response.InviteClassListResponse;
-import io.my.calender.calender._class.payload.response.SearchClassResponse;
+import io.my.calender._class.payload.request.InviteClassRequeset;
+import io.my.calender._class.payload.request.ModifyClassInfoRequest;
+import io.my.calender._class.payload.response.InviteClassListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;

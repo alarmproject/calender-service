@@ -1,5 +1,10 @@
-package io.my.calender.calender._class;
+package io.my.calender._class;
 
+import io.my.calender._class.payload.request.CreateClassRequest;
+import io.my.calender._class.payload.request.InviteClassRequeset;
+import io.my.calender._class.payload.request.ModifyClassInfoRequest;
+import io.my.calender._class.payload.response.InviteClassListResponse;
+import io.my.calender._class.payload.response.SearchClassResponse;
 import io.my.calender.base.context.JwtContextHolder;
 import io.my.calender.base.entity.Calender;
 import io.my.calender.base.entity.Class;
@@ -10,11 +15,6 @@ import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.base.repository.*;
 import io.my.calender.base.repository.dao.ClassDAO;
 import io.my.calender.base.util.DateUtil;
-import io.my.calender.calender._class.payload.request.CreateClassRequest;
-import io.my.calender.calender._class.payload.request.InviteClassRequeset;
-import io.my.calender.calender._class.payload.request.ModifyClassInfoRequest;
-import io.my.calender.calender._class.payload.response.InviteClassListResponse;
-import io.my.calender.calender._class.payload.response.SearchClassResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
