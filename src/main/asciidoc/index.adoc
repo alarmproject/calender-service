@@ -160,6 +160,15 @@ include::{snippets}/personelrestdocstest/invitepersonelcalender/http-request.ado
 include::{snippets}/personelrestdocstest/invitepersonelcalender/http-response.adoc[]
 include::{snippets}/personelrestdocstest/invitepersonelcalender/curl-request.adoc[]
 
+[[resources-calender-personel-my-list]]
+==== 내 개인 일정 목록
+
+include::{snippets}/personelrestdocstest/mypersonelcalenderlist/request-parameters.adoc[]
+include::{snippets}/personelrestdocstest/mypersonelcalenderlist/response-fields.adoc[]
+include::{snippets}/personelrestdocstest/mypersonelcalenderlist/http-request.adoc[]
+include::{snippets}/personelrestdocstest/mypersonelcalenderlist/http-response.adoc[]
+include::{snippets}/personelrestdocstest/mypersonelcalenderlist/curl-request.adoc[]
+
 [[resources-calender-personel-accept]]
 ==== 일정 수락 or 거절
 
@@ -179,11 +188,20 @@ include::{snippets}/personelrestdocstest/removepersonelcalender/http-response.ad
 include::{snippets}/personelrestdocstest/removepersonelcalender/curl-request.adoc[]
 
 [[resources-calender-personel-info-modify]]
-==== 개인 일정 정보 수
+==== 개인 일정 정보
 
 include::{snippets}/personelrestdocstest/modifypersonelcalenderinfo/request-fields.adoc[]
 include::{snippets}/personelrestdocstest/modifypersonelcalenderinfo/response-fields.adoc[]
 include::{snippets}/personelrestdocstest/modifypersonelcalenderinfo/http-request.adoc[]
 include::{snippets}/personelrestdocstest/modifypersonelcalenderinfo/http-response.adoc[]
 include::{snippets}/personelrestdocstest/modifypersonelcalenderinfo/curl-request.adoc[]
+
+[[resources-calender-personel-search]]
+==== 공개된 개인 일정 검색
+
+include::{snippets}/personelrestdocstest/searchpersonelcalenderlist/request-parameters.adoc[]
+include::{snippets}/personelrestdocstest/searchpersonelcalenderlist/response-fields.adoc[]
+include::{snippets}/personelrestdocstest/searchpersonelcalenderlist/http-request.adoc[]
+include::{snippets}/personelrestdocstest/searchpersonelcalenderlist/http-response.adoc[]
+include::{snippets}/personelrestdocstest/searchpersonelcalenderlist/curl-request.adoc[]
 

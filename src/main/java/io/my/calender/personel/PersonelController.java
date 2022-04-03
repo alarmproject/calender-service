@@ -1,14 +1,19 @@
 package io.my.calender.personel;
 
 import io.my.calender.base.annotation.Logger;
+import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.personel.payload.request.AcceptPersoneCalenderRequest;
 import io.my.calender.personel.payload.request.CreatePersonelRequest;
 import io.my.calender.personel.payload.request.InvitePersonelRequest;
 import io.my.calender.personel.payload.request.ModifyPersonelCalenderRequest;
+import io.my.calender.personel.payload.response.MyPersonelCalenderListResponse;
+import io.my.calender.personel.payload.response.SearchPersonelCalenderListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,6 +54,25 @@ public class PersonelController {
     public Mono<BaseResponse> modifyPersonelCalenderInfo(
             @RequestBody ModifyPersonelCalenderRequest requestBody) {
         return this.personelService.modifyPersonelCalenderInfo(requestBody);
+    }
+
+    @Logger
+    @GetMapping("/my/list")
+    public Mono<BaseExtentionResponse<List<MyPersonelCalenderListResponse>>> myPersonelCalenderList(
+            @RequestParam(required = false, name = "id") Long id,
+            @RequestParam(required = false, name = "aceept") Boolean accept,
+            @RequestParam(required = false, name = "open") Boolean open) {
+        return this.personelService.myPersonelCalenderList(id, accept, open);
+    }
+
+    @Logger
+    @GetMapping
+    public Mono<BaseExtentionResponse<List<SearchPersonelCalenderListResponse>>> searchPersonelCalenderList(
+            @RequestParam(required = false, name = "personelCalenderId") Long personelCalenderId,
+            @RequestParam(required = false, name = "perPage", defaultValue = "10") Integer perPage,
+            @RequestParam(required = false, name = "title") String title) {
+
+        return this.personelService.searchPersonelCalenderList(personelCalenderId, perPage, title);
     }
 
 

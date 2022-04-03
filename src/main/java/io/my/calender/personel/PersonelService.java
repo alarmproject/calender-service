@@ -4,27 +4,33 @@ import io.my.calender.base.context.JwtContextHolder;
 import io.my.calender.base.entity.Calender;
 import io.my.calender.base.entity.PersonelCalender;
 import io.my.calender.base.entity.PersonelCalenderJoinUser;
+import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.base.repository.CalenderRepository;
 import io.my.calender.base.repository.PersonelCalenderJoinUserRepository;
 import io.my.calender.base.repository.PersonelCalenderRepository;
+import io.my.calender.base.repository.dao.PersonelCalenderDAO;
 import io.my.calender.base.util.DateUtil;
 import io.my.calender.personel.payload.request.AcceptPersoneCalenderRequest;
 import io.my.calender.personel.payload.request.CreatePersonelRequest;
 import io.my.calender.personel.payload.request.InvitePersonelRequest;
 import io.my.calender.personel.payload.request.ModifyPersonelCalenderRequest;
+import io.my.calender.personel.payload.response.MyPersonelCalenderListResponse;
+import io.my.calender.personel.payload.response.SearchPersonelCalenderListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class PersonelService {
     private final DateUtil dateUtil;
     private final CalenderRepository calenderRepository;
+    private final PersonelCalenderDAO personelCalenderDAO;
     private final PersonelCalenderRepository personelCalenderRepository;
     private final PersonelCalenderJoinUserRepository personelCalenderJoinUserRepository;
 
@@ -95,5 +101,22 @@ public class PersonelService {
                     return personelCalenderRepository.save(entity);
                 })
                 .map(entity -> new BaseResponse());
+    }
+
+    public Mono<BaseExtentionResponse<List<MyPersonelCalenderListResponse>>> myPersonelCalenderList(
+            Long id, Boolean accept, Boolean open) {
+        return JwtContextHolder.getMonoUserId()
+                .flatMapMany(userId -> personelCalenderDAO.findMyPersonelCalenderList(userId, id, accept, open))
+                .collectList()
+                .map(BaseExtentionResponse::new)
+                ;
+
+
+    }
+
+    public Mono<BaseExtentionResponse<List<SearchPersonelCalenderListResponse>>> searchPersonelCalenderList(Long personelCalenderId, Integer perPage, String title) {
+        return personelCalenderDAO.searchPersonelCalenderList(personelCalenderId, perPage, title)
+                .collectList()
+                .map(BaseExtentionResponse::new);
     }
 }
