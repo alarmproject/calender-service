@@ -86,7 +86,7 @@ public class PersonelService {
         return JwtContextHolder.getMonoUserId().flatMap(userId ->
                 personelCalenderJoinUserRepository.findByUserIdAndPersonelCalenderId(userId, requestBody.getPersonelCalenderId()))
                 .flatMap(entity -> {
-                    entity.setAccept(requestBody.getAccept());
+                    entity.setAccept(requestBody.getAccept() ? (byte) 1 : (byte) 0);
                     return personelCalenderJoinUserRepository.save(entity);
                 }).map(entity -> new BaseResponse());
     }

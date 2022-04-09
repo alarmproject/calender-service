@@ -33,7 +33,7 @@ public class PersonelCalenderQuery {
                 "join image i ON i.id = u.image_id " +
                 "where " +
                 "pcju.user_id = :userId " +
-                (accept != null ? "and pcju.accept = :accept " : "") +
+                (accept != null ? (accept ? "and pcju.accept != 0 " : "and pcju.accept = :accept ") : "") +
                 (open != null ? "and pc.`open` = :open " : "") +
                 (calenderId != null && calenderId != 0 ? "and pcju.id < :calenderId " : "") +
                 "limit 10";

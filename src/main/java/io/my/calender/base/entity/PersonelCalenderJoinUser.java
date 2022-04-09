@@ -14,7 +14,7 @@ public class PersonelCalenderJoinUser {
     private Long id;
     private Long userId;
     private Long personelCalenderId;
-    private Boolean accept;
+    private Byte accept;
 
     @Transient
     private User user;

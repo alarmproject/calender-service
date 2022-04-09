@@ -125,7 +125,7 @@ public class ClassService {
             return this.classJoinUserRepository.findByUserIdAndClassId(id, classId);
         })
         .flatMap(entity -> {
-            entity.setAccept(Boolean.TRUE);
+            entity.setAccept((byte) 1);
             return this.classJoinUserRepository.save(entity);
         })
         .switchIfEmpty(saveClassJoinUser(classId, userId.get()))
@@ -137,7 +137,7 @@ public class ClassService {
         ClassJoinUser entity = new ClassJoinUser();
         entity.setClassId(classId);
         entity.setUserId(userId);
-        entity.setAccept(Boolean.TRUE);
+        entity.setAccept((byte) 1);
         return this.classJoinUserRepository.save(entity);
     }
 
@@ -145,7 +145,7 @@ public class ClassService {
         return JwtContextHolder.getMonoUserId().flatMap(userId ->
                 classJoinUserRepository.findByUserIdAndClassId(userId, requestBody.getClassId()))
                 .flatMap(entity -> {
-                    entity.setAccept(requestBody.getAccept());
+                    entity.setAccept(requestBody.getAccept() ? (byte) 1 : (byte) 0);
                     return classJoinUserRepository.save(entity);
                 })
         .map(o -> new BaseResponse());
