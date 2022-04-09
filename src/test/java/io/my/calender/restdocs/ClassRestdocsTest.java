@@ -298,6 +298,7 @@ class ClassRestdocsTest extends RestdocsBase {
 
         SearchClassResponse response = SearchClassResponse.builder()
                 .id(1L)
+                .userId(1L)
                 .startDate(1647652678000L)
                 .endDate(1658193478000L)
                 .title("경제학원론")
@@ -346,6 +347,10 @@ class ClassRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
                         fieldWithPath("returnValue.[].id").description("수업 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.[].userId").description("수업 생성자 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
