@@ -62,7 +62,7 @@ public class ClassQuery {
                 "join class c on cju.class_id = c.id " +
                 "left join professor p on c.professor_id = p.id " +
                 "left join image i on p.image_id = i.id " +
-                "where cju.user_id = :userId and cju.accept = 0";
+                "where cju.user_id = :userId and (cju.accept != 0)";
 
         return this.client.sql(query).bind("userId", userId);
     }
