@@ -67,6 +67,6 @@ public class CalenderService {
     }
 
     public Mono<BaseResponse> removeCalender(Long id) {
-        return calenderRepository.deleteById(id).map(o -> new BaseResponse());
+        return calenderRepository.deleteById(id).thenReturn(new BaseResponse());
     }
 }

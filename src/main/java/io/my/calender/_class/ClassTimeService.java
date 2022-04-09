@@ -55,6 +55,6 @@ public class ClassTimeService {
     }
 
     public Mono<BaseResponse> removeClassTime(Long id) {
-        return this.classTimeRepository.deleteById(id).map(o -> new BaseResponse());
+        return this.classTimeRepository.deleteById(id).thenReturn(new BaseResponse());
     }
 }

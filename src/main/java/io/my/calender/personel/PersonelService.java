@@ -79,7 +79,7 @@ public class PersonelService {
 
     public Mono<BaseResponse> removePersonelCalender(Long personelCalenderId) {
         return personelCalenderRepository.deleteById(personelCalenderId)
-                .map(o -> new BaseResponse());
+                .thenReturn(new BaseResponse());
     }
 
     public Mono<BaseResponse> acceeptPersonelCalender(AcceptPersoneCalenderRequest requestBody) {
