@@ -35,21 +35,22 @@ public class CalenderDAO {
                     Integer acceptUserCount = 0;
                     Boolean accept = Boolean.FALSE;
 
+                    String userName = "";
                     if (classId != null) {
                         inviteUserCount = row.get("class_invite_count", Integer.class);
                         acceptUserCount = row.get("class_accept_count", Integer.class);
                         accept = row.get("class_accept", Byte.class) == (byte)1 ? Boolean.TRUE : Boolean.FALSE;
+                        userName = row.get("professor_name", String.class);
                     } else if (personelCalenderId != null) {
                         inviteUserCount = row.get("personel_calender_invite_count", Integer.class);
                         acceptUserCount = row.get("personel_calender_accept_count", Integer.class);
                         accept = row.get("personel_calender_accept", Byte.class) == (byte) 1 ? Boolean.TRUE : Boolean.FALSE;
+                        userName = row.get("user_name", String.class);
                     }
-
-                    String userName = row.get("professor_name", String.class);
-                    if (userName == null) userName = row.get("user_name", String.class);
 
                     return CalenderListResponse.builder()
                             .id(row.get("id", Long.class))
+                            .userId(row.get("user_id", Long.class))
                             .startTime(startTime)
                             .endTime(endTime)
                             .classId(classId)

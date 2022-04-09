@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 public class CalenderListResponse {
     private Long id;
+    private Long userId;
     private Long startTime;
     private Long endTime;
 

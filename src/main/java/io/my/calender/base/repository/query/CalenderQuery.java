@@ -15,6 +15,7 @@ public class CalenderQuery {
         String query = "" +
                 "select " +
                 "c.id " +
+                ", u2.id as user_id " +
                 ", c.start_time  " +
                 ", c.end_time  " +
                 ", class.id as class_id " +
@@ -42,6 +43,7 @@ public class CalenderQuery {
                 "left join user u on pc.user_id = u.id " +
                 "left join professor p on class.professor_id = p.id " +
                 "left join image i on u.image_id = i.id or p.image_id = i.id " +
+                "left join user u2 on pc.user_id = u2.id or class.user_id = u2.id " +
                 "where " +
                 "c.start_time > :startDate " +
                 "and " +

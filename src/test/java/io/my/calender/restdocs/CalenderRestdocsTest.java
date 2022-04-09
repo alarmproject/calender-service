@@ -31,6 +31,7 @@ class CalenderRestdocsTest extends RestdocsBase {
         list.add(
                 CalenderListResponse.builder()
                     .id(1L)
+                    .userId(1L)
                     .startTime(1647824400000L)
                     .endTime(1647831600000L)
                     .classId(1L)
@@ -47,6 +48,7 @@ class CalenderRestdocsTest extends RestdocsBase {
         list.add(
                 CalenderListResponse.builder()
                         .id(1L)
+                        .userId(1L)
                         .startTime(1648429200000L)
                         .endTime(1648436400000L)
                         .classId(1L)
@@ -63,6 +65,7 @@ class CalenderRestdocsTest extends RestdocsBase {
         list.add(
                 CalenderListResponse.builder()
                         .id(1L)
+                        .userId(1L)
                         .startTime(1648000800000L)
                         .endTime(1648004400000L)
                         .classId(1L)
@@ -78,6 +81,7 @@ class CalenderRestdocsTest extends RestdocsBase {
         list.add(
                 CalenderListResponse.builder()
                         .id(1L)
+                        .userId(1L)
                         .startTime(1648605600000L)
                         .endTime(1648609200000L)
                         .classId(1L)
@@ -93,6 +97,7 @@ class CalenderRestdocsTest extends RestdocsBase {
         list.add(
                 CalenderListResponse.builder()
                         .id(1L)
+                        .userId(1L)
                         .startTime(1647652678000L)
                         .endTime(1647658613000L)
                         .personelCalenderId(1L)
@@ -128,6 +133,10 @@ class CalenderRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
                         fieldWithPath("returnValue.[].id").description("일정 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.[].userId").description("일정 생성자의 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
