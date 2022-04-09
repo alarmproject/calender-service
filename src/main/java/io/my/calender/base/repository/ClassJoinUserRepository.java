@@ -6,5 +6,4 @@ import reactor.core.publisher.Mono;
 
 public interface ClassJoinUserRepository extends ReactiveCrudRepository<ClassJoinUser, Long> {
     Mono<ClassJoinUser> findByUserIdAndClassId(Long userId, Long classId);
-    Mono<Void> deleteByUserIdAndClassId(Long userId, Long classID);
 }

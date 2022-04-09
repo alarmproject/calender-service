@@ -1,13 +1,10 @@
 package io.my.calender.restdocs;
 
+import io.my.calender._class.payload.request.*;
 import io.my.calender.base.base.RestDocAttributes;
 import io.my.calender.base.base.RestdocsBase;
 import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender._class.payload.request.CreateClassRequest;
-import io.my.calender._class.payload.request.CreateClassTimeRequest;
-import io.my.calender._class.payload.request.InviteClassRequeset;
-import io.my.calender._class.payload.request.ModifyClassInfoRequest;
 import io.my.calender._class.payload.response.InviteClassListResponse;
 import io.my.calender._class.payload.response.SearchClassResponse;
 import org.junit.jupiter.api.DisplayName;
@@ -200,15 +197,24 @@ class ClassRestdocsTest extends RestdocsBase {
 
     @Test
     @DisplayName("수업 참가 취소 API")
-    void refuseClass() {
-        Mockito.when(classService.refuseClass(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+    void acceptClass() {
+        AcceptClassRequest requestBody = new AcceptClassRequest();
+        requestBody.setClassId(1L);
+        requestBody.setAccept(Boolean.TRUE);
 
-        RequestParametersSnippet requestParametersSnippet =
-                requestParameters(
-                        parameterWithName("classId").description("수업 번호")
+        Mockito.when(classService.acceptClass(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+
+        RequestFieldsSnippet requestFieldsSnippet =
+                requestFields(
+                        fieldWithPath("classId").description("수업 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")
+                                ),
+                        fieldWithPath("accept").description("승낙 여부")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean")
                                 )
                 );
 
@@ -224,12 +230,10 @@ class ClassRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Integer"))
                 );
 
-        String params = "?classId=3";
-
-        deleteWebTestClient("/calender/class/refuse" + params).expectStatus()
+        patchWebTestClient(requestBody, "/calender/class/accept").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/refuseclass", requestParametersSnippet, responseFieldsSnippet));
+                .consumeWith(createConsumer("/acceptclass", requestFieldsSnippet, responseFieldsSnippet));
     }
 
     @Test

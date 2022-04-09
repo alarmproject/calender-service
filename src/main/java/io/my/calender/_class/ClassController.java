@@ -1,5 +1,6 @@
 package io.my.calender._class;
 
+import io.my.calender._class.payload.request.AcceptClassRequest;
 import io.my.calender._class.payload.request.CreateClassRequest;
 import io.my.calender._class.payload.response.SearchClassResponse;
 import io.my.calender.base.annotation.Logger;
@@ -42,9 +43,10 @@ public class ClassController {
     }
 
     @Logger
-    @DeleteMapping("/refuse")
-    public Mono<BaseResponse> refuseClass(@RequestParam("classId") Long classId) {
-        return this.classService.refuseClass(classId);
+    @PatchMapping("/accept")
+    public Mono<BaseResponse> acceptClass(
+            @RequestBody AcceptClassRequest requestBody) {
+        return this.classService.acceptClass(requestBody);
     }
 
     @Logger

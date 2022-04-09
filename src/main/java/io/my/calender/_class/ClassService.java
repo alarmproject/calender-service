@@ -1,5 +1,6 @@
 package io.my.calender._class;
 
+import io.my.calender._class.payload.request.AcceptClassRequest;
 import io.my.calender._class.payload.request.CreateClassRequest;
 import io.my.calender._class.payload.request.InviteClassRequeset;
 import io.my.calender._class.payload.request.ModifyClassInfoRequest;
@@ -140,9 +141,13 @@ public class ClassService {
         return this.classJoinUserRepository.save(entity);
     }
 
-    public Mono<BaseResponse> refuseClass(Long classId) {
+    public Mono<BaseResponse> acceptClass(AcceptClassRequest requestBody) {
         return JwtContextHolder.getMonoUserId().flatMap(userId ->
-                classJoinUserRepository.deleteByUserIdAndClassId(userId, classId))
+                classJoinUserRepository.findByUserIdAndClassId(userId, requestBody.getClassId()))
+                .flatMap(entity -> {
+                    entity.setAccept(requestBody.getAccept());
+                    return classJoinUserRepository.save(entity);
+                })
         .map(o -> new BaseResponse());
     }
 

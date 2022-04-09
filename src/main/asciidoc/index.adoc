@@ -109,14 +109,14 @@ include::{snippets}/classrestdocstest/joinclass/http-request.adoc[]
 include::{snippets}/classrestdocstest/joinclass/http-response.adoc[]
 include::{snippets}/classrestdocstest/joinclass/curl-request.adoc[]
 
-[[resources-calender-class-refuse]]
-==== 수업 참가 취소 (거절)
+[[resources-calender-class-accept]]
+==== 수업 참가 승낙 or 거절
 
-include::{snippets}/classrestdocstest/refuseclass/request-parameters.adoc[]
-include::{snippets}/classrestdocstest/refuseclass/response-fields.adoc[]
-include::{snippets}/classrestdocstest/refuseclass/http-request.adoc[]
-include::{snippets}/classrestdocstest/refuseclass/http-response.adoc[]
-include::{snippets}/classrestdocstest/refuseclass/curl-request.adoc[]
+include::{snippets}/classrestdocstest/acceptclass/request-fields.adoc[]
+include::{snippets}/classrestdocstest/acceptclass/response-fields.adoc[]
+include::{snippets}/classrestdocstest/acceptclass/http-request.adoc[]
+include::{snippets}/classrestdocstest/acceptclass/http-response.adoc[]
+include::{snippets}/classrestdocstest/acceptclass/curl-request.adoc[]
 
 === Class Time Calender
 
