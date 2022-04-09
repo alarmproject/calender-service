@@ -39,7 +39,7 @@ public class ClassQuery {
 
         DatabaseClient.GenericExecuteSpec sql = this.client.sql(query);
 
-        if (classId != null && classId != 0) sql = sql.bind("classId", classId);
+        if (classId != null && classId != 0) sql = sql.bind("id", classId);
 
         return sql.bind("collegeId", collegeId)
                 .bind("title", title)
