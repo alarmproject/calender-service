@@ -39,6 +39,7 @@ public class JwtContextWebFilter implements WebFilter {
 
         String jwt = context.getJwt();
 
+
         if (context.getJwt() == null || !jwtUtil.verifyAccessToken(jwt)) {
             setJwtExceptionHeaders(exchange);
             DefaultDataBuffer buffer = getJwtExceptionBody();
