@@ -31,6 +31,7 @@ public class ClassDAO {
 
                     return SearchClassResponse.builder()
                             .id(row.get("id", Long.class))
+                            .userId(row.get("user_id", Long.class))
                             .startDate(dateUtil.localDateTimeToUnixTime(
                                     row.get("start_date", LocalDateTime.class)
                             ))
