@@ -22,7 +22,7 @@ public class ClassQuery {
                 ", i.file_name " +
                 ", (select count(*) from class_join_user where class_id = c.id) as invite_user_count " +
                 ", (select count(*) from class_join_user where class_id = c.id and accept = 1) as accept_user_count " +
-                ", GROUP_CONCAT (ct.`day`) as day" +
+                ", GROUP_CONCAT (ct.`day`) as day " +
                 "from " +
                 "class c " +
                 "left join professor p ON c.professor_id = p.id " +
