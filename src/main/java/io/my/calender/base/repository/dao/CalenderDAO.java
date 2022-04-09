@@ -4,6 +4,7 @@ import io.my.calender.base.properties.ServerProperties;
 import io.my.calender.base.repository.query.CalenderQuery;
 import io.my.calender.base.util.DateUtil;
 import io.my.calender.calender.payload.response.CalenderListResponse;
+import io.r2dbc.spi.Row;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
@@ -32,19 +33,16 @@ public class CalenderDAO {
 
                     Integer inviteUserCount = 0;
                     Integer acceptUserCount = 0;
+                    Boolean accept = Boolean.FALSE;
 
                     if (classId != null) {
                         inviteUserCount = row.get("class_invite_count", Integer.class);
                         acceptUserCount = row.get("class_accept_count", Integer.class);
+                        accept = row.get("class_accept", Byte.class) == (byte)1 ? Boolean.TRUE : Boolean.FALSE;
                     } else if (personelCalenderId != null) {
                         inviteUserCount = row.get("personel_calender_invite_count", Integer.class);
                         acceptUserCount = row.get("personel_calender_accept_count", Integer.class);
-                    }
-
-                    String imageUrl = row.get("filename", String.class);
-                    if (imageUrl != null) {
-                        imageUrl = serverProperties.getImageUrl() +
-                                serverProperties.getImagePath() + imageUrl;
+                        accept = row.get("personel_calender_accept", Byte.class) == (byte) 1 ? Boolean.TRUE : Boolean.FALSE;
                     }
 
                     String userName = row.get("professor_name", String.class);
@@ -61,13 +59,23 @@ public class CalenderDAO {
                             .personelCalenderTitle(row.get("personel_calender_title", String.class))
                             .personelCalenderLocation(row.get("personel_calender_location", String.class))
                             .userName(userName)
-                            .imageUrl(imageUrl)
+                            .imageUrl(getImageUrl(row))
                             .inviteUserCount(inviteUserCount)
                             .acceptUserCount(acceptUserCount)
+                            .accept(accept)
                             .build()
                             ;
                 }).all()
                 ;
-
     }
+
+    private String getImageUrl (Row row) {
+        String imageUrl = row.get("filename", String.class);
+        if (imageUrl != null) {
+            imageUrl = serverProperties.getImageUrl() +
+                    serverProperties.getImagePath() + imageUrl;
+        }
+        return imageUrl;
+    }
+
 }

@@ -26,6 +26,8 @@ public class CalenderQuery {
                 ", u.name as user_name " +
                 ", i.file_name as filename " +
                 ", p.name as professor_name " +
+                ", cju.accept as class_accept " +
+                ", pcju.accept as personel_calender_accept " +
                 ", (select count(*) from class_join_user where class_id = class.id) as class_invite_count " +
                 ", (select count(*) from class_join_user where class_id = class.id and accept = 1) as class_accept_count " +
                 ", (select count(*) from personel_calender_join_user where personel_calender_id = pc.id) as personel_calender_invite_count " +

@@ -23,4 +23,6 @@ public class CalenderListResponse {
     private String imageUrl;
     private Integer inviteUserCount;
     private Integer acceptUserCount;
+
+    private Boolean accept;
 }

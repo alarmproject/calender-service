@@ -26,6 +26,7 @@ class CalenderRestdocsTest extends RestdocsBase {
     @DisplayName("내 일정 조회")
     void getCalender() {
         var list = new ArrayList<CalenderListResponse>();
+        String imageUrl = "http://mysend.co.kr:8080/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg";
 
         list.add(
                 CalenderListResponse.builder()
@@ -36,9 +37,10 @@ class CalenderRestdocsTest extends RestdocsBase {
                     .classTitle("경제학원론")
                     .classLocation("인문관 101호")
                     .userName("Kim Bosung")
-                    .imageUrl("http://mysend.co.kr:8080/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg")
+                    .imageUrl(imageUrl)
                     .inviteUserCount(15)
                     .acceptUserCount(14)
+                    .accept(Boolean.FALSE)
                     .build())
                 ;
 
@@ -51,9 +53,10 @@ class CalenderRestdocsTest extends RestdocsBase {
                         .classTitle("경제학원론")
                         .classLocation("인문관 101호")
                         .userName("Kim Bosung")
-                        .imageUrl("http://mysend.co.kr:8080/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg")
+                        .imageUrl(imageUrl)
                         .inviteUserCount(15)
                         .acceptUserCount(14)
+                        .accept(Boolean.FALSE)
                         .build())
         ;
 
@@ -66,9 +69,10 @@ class CalenderRestdocsTest extends RestdocsBase {
                         .classTitle("경제학원론")
                         .classLocation("인문관 101호")
                         .userName("Kim Bosung")
-                        .imageUrl("http://mysend.co.kr:8080/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg")
+                        .imageUrl(imageUrl)
                         .inviteUserCount(15)
                         .acceptUserCount(14)
+                        .accept(Boolean.FALSE)
                         .build())
         ;
         list.add(
@@ -80,9 +84,10 @@ class CalenderRestdocsTest extends RestdocsBase {
                         .classTitle("경제학원론")
                         .classLocation("인문관 101호")
                         .userName("Kim Bosung")
-                        .imageUrl("http://mysend.co.kr:8080/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg")
+                        .imageUrl(imageUrl)
                         .inviteUserCount(15)
                         .acceptUserCount(14)
+                        .accept(Boolean.FALSE)
                         .build())
         ;
         list.add(
@@ -94,9 +99,10 @@ class CalenderRestdocsTest extends RestdocsBase {
                         .personelCalenderTitle("사진동아리 신입생 환영회")
                         .personelCalenderLocation("동아리실")
                         .userName("Kim Bosung")
-                        .imageUrl("http://mysend.co.kr:8080/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg")
+                        .imageUrl(imageUrl)
                         .inviteUserCount(15)
                         .acceptUserCount(14)
+                        .accept(Boolean.FALSE)
                         .build())
         ;
 
@@ -145,6 +151,10 @@ class CalenderRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].accept").description("일정 수락 여부").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean")),
                         fieldWithPath("returnValue.[].personelCalenderId").description("개인 일정 번호").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
