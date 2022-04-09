@@ -10,9 +10,11 @@ import io.my.calender.calender.payload.request.ModifyCalender;
 import io.my.calender.calender.payload.response.CalenderListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,7 +41,9 @@ public class CalenderService {
             }
 
             return calenderDAO.findCalenderListResponse(userId, startDate, endDate);
-        }).collectList()
+        })
+        .switchIfEmpty(Flux.empty())
+        .collectList()
         .map(list -> {
             var responseBody = new BaseExtentionResponse<List<CalenderListResponse>>();
             responseBody.setReturnValue(list);
