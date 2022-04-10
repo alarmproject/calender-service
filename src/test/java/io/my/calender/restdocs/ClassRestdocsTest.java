@@ -27,30 +27,37 @@ class ClassRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("수업 생성 API")
     void createClass() {
-        CreateClassRequest requestBody = new CreateClassRequest();
-        requestBody.setTitle("경제학원론");
-        requestBody.setContent("경제학원론 수업입니다.");
-        requestBody.setLocation("인문관 101호");
-        requestBody.setCollegeId(1L);
-        requestBody.setStartDate(1647652678000L);
-        requestBody.setEndDate(1658193478000L);
-        requestBody.setProfessorId(1L);
 
         List<CreateClassTimeRequest> list = new ArrayList<>();
-        CreateClassTimeRequest classTimeRequest1 = new CreateClassTimeRequest();
-        classTimeRequest1.setStartTime(10);
-        classTimeRequest1.setEndTime(12);
-        classTimeRequest1.setDay("월");
+        CreateClassTimeRequest classTimeRequest1 = CreateClassTimeRequest
+                .builder()
+                .startTime(10)
+                .endTime(12)
+                .day("월")
+                .build()
+                ;
 
-        CreateClassTimeRequest classTimeRequest2 = new CreateClassTimeRequest();
-        classTimeRequest2.setStartTime(11);
-        classTimeRequest2.setEndTime(12);
-        classTimeRequest2.setDay("수");
+        CreateClassTimeRequest classTimeRequest2 = CreateClassTimeRequest
+                .builder()
+                .startTime(11)
+                .endTime(12)
+                .day("수")
+                .build();
 
         list.add(classTimeRequest1);
         list.add(classTimeRequest2);
 
-        requestBody.setClassTimeList(list);
+        CreateClassRequest requestBody = CreateClassRequest
+                .builder()
+                .title("경제학원론")
+                .content("경제학원론 수업입니다.")
+                .location("인문관 101호")
+                .collegeId(1L)
+                .startDate(1647652678000L)
+                .endDate(1658193478000L)
+                .professorId(1L)
+                .classTimeList(list)
+                .build();
 
         Mockito.when(classService.createClass(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
@@ -119,13 +126,15 @@ class ClassRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("수업 초대 API")
     public void inviteClass() {
-        var requestBody = new InviteClassRequeset();
-        requestBody.setClassId(3L);
-
         List<Long> userList = new ArrayList<>();
         userList.add(1L);
         userList.add(2L);
-        requestBody.setUserList(userList);
+
+        var requestBody = InviteClassRequeset.builder()
+                .classId(3L)
+                .userList(userList)
+                .build()
+                ;
 
         Mockito.when(classService.inviteUser(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
@@ -198,9 +207,11 @@ class ClassRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("수업 참가 취소 API")
     void acceptClass() {
-        AcceptClassRequest requestBody = new AcceptClassRequest();
-        requestBody.setClassId(1L);
-        requestBody.setAccept(Boolean.TRUE);
+        AcceptClassRequest requestBody = AcceptClassRequest
+                .builder()
+                .classId(1L)
+                .accept(Boolean.TRUE)
+                .build();
 
         Mockito.when(classService.acceptClass(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
@@ -239,12 +250,15 @@ class ClassRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("수업 정보 변경")
     void modifyClassInfo() {
-        var requestBody = new ModifyClassInfoRequest();
-        requestBody.setId(1L);
-        requestBody.setProfessorId(1L);
-        requestBody.setLocation("인문관 1호");
-        requestBody.setTitle("경제학원론");
-        requestBody.setContent("경제학과 1학년 필수 수업입니다.");
+        var requestBody = ModifyClassInfoRequest
+                .builder()
+                .id(1L)
+                .professorId(1L)
+                .location("인문관 1호")
+                .title("경제학원론")
+                .content("경제학과 1학년 필수 수업입니다.")
+                .build()
+                ;
 
         Mockito.when(classService.modifyClassInfo(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 

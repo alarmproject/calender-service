@@ -22,10 +22,12 @@ class ClassTimeRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("수업 일정 수정 API")
     void modifyClassTime() {
-        var requestBody = new ModifyClassTimeRequest();
-        requestBody.setStartTime(10);
-        requestBody.setEndTime(12);
-        requestBody.setDay("수");
+        var requestBody = ModifyClassTimeRequest
+                .builder()
+                .startTime(10)
+                .endTime(12)
+                .day("수")
+                .build();
 
         Mockito.when(classTimeService.modifyClassTime(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 

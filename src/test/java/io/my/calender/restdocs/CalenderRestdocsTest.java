@@ -205,10 +205,12 @@ class CalenderRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("일정 수정")
     void modifyCalender() {
-        var requestBody = new ModifyCalender();
-        requestBody.setStartTime(1647652678000L);
-        requestBody.setEndTime(1647658613000L);
-        requestBody.setId(1L);
+        var requestBody = ModifyCalender.builder()
+                .startTime(1647652678000L)
+                .endTime(1647658613000L)
+                .id(1L)
+                .build()
+                ;
 
         Mockito.when(calenderService.modifyCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 

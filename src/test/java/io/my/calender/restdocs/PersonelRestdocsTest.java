@@ -20,7 +20,6 @@ import org.springframework.restdocs.request.RequestParametersSnippet;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.List;
 
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -31,13 +30,15 @@ class PersonelRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("개인 일정 생성 API")
     void createPersonel() {
-        CreatePersonelRequest requestBody = new CreatePersonelRequest();
-        requestBody.setTitle("사진동아리 신입생 환영회");
-        requestBody.setContent("신입생 환영회입니다.");
-        requestBody.setLocation("사진동아리 동아리실");
-        requestBody.setStartTime(1647652678000L);
-        requestBody.setEndTime(1647658613000L);
-        requestBody.setOpen(Boolean.TRUE);
+        CreatePersonelRequest requestBody = CreatePersonelRequest
+                .builder()
+                .title("사진동아리 신입생 환영회")
+                .content("신입생 환영회입니다.")
+                .location("사진동아리 동아리실")
+                .startTime(1647652678000L)
+                .endTime(1647658613000L)
+                .open(Boolean.TRUE)
+                .build();
 
         Mockito.when(personelService.createPersonelCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
@@ -90,13 +91,15 @@ class PersonelRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("일정 초대 API")
     void invitePersonelCalener() {
-        var requestBody = new InvitePersonelRequest();
-        requestBody.setPersonelCalenderId(1L);
         List<Long> userList = new ArrayList<>();
         userList.add(1L);
         userList.add(2L);
 
-        requestBody.setUserList(userList);
+        var requestBody = InvitePersonelRequest.builder()
+                .personelCalenderId(1L)
+                .userList(userList)
+                .build()
+                ;
 
         Mockito.when(personelService.invitePersonelCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
@@ -163,9 +166,10 @@ class PersonelRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("개인 일정 수락 or 거절")
     void acceptPersonelCalender() {
-        var requestBody = new AcceptPersoneCalenderRequest();
-        requestBody.setAccept(Boolean.FALSE);
-        requestBody.setPersonelCalenderId(1L);
+        var requestBody = AcceptPersoneCalenderRequest.builder()
+                .accept(Boolean.FALSE)
+                .personelCalenderId(1L)
+                .build();
 
         Mockito.when(personelService.acceeptPersonelCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
@@ -201,12 +205,14 @@ class PersonelRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("개인 일정 정보 수정")
     void modifyPersonelCalenderInfo() {
-        var requestBody = new ModifyPersonelCalenderRequest();
-        requestBody.setPersonelCalenderId(1L);
-        requestBody.setContent("신입생 환영회");
-        requestBody.setTitle("사진동아리 신입생 환영회");
-        requestBody.setLocation("사진동아리 동아리실");
-        requestBody.setOpen(Boolean.TRUE);
+        var requestBody = ModifyPersonelCalenderRequest.builder()
+                .personelCalenderId(1L)
+                .content("신입생 환영회")
+                .title("사진동아리 신입생 환영회")
+                .location("사진동아리 동아리실")
+                .open(Boolean.TRUE)
+                .build();
+
         Mockito.when(personelService.modifyPersonelCalenderInfo(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
         RequestFieldsSnippet requestFieldsSnippet =
