@@ -4,7 +4,6 @@ import io.my.calender._class.payload.request.ModifyClassTimeRequest;
 import io.my.calender.active.service.ActiveService;
 import io.my.calender.base.annotation.Logger;
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender.base.repository.ActiveHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
