@@ -50,6 +50,7 @@ public class ClassService {
         _class.setEndDate(
                 this.dateUtil.unixTimeToLocalDateTime(requestBody.getEndDate()).toLocalDate());
         _class.setProfessorId(requestBody.getProfessorId());
+        _class.setAlarmType(requestBody.getAlarmType());
 
         return JwtContextHolder.getMonoUserId().flatMap(userId -> {
             _class.setUserId(userId);
@@ -158,6 +159,7 @@ public class ClassService {
                     entity.setContent(requestBody.getContent());
                     entity.setLocation(requestBody.getLocation());
                     entity.setProfessorId(requestBody.getProfessorId());
+                    entity.setAlarmType(requestBody.getAlarmType());
                     return classRepository.save(entity);
                 })
                 .map(entity -> new BaseResponse())

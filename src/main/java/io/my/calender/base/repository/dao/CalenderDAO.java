@@ -34,6 +34,7 @@ public class CalenderDAO {
                     Integer inviteUserCount = 0;
                     Integer acceptUserCount = 0;
                     Boolean accept = Boolean.FALSE;
+                    String alarmType = null;
 
                     String userName = "";
                     if (classId != null) {
@@ -41,11 +42,13 @@ public class CalenderDAO {
                         acceptUserCount = row.get("class_accept_count", Integer.class);
                         accept = row.get("class_accept", Byte.class) == (byte)1 ? Boolean.TRUE : Boolean.FALSE;
                         userName = row.get("professor_name", String.class);
+                        alarmType = row.get("class_alarm_type", String.class);
                     } else if (personelCalenderId != null) {
                         inviteUserCount = row.get("personel_calender_invite_count", Integer.class);
                         acceptUserCount = row.get("personel_calender_accept_count", Integer.class);
                         accept = row.get("personel_calender_accept", Byte.class) == (byte) 1 ? Boolean.TRUE : Boolean.FALSE;
                         userName = row.get("user_name", String.class);
+                        alarmType = row.get("personel_calender_alarm_type", String.class);
                     }
 
                     return CalenderListResponse.builder()
@@ -64,6 +67,7 @@ public class CalenderDAO {
                             .inviteUserCount(inviteUserCount)
                             .acceptUserCount(acceptUserCount)
                             .accept(accept)
+                            .alarmType(alarmType)
                             .build()
                             ;
                 }).all()

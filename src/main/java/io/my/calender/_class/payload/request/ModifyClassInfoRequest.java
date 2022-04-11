@@ -13,4 +13,5 @@ public class ModifyClassInfoRequest {
     private String content;
     private String location;
     private Long professorId;
+    private String alarmType;
 }

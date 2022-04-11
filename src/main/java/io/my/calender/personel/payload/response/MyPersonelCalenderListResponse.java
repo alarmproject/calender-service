@@ -22,4 +22,5 @@ public class MyPersonelCalenderListResponse {
     private String nickname;
     private String email;
     private String imageUrl;
+    private String alarmType;
 }

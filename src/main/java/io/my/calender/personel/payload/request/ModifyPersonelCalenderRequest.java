@@ -13,4 +13,5 @@ public class ModifyPersonelCalenderRequest {
     private String content;
     private String location;
     private Boolean open;
+    private String alarmType;
 }

@@ -63,6 +63,7 @@ public class ClassDAO {
                             .location(row.get("location", String.class))
                             .professorName(row.get("professor_name", String.class))
                             .imageUrl(imageUrl)
+                            .alarmType(row.get("alarm_type", String.class))
                             .build();
         }).all();
     }

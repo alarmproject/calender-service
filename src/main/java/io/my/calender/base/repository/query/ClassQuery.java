@@ -56,6 +56,7 @@ public class ClassQuery {
                 ", c.title " +
                 ", c.content " +
                 ", c.location " +
+                ", c.alarm_type " +
                 ", p.name as professor_name " +
                 ", i.file_name " +
                 "from " +

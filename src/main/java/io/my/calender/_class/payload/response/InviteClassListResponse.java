@@ -16,4 +16,5 @@ public class InviteClassListResponse {
     private String professorName;
     private String location;
     private String imageUrl;
+    private String alarmType;
 }

@@ -23,6 +23,7 @@ public class Class extends BaseEntity {
     private String location;
     private Long userId;
     private Long professorId;
+    private String alarmType;
 
     @Transient
     private User user;

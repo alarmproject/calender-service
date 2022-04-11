@@ -21,6 +21,7 @@ public class PersonelCalenderQuery {
                 ", pc.content as content " +
                 ", pc.location as location " +
                 ", pc.`open` as open " +
+                ", pc.alarm_type as alarm_type " +
                 ", u.id as user_id " +
                 ", u.name as user_name " +
                 ", u.nickname as user_nickname " +

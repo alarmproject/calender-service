@@ -42,6 +42,7 @@ public class PersonelService {
         personelCalender.setContent(requestBody.getContent());
         personelCalender.setLocation(requestBody.getLocation());
         personelCalender.setOpen(requestBody.getOpen());
+        personelCalender.setAlarmType(requestBody.getAlarmType());
 
         LocalDateTime startTime = dateUtil.unixTimeToLocalDateTime(requestBody.getStartTime());
         LocalDateTime endTime = dateUtil.unixTimeToLocalDateTime(requestBody.getEndTime());
@@ -98,6 +99,7 @@ public class PersonelService {
                     entity.setContent(requestBody.getContent());
                     entity.setLocation(requestBody.getLocation());
                     entity.setOpen(requestBody.getOpen());
+                    entity.setAlarmType(requestBody.getAlarmType());
                     return personelCalenderRepository.save(entity);
                 })
                 .map(entity -> new BaseResponse());
@@ -110,8 +112,6 @@ public class PersonelService {
                 .collectList()
                 .map(BaseExtentionResponse::new)
                 ;
-
-
     }
 
     public Mono<BaseExtentionResponse<List<SearchPersonelCalenderListResponse>>> searchPersonelCalenderList(Long personelCalenderId, Integer perPage, String title) {

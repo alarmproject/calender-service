@@ -42,6 +42,7 @@ class CalenderRestdocsTest extends RestdocsBase {
                     .inviteUserCount(15)
                     .acceptUserCount(14)
                     .accept(Boolean.FALSE)
+                    .alarmType("class")
                     .build())
                 ;
 
@@ -59,6 +60,7 @@ class CalenderRestdocsTest extends RestdocsBase {
                         .inviteUserCount(15)
                         .acceptUserCount(14)
                         .accept(Boolean.FALSE)
+                        .alarmType("class")
                         .build())
         ;
 
@@ -76,6 +78,7 @@ class CalenderRestdocsTest extends RestdocsBase {
                         .inviteUserCount(15)
                         .acceptUserCount(14)
                         .accept(Boolean.FALSE)
+                        .alarmType("class")
                         .build())
         ;
         list.add(
@@ -92,6 +95,7 @@ class CalenderRestdocsTest extends RestdocsBase {
                         .inviteUserCount(15)
                         .acceptUserCount(14)
                         .accept(Boolean.FALSE)
+                        .alarmType("class")
                         .build())
         ;
         list.add(
@@ -108,6 +112,7 @@ class CalenderRestdocsTest extends RestdocsBase {
                         .inviteUserCount(15)
                         .acceptUserCount(14)
                         .accept(Boolean.FALSE)
+                        .alarmType("personel")
                         .build())
         ;
 
@@ -173,6 +178,10 @@ class CalenderRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
                         fieldWithPath("returnValue.[].personelCalenderLocation").description("개인 일정 장소").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].alarmType").description("알람 타입").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),

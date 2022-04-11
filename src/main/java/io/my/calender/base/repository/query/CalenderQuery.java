@@ -20,8 +20,10 @@ public class CalenderQuery {
                 ", c.end_time  " +
                 ", class.id as class_id " +
                 ", class.title as class_title " +
+                ", class.alarm_type as class_alarm_type " +
                 ", pc.id as personel_calender_id  " +
                 ", pc.title as personel_calender_title " +
+                ", pc.alarm_type as personel_calender_alarm_type " +
                 ", class.location as class_location " +
                 ", pc.location as personel_calender_location " +
                 ", u.name as user_name " +

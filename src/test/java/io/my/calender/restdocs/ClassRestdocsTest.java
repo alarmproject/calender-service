@@ -57,6 +57,7 @@ class ClassRestdocsTest extends RestdocsBase {
                 .endDate(1658193478000L)
                 .professorId(1L)
                 .classTimeList(list)
+                .alarmType("class")
                 .build();
 
         Mockito.when(classService.createClass(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
@@ -91,6 +92,10 @@ class ClassRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("unixTime")),
+                        fieldWithPath("alarmType").description("알람 타입(class, personel)")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
                         fieldWithPath("classTimeList.[].startTime").description("시작시간")
                                 .attributes(
                                         RestDocAttributes.length(0),
@@ -257,6 +262,7 @@ class ClassRestdocsTest extends RestdocsBase {
                 .location("인문관 1호")
                 .title("경제학원론")
                 .content("경제학과 1학년 필수 수업입니다.")
+                .alarmType("class")
                 .build()
                 ;
 
@@ -283,7 +289,11 @@ class ClassRestdocsTest extends RestdocsBase {
                         fieldWithPath("professorId").description("교수님 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("Integer"))
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("alarmType").description("알람 타입 ( class, personel )")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String"))
                 );
 
         ResponseFieldsSnippet responseFieldsSnippet =
@@ -463,6 +473,10 @@ class ClassRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
                         fieldWithPath("returnValue.[].imageUrl").description("이미지 주소")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].alarmType").description("알람 타입")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String"))

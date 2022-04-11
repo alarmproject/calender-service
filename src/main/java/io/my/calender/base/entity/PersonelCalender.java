@@ -19,6 +19,7 @@ public class PersonelCalender {
     private String location;
     private Boolean open;
     private Long userId;
+    private String alarmType;
 
     @Transient
     private User user;

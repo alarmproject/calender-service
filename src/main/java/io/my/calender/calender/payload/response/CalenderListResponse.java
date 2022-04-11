@@ -26,4 +26,5 @@ public class CalenderListResponse {
     private Integer acceptUserCount;
 
     private Boolean accept;
+    private String alarmType;
 }

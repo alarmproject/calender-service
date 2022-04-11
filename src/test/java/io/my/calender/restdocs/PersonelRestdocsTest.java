@@ -38,6 +38,7 @@ class PersonelRestdocsTest extends RestdocsBase {
                 .startTime(1647652678000L)
                 .endTime(1647658613000L)
                 .open(Boolean.TRUE)
+                .alarmType("personel")
                 .build();
 
         Mockito.when(personelService.createPersonelCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
@@ -67,7 +68,11 @@ class PersonelRestdocsTest extends RestdocsBase {
                         fieldWithPath("open").description("공개 여부(detault: false.비공개)")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("Boolean"))
+                                        RestDocAttributes.format("Boolean")),
+                        fieldWithPath("alarmType").description("알람 타입( class, alarmType )")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String"))
                 );
 
         ResponseFieldsSnippet responseFieldsSnippet =
@@ -211,6 +216,7 @@ class PersonelRestdocsTest extends RestdocsBase {
                 .title("사진동아리 신입생 환영회")
                 .location("사진동아리 동아리실")
                 .open(Boolean.TRUE)
+                .alarmType("personel")
                 .build();
 
         Mockito.when(personelService.modifyPersonelCalenderInfo(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
@@ -236,7 +242,11 @@ class PersonelRestdocsTest extends RestdocsBase {
                         fieldWithPath("open").description("일정 공개 여부")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("Boolean"))
+                                        RestDocAttributes.format("Boolean")),
+                        fieldWithPath("alarmType").description("알람 타입( class, personel )")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String"))
                 );
 
         ResponseFieldsSnippet responseFieldsSnippet =
@@ -274,6 +284,7 @@ class PersonelRestdocsTest extends RestdocsBase {
                         .name("name")
                         .nickname("nickname")
                         .email(EMAIL)
+                        .alarmType("personel")
                         .imageUrl("http://mysend.co.kr:8080/image/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg")
                         .build()
         );
@@ -337,6 +348,10 @@ class PersonelRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Boolean")),
+                        fieldWithPath("returnValue.[].alarmType").description("알람 타입")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
                         fieldWithPath("returnValue.[].userId").description("일정 생성 유저 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),

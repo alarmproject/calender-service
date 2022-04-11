@@ -37,6 +37,7 @@ public class PersonelCalenderDAO {
                         .name(row.get("user_name", String.class))
                         .nickname(row.get("user_nickname", String.class))
                         .email(row.get("user_email", String.class))
+                        .alarmType(row.get("alarm_type", String.class))
                         .imageUrl(imageUrl)
                         .build();
             })
