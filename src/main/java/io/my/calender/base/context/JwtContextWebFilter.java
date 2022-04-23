@@ -2,18 +2,14 @@ package io.my.calender.base.context;
 
 import com.sun.istack.NotNull;
 import io.my.calender.base.exception.ErrorTypeEnum;
-import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.base.properties.security.UnSecurityProperties;
-import io.my.calender.base.util.JsonUtil;
+import io.my.calender.base.util.ExceptionUtil;
 import io.my.calender.base.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.buffer.DefaultDataBuffer;
-import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.util.SerializationUtils;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
@@ -24,7 +20,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class JwtContextWebFilter implements WebFilter {
     private final JwtUtil jwtUtil;
-    private final JsonUtil jsonUtil;
+    private final ExceptionUtil exceptionUtil;
     private final UnSecurityProperties unSecurityProperties;
 
     @NotNull
@@ -43,8 +39,8 @@ public class JwtContextWebFilter implements WebFilter {
 
 
         if (context.getJwt() == null || !jwtUtil.verifyAccessToken(jwt)) {
-            setJwtExceptionHeaders(exchange);
-            DefaultDataBuffer buffer = getJwtExceptionBody();
+            exceptionUtil.setExceptionHeaders(exchange, HttpStatus.UNAUTHORIZED);
+            DefaultDataBuffer buffer = exceptionUtil.createExceptionBody(ErrorTypeEnum.JWT_EXCEPTION);
             return exchange.getResponse().writeWith(Mono.just(buffer));
         }
 
@@ -54,18 +50,4 @@ public class JwtContextWebFilter implements WebFilter {
                 .contextWrite(JwtContextHolder.withJwtContext(Mono.just(context)));
     }
 
-    private void setJwtExceptionHeaders(ServerWebExchange exchange) {
-        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-        exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
-    }
-
-    private DefaultDataBuffer getJwtExceptionBody() {
-        BaseResponse response = new BaseResponse();
-        response.setResult(ErrorTypeEnum.JWT_EXCEPTION.getResult());
-        response.setCode(ErrorTypeEnum.JWT_EXCEPTION.getCode());
-
-        return new DefaultDataBufferFactory().wrap(
-                jsonUtil.objectToByteArray(response)
-        );
-    }
 }
