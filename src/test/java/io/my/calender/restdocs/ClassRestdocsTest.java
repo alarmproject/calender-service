@@ -50,7 +50,6 @@ class ClassRestdocsTest extends RestdocsBase {
         CreateClassRequest requestBody = CreateClassRequest
                 .builder()
                 .title("경제학원론")
-                .content("경제학원론 수업입니다.")
                 .location("인문관 101호")
                 .collegeId(1L)
                 .startDate(1647652678000L)
@@ -65,10 +64,6 @@ class ClassRestdocsTest extends RestdocsBase {
         RequestFieldsSnippet requestFieldsSnippet =
                 requestFields(
                         fieldWithPath("title").description("수업명")
-                                .attributes(
-                                        RestDocAttributes.length(0),
-                                        RestDocAttributes.format("String")),
-                        fieldWithPath("content").description("메모")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
@@ -275,7 +270,6 @@ class ClassRestdocsTest extends RestdocsBase {
                 .professorId(1L)
                 .location("인문관 1호")
                 .title("경제학원론")
-                .content("경제학과 1학년 필수 수업입니다.")
                 .alarmType("class")
                 .build()
                 ;
@@ -289,10 +283,6 @@ class ClassRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
                         fieldWithPath("title").description("수업 제목")
-                                .attributes(
-                                        RestDocAttributes.length(0),
-                                        RestDocAttributes.format("String")),
-                        fieldWithPath("content").description("수업 설명")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
@@ -340,7 +330,6 @@ class ClassRestdocsTest extends RestdocsBase {
                 .startDate(1647652678000L)
                 .endDate(1658193478000L)
                 .title("경제학원론")
-                .content("경제학원론 수업입니다.")
                 .location("인문관 1호")
                 .professorName("김교수")
                 .inviteUserCount(30)
@@ -404,10 +393,6 @@ class ClassRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
-                        fieldWithPath("returnValue.[].content").description("수업 소개(메모)")
-                                .attributes(
-                                        RestDocAttributes.length(0),
-                                        RestDocAttributes.format("String")),
                         fieldWithPath("returnValue.[].location").description("수업 장소")
                                 .attributes(
                                         RestDocAttributes.length(0),
@@ -448,7 +433,6 @@ class ClassRestdocsTest extends RestdocsBase {
         list.add(InviteClassListResponse.builder()
                 .id(1L)
                 .title("경제학원론")
-                .content("경제학 1학년 수업")
                 .location("인문관 1호")
                 .professorName("김교수")
                 .imageUrl(null)
@@ -471,10 +455,6 @@ class ClassRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
                         fieldWithPath("returnValue.[].title").description("수업명")
-                                .attributes(
-                                        RestDocAttributes.length(0),
-                                        RestDocAttributes.format("String")),
-                        fieldWithPath("returnValue.[].content").description("수업 소개(메모)")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),

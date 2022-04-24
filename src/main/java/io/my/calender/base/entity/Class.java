@@ -1,7 +1,6 @@
 package io.my.calender.base.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
@@ -10,6 +9,9 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table("class")
 public class Class extends BaseEntity {
 
@@ -19,7 +21,6 @@ public class Class extends BaseEntity {
     private LocalDate endDate;
     private Long collegeId;
     private String title;
-    private String content;
     private String location;
     private Long userId;
     private Long professorId;

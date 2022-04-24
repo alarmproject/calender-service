@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class InviteClassListResponse {
     private Long id;
     private String title;
-    private String content;
     private String professorName;
     private String location;
     private String imageUrl;

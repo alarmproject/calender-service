@@ -37,17 +37,19 @@ public class ClassService {
     private final ClassJoinUserRepository classJoinUserRepository;
 
     public Mono<BaseResponse> createClass(CreateClassRequest requestBody) {
-        Class _class = new Class();
-        _class.setContent(requestBody.getContent());
-        _class.setTitle(requestBody.getTitle());
-        _class.setCollegeId(requestBody.getCollegeId());
-        _class.setLocation(requestBody.getLocation());
-        _class.setStartDate(
-                this.dateUtil.unixTimeToLocalDateTime(requestBody.getStartDate()).toLocalDate());
-        _class.setEndDate(
-                this.dateUtil.unixTimeToLocalDateTime(requestBody.getEndDate()).toLocalDate());
-        _class.setProfessorId(requestBody.getProfessorId());
-        _class.setAlarmType(requestBody.getAlarmType());
+        Class _class = Class.builder()
+                .title(requestBody.getTitle())
+                .collegeId(requestBody.getCollegeId())
+                .location(requestBody.getLocation())
+                .startDate(
+                        this.dateUtil.unixTimeToLocalDateTime(requestBody.getStartDate()).toLocalDate()
+                )
+                .endDate(
+                        this.dateUtil.unixTimeToLocalDateTime(requestBody.getEndDate()).toLocalDate()
+                )
+                .professorId(requestBody.getProfessorId())
+                .alarmType(requestBody.getAlarmType())
+                .build();
 
         return JwtContextHolder.getMonoUserId().flatMap(userId -> {
             _class.setUserId(userId);
@@ -56,11 +58,12 @@ public class ClassService {
         .flatMapMany(entity -> {
             List<ClassTime> saveClassTimeList = new ArrayList<>();
             requestBody.getClassTimeList().forEach(classTimeRequest -> {
-                ClassTime classTime = new ClassTime();
-                classTime.setClassId(entity.getId());
-                classTime.setStartTime(classTimeRequest.getStartTime());
-                classTime.setEndTime(classTimeRequest.getEndTime());
-                classTime.setDay(classTimeRequest.getDay());
+                ClassTime classTime = ClassTime.builder()
+                        .classId(entity.getId())
+                        .startTime(classTimeRequest.getStartTime())
+                        .endTime(classTimeRequest.getEndTime())
+                        .day(classTimeRequest.getDay())
+                        .build();
                 saveClassTimeList.add(classTime);
             });
             return this.classTimeRepository.saveAll(saveClassTimeList);
@@ -76,11 +79,11 @@ public class ClassService {
 
             while (date != _class.getEndDate() && date.isBefore(_class.getEndDate())) {
                 if (date.getDayOfWeek() == dayOfWeek) {
-                    Calender calender = new Calender();
-
-                    calender.setClassTimeId(entity.getId());
-                    calender.setStartTime(LocalDateTime.of(date, startTime));
-                    calender.setEndTime(LocalDateTime.of(date, endTime));
+                    Calender calender = Calender.builder()
+                            .classTimeId(entity.getId())
+                            .startTime(LocalDateTime.of(date, startTime))
+                            .endTime(LocalDateTime.of(date, endTime))
+                            .build();
 
                     calenderEntityList.add(calender);
                     date = date.plusDays(7);
@@ -157,7 +160,6 @@ public class ClassService {
         return classRepository.findById(requestBody.getId())
                 .flatMap(entity -> {
                     entity.setTitle(requestBody.getTitle());
-                    entity.setContent(requestBody.getContent());
                     entity.setLocation(requestBody.getLocation());
                     entity.setProfessorId(requestBody.getProfessorId());
                     entity.setAlarmType(requestBody.getAlarmType());

@@ -14,7 +14,6 @@ public class CreateClassRequest {
     private Long endDate;
 
     private String title;
-    private String content;
     private String location;
 
     private Long collegeId;

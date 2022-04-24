@@ -10,7 +10,6 @@ import lombok.Getter;
 public class ModifyClassInfoRequest {
     private Long id;
     private String title;
-    private String content;
     private String location;
     private Long professorId;
     private String alarmType;

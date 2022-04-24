@@ -15,7 +15,6 @@ public class SearchClassResponse {
     private Long startDate;
     private Long endDate;
     private String title;
-    private String content;
     private String location;
     private String professorName;
     private String imageUrl;

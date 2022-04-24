@@ -17,7 +17,6 @@ public class ClassQuery {
                 ", c.start_date " +
                 ", c.end_date " +
                 ", c.title " +
-                ", c.content " +
                 ", c.location " +
                 ", p.name as professor_name " +
                 ", i.file_name " +
@@ -54,7 +53,6 @@ public class ClassQuery {
                 "SELECT " +
                 "c.id " +
                 ", c.title " +
-                ", c.content " +
                 ", c.location " +
                 ", c.alarm_type " +
                 ", p.name as professor_name " +
