@@ -13,7 +13,6 @@ public class SearchPersonelCalenderListResponse {
     private Long id;
     private String day;
     private String title;
-    private String content;
     private String location;
     private Boolean open;
     private Long regDateTime;

@@ -33,7 +33,6 @@ class PersonelRestdocsTest extends RestdocsBase {
         CreatePersonelRequest requestBody = CreatePersonelRequest
                 .builder()
                 .title("사진동아리 신입생 환영회")
-                .content("신입생 환영회입니다.")
                 .location("사진동아리 동아리실")
                 .startTime(1647652678000L)
                 .endTime(1647658613000L)
@@ -46,10 +45,6 @@ class PersonelRestdocsTest extends RestdocsBase {
         RequestFieldsSnippet requestFieldsSnippet =
                 requestFields(
                         fieldWithPath("title").description("수업명")
-                                .attributes(
-                                        RestDocAttributes.length(0),
-                                        RestDocAttributes.format("String")),
-                        fieldWithPath("content").description("메모")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
@@ -222,7 +217,6 @@ class PersonelRestdocsTest extends RestdocsBase {
     void modifyPersonelCalenderInfo() {
         var requestBody = ModifyPersonelCalenderRequest.builder()
                 .personelCalenderId(1L)
-                .content("신입생 환영회")
                 .title("사진동아리 신입생 환영회")
                 .location("사진동아리 동아리실")
                 .open(Boolean.TRUE)
@@ -238,10 +232,6 @@ class PersonelRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
                         fieldWithPath("title").description("일정 제목")
-                                .attributes(
-                                        RestDocAttributes.length(0),
-                                        RestDocAttributes.format("String")),
-                        fieldWithPath("content").description("설명")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
@@ -399,7 +389,6 @@ class PersonelRestdocsTest extends RestdocsBase {
                 SearchPersonelCalenderListResponse.builder()
                         .id(1L)
                         .title("title")
-                        .content("content")
                         .location("location")
                         .day("토")
                         .open(Boolean.TRUE)
@@ -455,10 +444,6 @@ class PersonelRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
                         fieldWithPath("returnValue.[].title").description("일정 제목")
-                                .attributes(
-                                        RestDocAttributes.length(0),
-                                        RestDocAttributes.format("String")),
-                        fieldWithPath("returnValue.[].content").description("일정 내용")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),

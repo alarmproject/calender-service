@@ -37,26 +37,27 @@ public class PersonelService {
     public Mono<BaseResponse> createPersonelCalender(
             CreatePersonelRequest requestBody) {
 
-        PersonelCalender personelCalender = new PersonelCalender();
-        personelCalender.setTitle(requestBody.getTitle());
-        personelCalender.setContent(requestBody.getContent());
-        personelCalender.setLocation(requestBody.getLocation());
-        personelCalender.setOpen(requestBody.getOpen());
-        personelCalender.setAlarmType(requestBody.getAlarmType());
-
         LocalDateTime startTime = dateUtil.unixTimeToLocalDateTime(requestBody.getStartTime());
         LocalDateTime endTime = dateUtil.unixTimeToLocalDateTime(requestBody.getEndTime());
-        personelCalender.setDay(dateUtil.localDateTimeToDay(startTime));
+
+        PersonelCalender personelCalender = PersonelCalender.builder()
+                .title(requestBody.getTitle())
+                .location(requestBody.getLocation())
+                .open(requestBody.getOpen())
+                .alarmType(requestBody.getAlarmType())
+                .day(dateUtil.localDateTimeToDay(startTime))
+                .build();
 
         return JwtContextHolder.getMonoUserId().flatMap(userId -> {
             personelCalender.setUserId(userId);
             return personelCalenderRepository.save(personelCalender);
         })
         .flatMap(entity -> {
-            Calender calender = new Calender();
-            calender.setPersonelCalenderId(entity.getId());
-            calender.setStartTime(startTime);
-            calender.setEndTime(endTime);
+            Calender calender = Calender.builder()
+                    .personelCalenderId(entity.getId())
+                    .startTime(startTime)
+                    .endTime(endTime)
+                    .build();
             return calenderRepository.save(calender);
         })
         .map(entity -> new BaseResponse())
@@ -98,7 +99,6 @@ public class PersonelService {
         return personelCalenderRepository.findById(requestBody.getPersonelCalenderId())
                 .flatMap(entity -> {
                     entity.setTitle(requestBody.getTitle());
-                    entity.setContent(requestBody.getContent());
                     entity.setLocation(requestBody.getLocation());
                     entity.setOpen(requestBody.getOpen());
                     entity.setAlarmType(requestBody.getAlarmType());

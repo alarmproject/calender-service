@@ -10,7 +10,6 @@ import lombok.Getter;
 public class ModifyPersonelCalenderRequest {
     private Long personelCalenderId;
     private String title;
-    private String content;
     private String location;
     private Boolean open;
     private String alarmType;

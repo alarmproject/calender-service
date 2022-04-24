@@ -9,7 +9,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreatePersonelRequest {
     private String title;
-    private String content;
     private String location;
     private Boolean open;
     private String alarmType;

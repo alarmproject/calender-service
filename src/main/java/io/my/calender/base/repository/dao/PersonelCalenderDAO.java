@@ -53,7 +53,6 @@ public class PersonelCalenderDAO {
                     return SearchPersonelCalenderListResponse.builder()
                             .id(row.get("id", Long.class))
                             .title(row.get("title", String.class))
-                            .content(row.get("content", String.class))
                             .location(row.get("location", String.class))
                             .open(row.get("open", Boolean.class))
                             .day(row.get("day", String.class))

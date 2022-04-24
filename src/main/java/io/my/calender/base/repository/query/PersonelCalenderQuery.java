@@ -54,7 +54,6 @@ public class PersonelCalenderQuery {
                 "pc.id " +
                 ", pc.day " +
                 ", pc.title " +
-                ", pc.content " +
                 ", pc.location " +
                 ", pc.`open` " +
                 ", pc.reg_date_time " +
