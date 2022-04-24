@@ -20,17 +20,17 @@ public class CalenderQuery {
                 ", c.end_time  " +
                 ", class.id as class_id " +
                 ", class.title as class_title " +
-                ", class.alarm_type as class_alarm_type " +
                 ", pc.id as personel_calender_id  " +
                 ", pc.title as personel_calender_title " +
-                ", pc.alarm_type as personel_calender_alarm_type " +
                 ", class.location as class_location " +
                 ", pc.location as personel_calender_location " +
                 ", u.name as user_name " +
                 ", i.file_name as filename " +
                 ", p.name as professor_name " +
                 ", cju.accept as class_accept " +
+                ", cju.alarm_type as class_alarm_type " +
                 ", pcju.accept as personel_calender_accept " +
+                ", pcju.alarm_type as personel_calender_alarm_type " +
                 ", (select count(*) from class_join_user where class_id = class.id) as class_invite_count " +
                 ", (select count(*) from class_join_user where class_id = class.id and accept = 1) as class_accept_count " +
                 ", (select count(*) from personel_calender_join_user where personel_calender_id = pc.id) as personel_calender_invite_count " +
