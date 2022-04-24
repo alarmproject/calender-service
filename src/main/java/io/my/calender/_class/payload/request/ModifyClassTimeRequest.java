@@ -10,6 +10,8 @@ import lombok.Getter;
 public class ModifyClassTimeRequest {
     private Long id;
     private String day;
-    private Integer startTime;
-    private Integer endTime;
+    private Integer startHour;
+    private Integer startMinutes;
+    private Integer endHour;
+    private Integer endMinutes;
 }

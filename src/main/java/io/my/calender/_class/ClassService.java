@@ -60,8 +60,10 @@ public class ClassService {
             requestBody.getClassTimeList().forEach(classTimeRequest -> {
                 ClassTime classTime = ClassTime.builder()
                         .classId(entity.getId())
-                        .startTime(classTimeRequest.getStartTime())
-                        .endTime(classTimeRequest.getEndTime())
+                        .startHour(classTimeRequest.getStartHour())
+                        .startMinutes(classTimeRequest.getStartMinutes())
+                        .endHour(classTimeRequest.getEndHour())
+                        .endMinutes(classTimeRequest.getEndMinutes())
                         .day(classTimeRequest.getDay())
                         .build();
                 saveClassTimeList.add(classTime);
@@ -71,8 +73,8 @@ public class ClassService {
         .map(entity -> {
             List<Calender> calenderEntityList = new ArrayList<>();
 
-            LocalTime startTime = LocalTime.of(entity.getStartTime(), 0);
-            LocalTime endTime = LocalTime.of(entity.getEndTime(), 0);
+            LocalTime startTime = LocalTime.of(entity.getStartHour(), entity.getStartMinutes());
+            LocalTime endTime = LocalTime.of(entity.getEndHour(), entity.getEndMinutes());
             DayOfWeek dayOfWeek = this.dateUtil.getDayOfWeek(entity.getDay());
 
             LocalDate date = _class.getStartDate();

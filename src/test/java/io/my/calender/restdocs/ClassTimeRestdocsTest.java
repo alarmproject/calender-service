@@ -24,8 +24,10 @@ class ClassTimeRestdocsTest extends RestdocsBase {
     void modifyClassTime() {
         var requestBody = ModifyClassTimeRequest
                 .builder()
-                .startTime(10)
-                .endTime(12)
+                .startHour(10)
+                .startMinutes(0)
+                .endHour(12)
+                .endMinutes(0)
                 .day("수")
                 .build();
 
@@ -37,11 +39,19 @@ class ClassTimeRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("startTime").description("시작시간")
+                        fieldWithPath("startHour").description("시작시간 (시)")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("endTime").description("종료시간")
+                        fieldWithPath("startMinutes").description("시작시간 (분)")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("endHour").description("종료시간 (시)")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("endMinutes").description("종료시간 (분)")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),

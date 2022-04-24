@@ -24,8 +24,10 @@ public class ClassTimeService {
     public Mono<BaseResponse> modifyClassTime(ModifyClassTimeRequest requestBody) {
         return this.classTimeRepository.findById(requestBody.getId())
                 .flatMap(entity -> {
-                    entity.setStartTime(requestBody.getStartTime());
-                    entity.setEndTime(requestBody.getEndTime());
+                    entity.setStartHour(requestBody.getStartHour());
+                    entity.setStartMinutes(requestBody.getStartMinutes());
+                    entity.setEndHour(requestBody.getEndHour());
+                    entity.setEndMinutes(requestBody.getEndMinutes());
                     entity.setDay(requestBody.getDay());
                     return this.classTimeRepository.save(entity);
                 })
@@ -41,8 +43,8 @@ public class ClassTimeService {
                             .toLocalDate()
                             .plusDays(diffrentDay);
 
-                    LocalDateTime startTime = LocalDateTime.of(changeDate, LocalTime.of(requestBody.getStartTime(), 0));
-                    LocalDateTime endTime = LocalDateTime.of(changeDate, LocalTime.of(requestBody.getEndTime(), 0));
+                    LocalDateTime startTime = LocalDateTime.of(changeDate, LocalTime.of(requestBody.getStartHour(), requestBody.getStartMinutes()));
+                    LocalDateTime endTime = LocalDateTime.of(changeDate, LocalTime.of(requestBody.getEndHour(), requestBody.getEndMinutes()));
 
                     entity.setStartTime(startTime);
                     entity.setEndTime(endTime);

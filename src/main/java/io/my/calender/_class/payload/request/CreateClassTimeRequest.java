@@ -8,7 +8,9 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class CreateClassTimeRequest {
-    private Integer startTime;
-    private Integer endTime;
+    private Integer startHour;
+    private Integer endHour;
+    private Integer startMinutes;
+    private Integer endMinutes;
     private String day;
 }
