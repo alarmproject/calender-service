@@ -15,13 +15,14 @@ public class PersonelCalenderQuery {
                 "select " +
                 "pcju.id " +
                 ", pcju.accept " +
+                ", pcju.content " +
+                ", pcju.alarm_type as alarm_type " +
+                ", pcju.content as content " +
                 ", pc.id as personel_calender_id " +
                 ", pc.`day` as `day` " +
                 ", pc.title as title " +
-                ", pc.content as content " +
                 ", pc.location as location " +
                 ", pc.`open` as open " +
-                ", pc.alarm_type as alarm_type " +
                 ", u.id as user_id " +
                 ", u.name as user_name " +
                 ", u.nickname as user_nickname " +
