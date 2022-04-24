@@ -176,14 +176,30 @@ class ClassRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("수업 참가 API")
     public void joinClass() {
+        JoinClassRequest requestBody = JoinClassRequest
+                .builder()
+                .classId(1L)
+                .content("메모입니다")
+                .alarmType("class")
+                .build();
         Mockito.when(classService.joinClass(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
-        RequestParametersSnippet requestParametersSnippet =
-                requestParameters(
-                        parameterWithName("classId").description("수업 번호")
+        RequestFieldsSnippet requestFieldsSnippet =
+                requestFields(
+                        fieldWithPath("classId").description("수업 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")
+                                ),
+                        fieldWithPath("content").description("메모")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")
+                                ),
+                        fieldWithPath("alarmType").description("알람 타입")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")
                                 )
                 );
 
@@ -200,12 +216,10 @@ class ClassRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Integer"))
                 );
 
-        String params = "?classId=3";
-
-        postWebTestClient("/calender/class/join" + params).expectStatus()
+        postWebTestClient(requestBody, "/calender/class/join").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/joinclass", requestParametersSnippet, responseFieldsSnippet));
+                .consumeWith(createConsumer("/joinclass", requestFieldsSnippet, responseFieldsSnippet));
 
     }
 

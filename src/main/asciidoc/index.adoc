@@ -103,7 +103,7 @@ include::{snippets}/classrestdocstest/inviteclass/curl-request.adoc[]
 [[resources-calender-class-join]]
 ==== 수업 참가
 
-include::{snippets}/classrestdocstest/joinclass/request-parameters.adoc[]
+include::{snippets}/classrestdocstest/joinclass/request-fields.adoc[]
 include::{snippets}/classrestdocstest/joinclass/response-fields.adoc[]
 include::{snippets}/classrestdocstest/joinclass/http-request.adoc[]
 include::{snippets}/classrestdocstest/joinclass/http-response.adoc[]

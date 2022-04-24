@@ -15,6 +15,8 @@ public class PersonelCalenderJoinUser {
     private Long userId;
     private Long personelCalenderId;
     private Byte accept;
+    private String content;
+    private String alarmType;
 
     @Transient
     private User user;

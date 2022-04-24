@@ -1,9 +1,6 @@
 package io.my.calender._class;
 
-import io.my.calender._class.payload.request.AcceptClassRequest;
-import io.my.calender._class.payload.request.CreateClassRequest;
-import io.my.calender._class.payload.request.InviteClassRequeset;
-import io.my.calender._class.payload.request.ModifyClassInfoRequest;
+import io.my.calender._class.payload.request.*;
 import io.my.calender._class.payload.response.InviteClassListResponse;
 import io.my.calender._class.payload.response.SearchClassResponse;
 import io.my.calender.base.context.JwtContextHolder;
@@ -107,9 +104,10 @@ public class ClassService {
         List<ClassJoinUser> entityList = new ArrayList<>();
 
         requestBody.getUserList().forEach(id -> {
-            ClassJoinUser entity = new ClassJoinUser();
-            entity.setClassId(requestBody.getClassId());
-            entity.setUserId(id);
+            ClassJoinUser entity = ClassJoinUser.builder()
+                    .classId(requestBody.getClassId())
+                    .userId(id)
+                    .build();
             entityList.add(entity);
         });
 
@@ -119,26 +117,29 @@ public class ClassService {
                 ;
     }
 
-    public Mono<BaseResponse> joinClass(Long classId) {
+    public Mono<BaseResponse> joinClass(JoinClassRequest requestBody) {
         AtomicReference<Long> userId = new AtomicReference<>(0L);
         return JwtContextHolder.getMonoUserId().flatMap(id -> {
             userId.set(id);
-            return this.classJoinUserRepository.findByUserIdAndClassId(id, classId);
+            return this.classJoinUserRepository.findByUserIdAndClassId(id, requestBody.getClassId());
         })
         .flatMap(entity -> {
             entity.setAccept((byte) 1);
             return this.classJoinUserRepository.save(entity);
         })
-        .switchIfEmpty(saveClassJoinUser(classId, userId.get()))
+        .switchIfEmpty(saveClassJoinUser(requestBody, userId.get()))
         .map(entity -> new BaseResponse())
         ;
     }
 
-    private Mono<ClassJoinUser> saveClassJoinUser(Long classId, Long userId) {
-        ClassJoinUser entity = new ClassJoinUser();
-        entity.setClassId(classId);
-        entity.setUserId(userId);
-        entity.setAccept((byte) 1);
+    private Mono<ClassJoinUser> saveClassJoinUser(JoinClassRequest requestBody, Long userId) {
+        ClassJoinUser entity = ClassJoinUser.builder()
+                .classId(requestBody.getClassId())
+                .userId(userId)
+                .content(requestBody.getContent())
+                .alarmType(requestBody.getAlarmType())
+                .accept((byte)1)
+                .build();
         return this.classJoinUserRepository.save(entity);
     }
 

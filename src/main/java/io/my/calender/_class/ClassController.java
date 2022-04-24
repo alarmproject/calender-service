@@ -1,13 +1,10 @@
 package io.my.calender._class;
 
-import io.my.calender._class.payload.request.AcceptClassRequest;
-import io.my.calender._class.payload.request.CreateClassRequest;
+import io.my.calender._class.payload.request.*;
 import io.my.calender._class.payload.response.SearchClassResponse;
 import io.my.calender.base.annotation.Logger;
 import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender._class.payload.request.InviteClassRequeset;
-import io.my.calender._class.payload.request.ModifyClassInfoRequest;
 import io.my.calender._class.payload.response.InviteClassListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +35,8 @@ public class ClassController {
     @Logger
     @PostMapping("/join")
     public Mono<BaseResponse> joinClass(
-            @RequestParam("classId") Long classId) {
-        return this.classService.joinClass(classId);
+            @RequestBody JoinClassRequest requestBody) {
+        return this.classService.joinClass(requestBody);
     }
 
     @Logger
