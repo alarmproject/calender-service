@@ -88,6 +88,8 @@ public class PersonelService {
                 personelCalenderJoinUserRepository.findByUserIdAndPersonelCalenderId(userId, requestBody.getPersonelCalenderId()))
                 .flatMap(entity -> {
                     entity.setAccept(requestBody.getAccept() ? (byte) 1 : (byte) 0);
+                    entity.setAlarmType(requestBody.getAlarmType());
+                    entity.setContent(requestBody.getContent());
                     return personelCalenderJoinUserRepository.save(entity);
                 }).map(entity -> new BaseResponse());
     }

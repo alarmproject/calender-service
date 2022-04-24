@@ -9,5 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class AcceptPersoneCalenderRequest {
     private Long personelCalenderId;
+    private String content;
+    private String alarmType;
     private Boolean accept;
 }

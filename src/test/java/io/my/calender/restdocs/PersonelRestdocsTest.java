@@ -173,6 +173,8 @@ class PersonelRestdocsTest extends RestdocsBase {
     void acceptPersonelCalender() {
         var requestBody = AcceptPersoneCalenderRequest.builder()
                 .accept(Boolean.FALSE)
+                .content("메모입니다.")
+                .alarmType("personnel")
                 .personelCalenderId(1L)
                 .build();
 
@@ -187,7 +189,15 @@ class PersonelRestdocsTest extends RestdocsBase {
                         fieldWithPath("accept").description("수락 여부")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("Boolean"))
+                                        RestDocAttributes.format("Boolean")),
+                        fieldWithPath("content").description("메모")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("alarmType").description("알람 타입")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String"))
                 );
 
         ResponseFieldsSnippet responseFieldsSnippet =
