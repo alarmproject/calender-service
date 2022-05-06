@@ -214,3 +214,12 @@ include::{snippets}/personelrestdocstest/searchpersonelcalenderlist/http-request
 include::{snippets}/personelrestdocstest/searchpersonelcalenderlist/http-response.adoc[]
 include::{snippets}/personelrestdocstest/searchpersonelcalenderlist/curl-request.adoc[]
 
+[[resources-calender-personel-detail]]
+==== 수업 상세
+
+include::{snippets}/personelrestdocstest/calenderpersoneldetail/path-parameters.adoc[]
+include::{snippets}/personelrestdocstest/calenderpersoneldetail/response-fields.adoc[]
+include::{snippets}/personelrestdocstest/calenderpersoneldetail/http-request.adoc[]
+include::{snippets}/personelrestdocstest/calenderpersoneldetail/http-response.adoc[]
+include::{snippets}/personelrestdocstest/calenderpersoneldetail/curl-request.adoc[]
+

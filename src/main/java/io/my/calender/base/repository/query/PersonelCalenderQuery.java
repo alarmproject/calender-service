@@ -1,8 +1,10 @@
 package io.my.calender.base.repository.query;
 
+import io.my.calender.personel.payload.request.PersonelCalenderDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
@@ -83,5 +85,24 @@ public class PersonelCalenderQuery {
         if (title != null) sql = sql.bind("title", title);
 
         return sql.bind("perPage", perPage);
+    }
+
+    public DatabaseClient.GenericExecuteSpec findPersonelCalenderDetail(Long id) {
+        String query = "" +
+                "select " +
+                "pc.id " +
+                ", pc.title " +
+                ", pc.content " +
+                ", pc.location " +
+                ", pc.`day` " +
+                ", pc.`open` " +
+                ", c.start_time " +
+                ", c.end_time " +
+                "from " +
+                "personel_calender pc " +
+                "join calender c on pc.id = c.personel_calender_id " +
+                "where pc.id = :id";
+
+        return this.client.sql(query).bind("id", id);
     }
 }

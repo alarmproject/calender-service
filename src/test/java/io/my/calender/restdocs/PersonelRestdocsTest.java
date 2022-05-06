@@ -4,11 +4,9 @@ import io.my.calender.base.base.RestDocAttributes;
 import io.my.calender.base.base.RestdocsBase;
 import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender.personel.payload.request.AcceptPersoneCalenderRequest;
-import io.my.calender.personel.payload.request.CreatePersonelRequest;
-import io.my.calender.personel.payload.request.InvitePersonelRequest;
-import io.my.calender.personel.payload.request.ModifyPersonelCalenderRequest;
+import io.my.calender.personel.payload.request.*;
 import io.my.calender.personel.payload.response.MyPersonelCalenderListResponse;
+import io.my.calender.personel.payload.response.PersonelCalenderJoinUserInfoResponse;
 import io.my.calender.personel.payload.response.SearchPersonelCalenderListResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -497,5 +495,137 @@ class PersonelRestdocsTest extends RestdocsBase {
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/searchpersonelcalenderlist", requestParametersSnippet, responseFieldsSnippet));
+    }
+
+    @Test
+    @DisplayName("개인 일정 상세 조회")
+    void findPersonelCalenderDetail() {
+        List<PersonelCalenderJoinUserInfoResponse> joinUserList = new ArrayList<>();
+
+        joinUserList.add(
+                PersonelCalenderJoinUserInfoResponse.builder()
+                        .userId(1L)
+                        .nickname("nickname")
+                        .name("name")
+                        .accept((byte)1)
+                        .imageUrl("http://mysend.co.kr:8080/image/image?fileName=c91a6281-d9bd-4119-95ac-d57c17c0451a_charactor.jpeg")
+                .build()
+        );
+        joinUserList.add(
+                PersonelCalenderJoinUserInfoResponse.builder()
+                        .userId(2L)
+                        .nickname("nickname1")
+                        .name("name1")
+                        .accept((byte)1)
+                        .imageUrl("http://mysend.co.kr:8080/image/image?fileName=c91a6281-d9bd-4119-95ac-d57c17c0451a_charactor.jpeg")
+                .build()
+        );
+
+        PersonelCalenderDetailResponse responseBody = PersonelCalenderDetailResponse.builder()
+                .id(3L)
+                .title("신입생 환영회 1111")
+                .content("수정수")
+                .location("수정입문학과 101호")
+                .day("금")
+                .open(Boolean.FALSE)
+                .startTime(1650417478000L)
+                .endTime(1650423413000L)
+                .joinUserList(joinUserList)
+                .inviteUserCount(3)
+                .acceptUserCount(1)
+                .isAccept(Boolean.TRUE)
+                .build();
+
+        Mockito.when(personelService.findPersonelCalenderDetail(Mockito.any())).thenReturn(Mono.just(new BaseExtentionResponse<>(responseBody)));
+
+        PathParametersSnippet pathParametersSnippet = pathParameters(
+                parameterWithName("id").description("개인 일정 번호")
+                        .attributes(
+                                RestDocAttributes.length(0),
+                                RestDocAttributes.format("String"))
+        );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.id").description("일정 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.title").description("일정 제목")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.content").description("일정 내용")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.location").description("일정 위치")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.startTime").description("시작 시간")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Unixtime")),
+                        fieldWithPath("returnValue.endTime").description("종료 시간")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Unixtime")),
+                        fieldWithPath("returnValue.day").description("수업일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.open").description("공개 여부")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean")),
+                        fieldWithPath("returnValue.joinUserList.[].userId").description("사용자 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.joinUserList.[].accept").description("승낙 여부")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.joinUserList.[].imageUrl").description("프로필 사진 주소")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.joinUserList.[].name").description("사용자 이름")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.joinUserList.[].nickname").description("사용자 닉네임")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.inviteUserCount").description("초대 유저 수")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.acceptUserCount").description("승낙 유저 수")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.isAccept").description("승낙 여부(요청자)")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean"))
+                );
+
+        getWebTestClientPathVariable(3, "/calender/personel/detail/{id}").expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/calenderpersoneldetail", pathParametersSnippet, responseFieldsSnippet));
+
+
     }
 }

@@ -10,12 +10,11 @@ import io.my.calender.base.repository.CalenderRepository;
 import io.my.calender.base.repository.PersonelCalenderJoinUserRepository;
 import io.my.calender.base.repository.PersonelCalenderRepository;
 import io.my.calender.base.repository.dao.PersonelCalenderDAO;
+import io.my.calender.base.repository.dao.PersonelCalenderJoinUserDAO;
 import io.my.calender.base.util.DateUtil;
-import io.my.calender.personel.payload.request.AcceptPersoneCalenderRequest;
-import io.my.calender.personel.payload.request.CreatePersonelRequest;
-import io.my.calender.personel.payload.request.InvitePersonelRequest;
-import io.my.calender.personel.payload.request.ModifyPersonelCalenderRequest;
+import io.my.calender.personel.payload.request.*;
 import io.my.calender.personel.payload.response.MyPersonelCalenderListResponse;
+import io.my.calender.personel.payload.response.PersonelCalenderJoinUserInfoResponse;
 import io.my.calender.personel.payload.response.SearchPersonelCalenderListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,15 +23,19 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 @RequiredArgsConstructor
 public class PersonelService {
     private final DateUtil dateUtil;
     private final CalenderRepository calenderRepository;
-    private final PersonelCalenderDAO personelCalenderDAO;
     private final PersonelCalenderRepository personelCalenderRepository;
     private final PersonelCalenderJoinUserRepository personelCalenderJoinUserRepository;
+
+    private final PersonelCalenderDAO personelCalenderDAO;
+    private final PersonelCalenderJoinUserDAO personelCalenderJoinUserDAO;
+
 
     public Mono<BaseResponse> createPersonelCalender(
             CreatePersonelRequest requestBody) {
@@ -120,5 +123,36 @@ public class PersonelService {
         return personelCalenderDAO.searchPersonelCalenderList(personelCalenderId, perPage, title)
                 .collectList()
                 .map(BaseExtentionResponse::new);
+    }
+
+    public Mono<BaseExtentionResponse<PersonelCalenderDetailResponse>> findPersonelCalenderDetail(Long id) {
+        AtomicLong atomicUserId = new AtomicLong();
+        return JwtContextHolder.getMonoUserId().flatMap(userId -> {
+            atomicUserId.set(userId);
+            return personelCalenderDAO.findPersonelCalenderDetail(id);
+        }).flatMap(personelCalenderDetailResponse ->
+                personelCalenderJoinUserDAO.findPersonelCalenderJoinUserInfo(id)
+                .collectList()
+                .map(list -> {
+                    int acceptUserCount = 0;
+                    boolean isAccept = false;
+
+                    for (PersonelCalenderJoinUserInfoResponse joinUser : list) {
+                        if (joinUser.getAccept() == 1) {
+                            acceptUserCount++;
+                        }
+
+                        if (joinUser.getUserId() == atomicUserId.get()) {
+                            isAccept = joinUser.getAccept() == 1;
+                        }
+                    }
+                    personelCalenderDetailResponse.setIsAccept(isAccept);
+                    personelCalenderDetailResponse.setAcceptUserCount(acceptUserCount);
+                    personelCalenderDetailResponse.setInviteUserCount(list.size());
+                    personelCalenderDetailResponse.setJoinUserList(list);
+
+                    return new BaseExtentionResponse<>(personelCalenderDetailResponse);
+                })
+        );
     }
 }

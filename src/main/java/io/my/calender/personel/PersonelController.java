@@ -3,10 +3,7 @@ package io.my.calender.personel;
 import io.my.calender.base.annotation.Logger;
 import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender.personel.payload.request.AcceptPersoneCalenderRequest;
-import io.my.calender.personel.payload.request.CreatePersonelRequest;
-import io.my.calender.personel.payload.request.InvitePersonelRequest;
-import io.my.calender.personel.payload.request.ModifyPersonelCalenderRequest;
+import io.my.calender.personel.payload.request.*;
 import io.my.calender.personel.payload.response.MyPersonelCalenderListResponse;
 import io.my.calender.personel.payload.response.SearchPersonelCalenderListResponse;
 import lombok.RequiredArgsConstructor;
@@ -73,6 +70,13 @@ public class PersonelController {
             @RequestParam(required = false, name = "title") String title) {
 
         return this.personelService.searchPersonelCalenderList(personelCalenderId, perPage, title);
+    }
+
+    @Logger
+    @GetMapping("/detail/{id}")
+    public Mono<BaseExtentionResponse<PersonelCalenderDetailResponse>> findPersonelCalenderDetail(
+            @PathVariable("id") Long id) {
+        return this.personelService.findPersonelCalenderDetail(id);
     }
 
 

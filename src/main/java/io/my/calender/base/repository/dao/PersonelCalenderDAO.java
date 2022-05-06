@@ -3,11 +3,13 @@ package io.my.calender.base.repository.dao;
 import io.my.calender.base.properties.ServerProperties;
 import io.my.calender.base.repository.query.PersonelCalenderQuery;
 import io.my.calender.base.util.DateUtil;
+import io.my.calender.personel.payload.request.PersonelCalenderDetailResponse;
 import io.my.calender.personel.payload.response.MyPersonelCalenderListResponse;
 import io.my.calender.personel.payload.response.SearchPersonelCalenderListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 
@@ -81,5 +83,22 @@ public class PersonelCalenderDAO {
     }
 
 
-
+    public Mono<PersonelCalenderDetailResponse> findPersonelCalenderDetail(Long id) {
+        return this.personelCalenderQuery.findPersonelCalenderDetail(id).map((row, rowMetadata) ->
+                PersonelCalenderDetailResponse.builder()
+                    .id(row.get("id", Long.class))
+                    .title(row.get("title", String.class))
+                    .content(row.get("content", String.class))
+                    .location(row.get("location", String.class))
+                    .day(row.get("day", String.class))
+                    .open(row.get("open", Boolean.class))
+                    .startTime(
+                            dateUtil.localDateTimeToUnixTime(row.get("start_time", LocalDateTime.class))
+                    )
+                    .endTime(
+                            dateUtil.localDateTimeToUnixTime(row.get("end_time", LocalDateTime.class))
+                    )
+                    .build()
+        ).one();
+    }
 }
