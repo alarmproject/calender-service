@@ -674,7 +674,7 @@ class ClassRestdocsTest extends RestdocsBase {
         getWebTestClientPathVariable(1, "/calender/class/detail/{id}").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("calenderclassdetail", pathParametersSnippet, responseFieldsSnippet));
+                .consumeWith(createConsumer("/calenderclassdetail", pathParametersSnippet, responseFieldsSnippet));
 
     }
 
