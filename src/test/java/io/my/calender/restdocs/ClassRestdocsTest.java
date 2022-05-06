@@ -1,6 +1,7 @@
 package io.my.calender.restdocs;
 
 import io.my.calender._class.payload.request.*;
+import io.my.calender._class.payload.response.InviteClassTimeListResponse;
 import io.my.calender.base.base.RestDocAttributes;
 import io.my.calender.base.base.RestdocsBase;
 import io.my.calender.base.payload.BaseExtentionResponse;
@@ -442,12 +443,31 @@ class ClassRestdocsTest extends RestdocsBase {
     @DisplayName("초대받은 수업 목록 조회")
     void findInviteClassList() {
         List<InviteClassListResponse> list = new ArrayList<>();
+        List<InviteClassTimeListResponse> classTimeList = new ArrayList<>();
+
+        classTimeList.add(
+                InviteClassTimeListResponse.builder()
+                        .day("월")
+                        .startHour(11)
+                        .endHour(12)
+                        .build()
+        );
+
+        classTimeList.add(
+                InviteClassTimeListResponse.builder()
+                        .day("화")
+                        .startHour(11)
+                        .endHour(12)
+                        .build()
+        );
+
         list.add(InviteClassListResponse.builder()
                 .id(1L)
                 .title("경제학원론")
                 .location("인문관 1호")
                 .professorName("김교수")
                 .imageUrl(null)
+                .classTimeList(classTimeList)
                 .build());
 
         Mockito.when(classService.findInviteClassList()).thenReturn(Mono.just(new BaseExtentionResponse<>(list)));
@@ -485,7 +505,19 @@ class ClassRestdocsTest extends RestdocsBase {
                         fieldWithPath("returnValue.[].alarmType").description("알람 타입")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("String"))
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].classTimeList.[].day").description("요일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].classTimeList.[].startHour").description("시작 시간")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.[].classTimeList.[].endHour").description("종료 시간")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
                 );
 
         getWebTestClient("/calender/class/invite").expectStatus()

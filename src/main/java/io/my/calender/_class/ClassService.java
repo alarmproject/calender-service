@@ -2,6 +2,7 @@ package io.my.calender._class;
 
 import io.my.calender._class.payload.request.*;
 import io.my.calender._class.payload.response.InviteClassListResponse;
+import io.my.calender._class.payload.response.InviteClassTimeListResponse;
 import io.my.calender._class.payload.response.SearchClassResponse;
 import io.my.calender.base.context.JwtContextHolder;
 import io.my.calender.base.entity.Calender;
@@ -182,6 +183,20 @@ public class ClassService {
     public Mono<BaseExtentionResponse<List<InviteClassListResponse>>> findInviteClassList() {
         return JwtContextHolder.getMonoUserId()
                 .flatMapMany(classDAO::findInviteClassList)
+                .flatMap(response ->
+                    classTimeRepository.findAllByClassId(response.getId())
+                        .map(entity ->
+                                InviteClassTimeListResponse.builder()
+                                        .day(entity.getDay())
+                                        .startHour(entity.getStartHour())
+                                        .endHour(entity.getEndHour())
+                                        .build())
+                        .collectList()
+                        .map(list -> {
+                            response.setClassTimeList(list);
+                            return response;
+                        })
+                )
                 .collectList()
                 .map(BaseExtentionResponse::new)
                 ;

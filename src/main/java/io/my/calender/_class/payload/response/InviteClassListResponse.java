@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -16,4 +18,9 @@ public class InviteClassListResponse {
     private String location;
     private String imageUrl;
     private String alarmType;
+    private List<InviteClassTimeListResponse> classTimeList;
+
+    public void setClassTimeList(List<InviteClassTimeListResponse> list) {
+        this.classTimeList = list;
+    }
 }
