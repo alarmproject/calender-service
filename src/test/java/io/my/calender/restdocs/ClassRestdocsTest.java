@@ -1,6 +1,7 @@
 package io.my.calender.restdocs;
 
 import io.my.calender._class.payload.request.*;
+import io.my.calender._class.payload.response.ClassJoinUserInfoResponse;
 import io.my.calender._class.payload.response.InviteClassTimeListResponse;
 import io.my.calender.base.base.RestDocAttributes;
 import io.my.calender.base.base.RestdocsBase;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.restdocs.payload.RequestFieldsSnippet;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
+import org.springframework.restdocs.request.PathParametersSnippet;
 import org.springframework.restdocs.request.RequestParametersSnippet;
 import reactor.core.publisher.Mono;
 
@@ -20,8 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 
 class ClassRestdocsTest extends RestdocsBase {
 
@@ -524,6 +525,156 @@ class ClassRestdocsTest extends RestdocsBase {
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/findinviteclasslist", responseFieldsSnippet));
+
+    }
+
+    @Test
+    @DisplayName("수업 상세 조회")
+    void findClassDetail() {
+        List<ClassJoinUserInfoResponse> joinUserList = new ArrayList<>();
+
+        joinUserList.add(
+                ClassJoinUserInfoResponse.builder()
+                        .userId(1L)
+                        .nickname("nickname")
+                        .name("name")
+                        .accept((byte)1)
+                        .imageUrl("http://mysend.co.kr:8080/image/image?fileName=c91a6281-d9bd-4119-95ac-d57c17c0451a_charactor.jpeg")
+                .build()
+        );
+        joinUserList.add(
+                ClassJoinUserInfoResponse.builder()
+                        .userId(2L)
+                        .nickname("nickname1")
+                        .name("name1")
+                        .accept((byte)1)
+                        .imageUrl("http://mysend.co.kr:8080/image/image?fileName=c91a6281-d9bd-4119-95ac-d57c17c0451a_charactor.jpeg")
+                        .build()
+        );
+
+        List<InviteClassTimeListResponse> classTimeList = new ArrayList<>();
+        classTimeList.add(
+                InviteClassTimeListResponse.builder()
+                        .day("월")
+                        .startHour(11)
+                        .endHour(12)
+                        .build()
+        );
+        classTimeList.add(
+                InviteClassTimeListResponse.builder()
+                        .day("수")
+                        .startHour(11)
+                        .endHour(12)
+                        .build()
+        );
+
+        ClassDetailResponse responseBody = ClassDetailResponse.builder()
+                .id(1L)
+                .title("화학입문학")
+                .startDate(1647652678000L)
+                .endDate(1658193478000L)
+                .content("내용입니다내용입니다.")
+                .location("인문학관 101호")
+                .classTimeList(classTimeList)
+                .joinUserList(joinUserList)
+                .inviteUserCount(2)
+                .acceptUserCount(2)
+                .isAccept(Boolean.TRUE)
+                .build();
+
+        Mockito.when(classService.findClassDetail(Mockito.any())).thenReturn(Mono.just(new BaseExtentionResponse<>(responseBody)));
+
+        PathParametersSnippet pathParametersSnippet = pathParameters(
+                parameterWithName("id").description("수 번호")
+                        .attributes(
+                                RestDocAttributes.length(0),
+                                RestDocAttributes.format("String"))
+        );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.id").description("수업 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.title").description("수업 제목")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.content").description("수업 내용")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.location").description("수업 위치")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.startDate").description("시작일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Unixtime")),
+                        fieldWithPath("returnValue.endDate").description("종료일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Unixtime")),
+                        fieldWithPath("returnValue.classTimeList.[].day").description("수업일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.classTimeList.[].startHour").description("시작 시간")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.classTimeList.[].endHour").description("종료 시간")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.joinUserList.[].userId").description("사용자 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.joinUserList.[].accept").description("승낙 여부")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.joinUserList.[].imageUrl").description("프로필 사진 주소")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.joinUserList.[].name").description("사용자 이름")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.joinUserList.[].nickname").description("사용자 닉네임")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.inviteUserCount").description("초대 유저 수")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.acceptUserCount").description("승낙 유저 수")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.isAccept").description("승낙 여부(요청자)")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean"))
+                );
+
+        getWebTestClientPathVariable(1, "/calender/class/detail/{id}").expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("calenderclassdetail", pathParametersSnippet, responseFieldsSnippet));
 
     }
 

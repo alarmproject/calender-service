@@ -70,4 +70,11 @@ public class ClassController {
         return this.classService.findInviteClassList();
     }
 
+    @Logger
+    @GetMapping("/detail/{id}")
+    public Mono<BaseExtentionResponse<ClassDetailResponse>> findClassDetail(
+            @PathVariable("id") Long id) {
+        return this.classService.findClassDetail(id);
+    }
+
 }

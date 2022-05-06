@@ -101,6 +101,10 @@ public class RestdocsBase {
         return this.webTestClient.method(HttpMethod.GET).uri(uri).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).bodyValue(body).exchange();
     }
 
+    protected WebTestClient.ResponseSpec getWebTestClientPathVariable(Object body, String uri) {
+        return this.webTestClient.method(HttpMethod.GET).uri(uri, body).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).exchange();
+    }
+
     protected WebTestClient.ResponseSpec postWebTestClient(Object body, String uri) {
         return this.webTestClient.post().uri(uri).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).bodyValue(body).exchange();
     }

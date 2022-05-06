@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class ClassQuery {
@@ -65,5 +67,24 @@ public class ClassQuery {
                 "where cju.user_id = :userId and (cju.accept != 0)";
 
         return this.client.sql(query).bind("userId", userId);
+    }
+
+    public DatabaseClient.GenericExecuteSpec findClassDetail(Long id) {
+        String query = "" +
+                "select " +
+                "c.id " +
+                ", c.title " +
+                ", c.start_date " +
+                ", c.end_date " +
+                ", c.content " +
+                ", c.location " +
+                ", ct.`day` " +
+                ", ct.start_hour " +
+                ", ct.end_hour " +
+                "from " +
+                "class c " +
+                "left join class_time ct on c.id = ct.class_id " +
+                "where c.id = :id";
+        return this.client.sql(query).bind("id", id);
     }
 }

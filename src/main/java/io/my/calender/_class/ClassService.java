@@ -1,6 +1,7 @@
 package io.my.calender._class;
 
 import io.my.calender._class.payload.request.*;
+import io.my.calender._class.payload.response.ClassJoinUserInfoResponse;
 import io.my.calender._class.payload.response.InviteClassListResponse;
 import io.my.calender._class.payload.response.InviteClassTimeListResponse;
 import io.my.calender._class.payload.response.SearchClassResponse;
@@ -13,6 +14,7 @@ import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.base.repository.*;
 import io.my.calender.base.repository.dao.ClassDAO;
+import io.my.calender.base.repository.dao.ClassJoinUserDAO;
 import io.my.calender.base.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -31,6 +34,8 @@ import java.util.concurrent.atomic.AtomicReference;
 public class ClassService {
     private final DateUtil dateUtil;
     private final ClassDAO classDAO;
+    private final ClassJoinUserDAO classJoinUserDAO;
+
     private final UserRepository userRepository;
     private final ClassRepository classRepository;
     private final CalenderRepository calenderRepository;
@@ -200,5 +205,34 @@ public class ClassService {
                 .collectList()
                 .map(BaseExtentionResponse::new)
                 ;
+    }
+
+    public Mono<BaseExtentionResponse<ClassDetailResponse>> findClassDetail(Long id) {
+        AtomicLong atomicUserId = new AtomicLong();
+        return JwtContextHolder.getMonoUserId().flatMap(userId -> {
+            atomicUserId.set(userId);
+            return classDAO.findClassDetail(id);
+        }).flatMap(classDetailResponse ->
+            classJoinUserDAO.findClassJoinUserInfo(id)
+                .collectList()
+                .map(list -> {
+                    Integer acceptUserCount = 0;
+                    boolean isAccept = false;
+                    for (ClassJoinUserInfoResponse joinUser : list) {
+                        if (joinUser.getAccept() == 1) {
+                            acceptUserCount++;
+                        }
+
+                        if (joinUser.getUserId() == atomicUserId.get()) {
+                            isAccept = joinUser.getAccept() == 1;
+                        }
+                    }
+                    classDetailResponse.setIsAccept(isAccept);
+                    classDetailResponse.setAcceptUserCount(acceptUserCount);
+                    classDetailResponse.setInviteUserCount(list.size());
+                    classDetailResponse.setJoinUserList(list);
+                    return new BaseExtentionResponse<>(classDetailResponse);
+                })
+        );
     }
 }

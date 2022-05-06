@@ -118,6 +118,15 @@ include::{snippets}/classrestdocstest/acceptclass/http-request.adoc[]
 include::{snippets}/classrestdocstest/acceptclass/http-response.adoc[]
 include::{snippets}/classrestdocstest/acceptclass/curl-request.adoc[]
 
+[[resources-calender-class-detail]]
+==== 수업 상세
+
+include::{snippets}/classrestdocstest/calenderclassdetail/path-parameters.adoc[]
+include::{snippets}/classrestdocstest/calenderclassdetail/response-fields.adoc[]
+include::{snippets}/classrestdocstest/calenderclassdetail/http-request.adoc[]
+include::{snippets}/classrestdocstest/calenderclassdetail/http-response.adoc[]
+include::{snippets}/classrestdocstest/calenderclassdetail/curl-request.adoc[]
+
 === Class Time Calender
 
 [[resources-calender-class-time-modify]]
