@@ -197,11 +197,11 @@ include::{snippets}/personelrestdocstest/removepersonelcalender/http-response.ad
 include::{snippets}/personelrestdocstest/removepersonelcalender/curl-request.adoc[]
 
 [[resources-calender-personel-info-modify]]
-==== 개인 일정 정보
+==== 개인 일정 정보 수정
 
 include::{snippets}/personelrestdocstest/modifypersonelcalenderinfo/request-fields.adoc[]
 include::{snippets}/personelrestdocstest/modifypersonelcalenderinfo/response-fields.adoc[]
-include::{snippets}/personelrestdocstest/modifypersonelcalenderinfo/http-request.adoc[]
+include::{snippets}/personelrestdoc개이stest/modifypersonelcalenderinfo/http-request.adoc[]
 include::{snippets}/personelrestdocstest/modifypersonelcalenderinfo/http-response.adoc[]
 include::{snippets}/personelrestdocstest/modifypersonelcalenderinfo/curl-request.adoc[]
 
@@ -215,7 +215,7 @@ include::{snippets}/personelrestdocstest/searchpersonelcalenderlist/http-respons
 include::{snippets}/personelrestdocstest/searchpersonelcalenderlist/curl-request.adoc[]
 
 [[resources-calender-personel-detail]]
-==== 수업 상세
+==== 개인 일정 상세 조회
 
 include::{snippets}/personelrestdocstest/calenderpersoneldetail/path-parameters.adoc[]
 include::{snippets}/personelrestdocstest/calenderpersoneldetail/response-fields.adoc[]
