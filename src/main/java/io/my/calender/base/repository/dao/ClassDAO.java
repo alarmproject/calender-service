@@ -82,7 +82,9 @@ public class ClassDAO {
                             InviteClassTimeListResponse.builder()
                                     .day(row.get("day", String.class))
                                     .startHour(row.get("start_hour", Integer.class))
+                                    .startMinutes(row.get("start_minutes", Integer.class))
                                     .endHour(row.get("end_hour", Integer.class))
+                                    .endMinutes(row.get("end_minutes", Integer.class))
                                     .build()
                     );
 

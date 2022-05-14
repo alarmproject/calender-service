@@ -194,7 +194,9 @@ public class ClassService {
                                 InviteClassTimeListResponse.builder()
                                         .day(entity.getDay())
                                         .startHour(entity.getStartHour())
+                                        .startMinutes(entity.getStartMinutes())
                                         .endHour(entity.getEndHour())
+                                        .endMinutes(entity.getEndMinutes())
                                         .build())
                         .collectList()
                         .map(list -> {

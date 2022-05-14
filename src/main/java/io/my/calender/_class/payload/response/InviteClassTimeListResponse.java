@@ -12,5 +12,7 @@ import lombok.NoArgsConstructor;
 public class InviteClassTimeListResponse {
     private String day;
     private Integer startHour;
+    private Integer startMinutes;
     private Integer endHour;
+    private Integer endMinutes;
 }

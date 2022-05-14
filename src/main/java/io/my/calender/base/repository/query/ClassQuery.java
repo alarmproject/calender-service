@@ -81,6 +81,8 @@ public class ClassQuery {
                 ", ct.`day` " +
                 ", ct.start_hour " +
                 ", ct.end_hour " +
+                ", ct.start_minutes " +
+                ", ct.end_minutes " +
                 "from " +
                 "class c " +
                 "left join class_time ct on c.id = ct.class_id " +

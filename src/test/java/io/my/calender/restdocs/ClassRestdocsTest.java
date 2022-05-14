@@ -450,7 +450,9 @@ class ClassRestdocsTest extends RestdocsBase {
                 InviteClassTimeListResponse.builder()
                         .day("월")
                         .startHour(11)
+                        .startMinutes(10)
                         .endHour(12)
+                        .endMinutes(10)
                         .build()
         );
 
@@ -458,7 +460,9 @@ class ClassRestdocsTest extends RestdocsBase {
                 InviteClassTimeListResponse.builder()
                         .day("화")
                         .startHour(11)
+                        .startMinutes(30)
                         .endHour(12)
+                        .endMinutes(30)
                         .build()
         );
 
@@ -511,11 +515,19 @@ class ClassRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
-                        fieldWithPath("returnValue.[].classTimeList.[].startHour").description("시작 시간")
+                        fieldWithPath("returnValue.[].classTimeList.[].startHour").description("시작 시간 (시)")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("returnValue.[].classTimeList.[].endHour").description("종료 시간")
+                        fieldWithPath("returnValue.[].classTimeList.[].startMinutes").description("시작 시간 (분)")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.[].classTimeList.[].endHour").description("종료 시간 (시)")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.[].classTimeList.[].endMinutes").description("종료 시간 (분)")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer"))
@@ -557,14 +569,18 @@ class ClassRestdocsTest extends RestdocsBase {
                 InviteClassTimeListResponse.builder()
                         .day("월")
                         .startHour(11)
+                        .startMinutes(10)
                         .endHour(12)
+                        .endMinutes(10)
                         .build()
         );
         classTimeList.add(
                 InviteClassTimeListResponse.builder()
                         .day("수")
                         .startHour(11)
+                        .startMinutes(30)
                         .endHour(12)
+                        .endMinutes(30)
                         .build()
         );
 
@@ -629,11 +645,19 @@ class ClassRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
-                        fieldWithPath("returnValue.classTimeList.[].startHour").description("시작 시간")
+                        fieldWithPath("returnValue.classTimeList.[].startHour").description("시작 시간 (시)")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("returnValue.classTimeList.[].endHour").description("종료 시간")
+                        fieldWithPath("returnValue.classTimeList.[].startMinutes").description("시작 시간 (분)")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.classTimeList.[].endHour").description("종료 시간 (시)")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.classTimeList.[].endMinutes").description("종료 시간 (분)")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
