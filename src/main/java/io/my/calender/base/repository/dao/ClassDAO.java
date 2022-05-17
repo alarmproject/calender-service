@@ -1,8 +1,7 @@
 package io.my.calender.base.repository.dao;
 
 import io.my.calender._class.payload.request.ClassDetailResponse;
-import io.my.calender._class.payload.response.InviteClassTimeListResponse;
-import io.my.calender.base.payload.BaseExtentionResponse;
+import io.my.calender._class.payload.response.ClassTimeListResponse;
 import io.my.calender.base.properties.ServerProperties;
 import io.my.calender.base.repository.query.ClassQuery;
 import io.my.calender.base.util.DateUtil;
@@ -16,6 +15,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 @RequiredArgsConstructor
@@ -24,7 +24,7 @@ public class ClassDAO {
     private final ClassQuery classQuery;
     private final ServerProperties serverProperties;
 
-    public Flux<SearchClassResponse> searchClasses(Long classId, Long collegeId, String title, Integer perPage) {
+    public Mono<List<SearchClassResponse>> searchClasses(Long classId, Long collegeId, String title, Integer perPage) {
         return this.classQuery.searchClasses(classId, collegeId, title, perPage)
                 .map(((row, rowMetadata) -> {
                     String imageUrl = row.get("file_name", String.class);
@@ -33,7 +33,19 @@ public class ClassDAO {
                             serverProperties.getImageUrl() +
                             serverProperties.getImagePath() +
                             imageUrl
+
                             ;
+                    List<ClassTimeListResponse> classTimeList = new ArrayList<>();
+
+                    classTimeList.add(
+                            ClassTimeListResponse.builder()
+                                    .day(row.get("day", String.class))
+                                    .startHour(row.get("start_hour", Integer.class))
+                                    .startMinutes(row.get("start_minutes", Integer.class))
+                                    .endHour(row.get("end_hour", Integer.class))
+                                    .endMinutes(row.get("end_minutes", Integer.class))
+                                    .build()
+                    );
 
                     return SearchClassResponse.builder()
                             .id(row.get("id", Long.class))
@@ -49,11 +61,29 @@ public class ClassDAO {
                             .professorName(row.get("professor_name", String.class))
                             .inviteUserCount(row.get("invite_user_count", Integer.class))
                             .acceptUserCount(row.get("accept_user_count", Integer.class))
-                            .day(row.get("day", String.class))
+                            .classTimeList(classTimeList)
                             .imageUrl(imageUrl)
                             .build();
                 }))
-                .all()
+                .all().collectList()
+                .map(list -> {
+                    AtomicLong atomicClassId = new AtomicLong();
+                    atomicClassId.set(0L);
+
+                    for (int index = list.size() - 1; index>=0; index--) {
+                        SearchClassResponse response = list.get(index);
+                        if (atomicClassId.get() != response.getId()) {
+                            atomicClassId.set(response.getId());
+                        } else {
+                            response.getClassTimeList().addAll(
+                                    list.get(index + 1).getClassTimeList()
+                            );
+                            list.remove(index + 1);
+                        }
+                    }
+
+                    return list;
+                })
                 ;
     }
 
@@ -77,9 +107,9 @@ public class ClassDAO {
         return this.classQuery.findClassDetail(id)
                 .map(((row, rowMetadata) -> {
 
-                    List<InviteClassTimeListResponse> list = new ArrayList<>();
+                    List<ClassTimeListResponse> list = new ArrayList<>();
                     list.add(
-                            InviteClassTimeListResponse.builder()
+                            ClassTimeListResponse.builder()
                                     .day(row.get("day", String.class))
                                     .startHour(row.get("start_hour", Integer.class))
                                     .startMinutes(row.get("start_minutes", Integer.class))

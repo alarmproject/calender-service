@@ -2,7 +2,7 @@ package io.my.calender.restdocs;
 
 import io.my.calender._class.payload.request.*;
 import io.my.calender._class.payload.response.ClassJoinUserInfoResponse;
-import io.my.calender._class.payload.response.InviteClassTimeListResponse;
+import io.my.calender._class.payload.response.ClassTimeListResponse;
 import io.my.calender.base.base.RestDocAttributes;
 import io.my.calender.base.base.RestdocsBase;
 import io.my.calender.base.payload.BaseExtentionResponse;
@@ -342,6 +342,16 @@ class ClassRestdocsTest extends RestdocsBase {
     void searchClasses() {
         List<SearchClassResponse> list = new ArrayList<>();
 
+        List<ClassTimeListResponse> classTimeList = new ArrayList<>();
+        classTimeList.add(
+                ClassTimeListResponse.builder()
+                        .startHour(10)
+                        .endHour(11)
+                        .startMinutes(0)
+                        .endMinutes(50)
+                .build()
+        );
+
         SearchClassResponse response = SearchClassResponse.builder()
                 .id(1L)
                 .userId(1L)
@@ -352,7 +362,7 @@ class ClassRestdocsTest extends RestdocsBase {
                 .professorName("김교수")
                 .inviteUserCount(30)
                 .acceptUserCount(2)
-                .day("수,월")
+                .classTimeList(classTimeList)
                 .imageUrl("http://mysend.co.kr:8080/image/image?fileName=c91a6281-d9bd-4119-95ac-d57c17c0451a_charactor.jpeg")
                 .build()
                 ;
@@ -423,7 +433,23 @@ class ClassRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
-                        fieldWithPath("returnValue.[].day").description("수업 요일")
+                        fieldWithPath("returnValue.[].classTimeList.[].day").description("수업 요일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].classTimeList.[].startHour").description("시작 시간(분)")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].classTimeList.[].startMinutes").description("시작 시간(분)")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].classTimeList.[].endHour").description("종료 시간(시)")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].classTimeList.[].endMinutes").description("종료 시간(분)")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
@@ -448,10 +474,10 @@ class ClassRestdocsTest extends RestdocsBase {
     @DisplayName("초대받은 수업 목록 조회")
     void findInviteClassList() {
         List<InviteClassListResponse> list = new ArrayList<>();
-        List<InviteClassTimeListResponse> classTimeList = new ArrayList<>();
+        List<ClassTimeListResponse> classTimeList = new ArrayList<>();
 
         classTimeList.add(
-                InviteClassTimeListResponse.builder()
+                ClassTimeListResponse.builder()
                         .day("월")
                         .startHour(11)
                         .startMinutes(10)
@@ -461,7 +487,7 @@ class ClassRestdocsTest extends RestdocsBase {
         );
 
         classTimeList.add(
-                InviteClassTimeListResponse.builder()
+                ClassTimeListResponse.builder()
                         .day("화")
                         .startHour(11)
                         .startMinutes(30)
@@ -568,9 +594,9 @@ class ClassRestdocsTest extends RestdocsBase {
                         .build()
         );
 
-        List<InviteClassTimeListResponse> classTimeList = new ArrayList<>();
+        List<ClassTimeListResponse> classTimeList = new ArrayList<>();
         classTimeList.add(
-                InviteClassTimeListResponse.builder()
+                ClassTimeListResponse.builder()
                         .day("월")
                         .startHour(11)
                         .startMinutes(10)
@@ -579,7 +605,7 @@ class ClassRestdocsTest extends RestdocsBase {
                         .build()
         );
         classTimeList.add(
-                InviteClassTimeListResponse.builder()
+                ClassTimeListResponse.builder()
                         .day("수")
                         .startHour(11)
                         .startMinutes(30)

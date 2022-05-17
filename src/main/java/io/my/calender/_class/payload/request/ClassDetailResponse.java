@@ -1,7 +1,7 @@
 package io.my.calender._class.payload.request;
 
 import io.my.calender._class.payload.response.ClassJoinUserInfoResponse;
-import io.my.calender._class.payload.response.InviteClassTimeListResponse;
+import io.my.calender._class.payload.response.ClassTimeListResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,7 +21,7 @@ public class ClassDetailResponse {
     private String content;
     private String location;
 
-    private List<InviteClassTimeListResponse> classTimeList;
+    private List<ClassTimeListResponse> classTimeList;
     private List<ClassJoinUserInfoResponse> joinUserList;
     private Integer inviteUserCount;
     private Integer acceptUserCount;

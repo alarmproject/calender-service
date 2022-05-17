@@ -3,7 +3,7 @@ package io.my.calender._class;
 import io.my.calender._class.payload.request.*;
 import io.my.calender._class.payload.response.ClassJoinUserInfoResponse;
 import io.my.calender._class.payload.response.InviteClassListResponse;
-import io.my.calender._class.payload.response.InviteClassTimeListResponse;
+import io.my.calender._class.payload.response.ClassTimeListResponse;
 import io.my.calender._class.payload.response.SearchClassResponse;
 import io.my.calender.base.context.JwtContextHolder;
 import io.my.calender.base.entity.Calender;
@@ -182,8 +182,7 @@ public class ClassService {
 
     public Mono<BaseExtentionResponse<List<SearchClassResponse>>> searchClasses(Long classId, Integer perPage, String title) {
         return JwtContextHolder.getMonoUserId().flatMap(userRepository::findById)
-                .flatMapMany(user -> classDAO.searchClasses(classId, user.getCollegeId(), title, perPage))
-                .collectList()
+                .flatMap(user -> classDAO.searchClasses(classId, user.getCollegeId(), title, perPage))
                 .map(BaseExtentionResponse::new)
         ;
     }
@@ -194,7 +193,7 @@ public class ClassService {
                 .flatMap(response ->
                     classTimeRepository.findAllByClassId(response.getId())
                         .map(entity ->
-                                InviteClassTimeListResponse.builder()
+                                ClassTimeListResponse.builder()
                                         .day(entity.getDay())
                                         .startHour(entity.getStartHour())
                                         .startMinutes(entity.getStartMinutes())

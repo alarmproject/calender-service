@@ -24,7 +24,11 @@ public class ClassQuery {
                 ", i.file_name " +
                 ", (select count(*) from class_join_user where class_id = c.id) as invite_user_count " +
                 ", (select count(*) from class_join_user where class_id = c.id and accept = 1) as accept_user_count " +
-                ", GROUP_CONCAT (ct.`day`) as day " +
+                ", ct.start_hour " +
+                ", ct.end_hour " +
+                ", ct.start_minutes " +
+                ", ct.end_minutes " +
+                ", ct.`day` " +
                 "from " +
                 "class c " +
                 "left join professor p ON c.professor_id = p.id " +
@@ -36,7 +40,7 @@ public class ClassQuery {
                 ) +
                 "c.college_id = :collegeId and " +
                 "c.title like CONCAT('%', :title, '%') " +
-                "group by c.id order by c.id desc limit :perPage"
+                "order by c.id desc limit :perPage"
                 ;
 
         DatabaseClient.GenericExecuteSpec sql = this.client.sql(query);

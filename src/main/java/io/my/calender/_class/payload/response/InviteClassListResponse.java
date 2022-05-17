@@ -18,9 +18,9 @@ public class InviteClassListResponse {
     private String location;
     private String imageUrl;
     private String alarmType;
-    private List<InviteClassTimeListResponse> classTimeList;
+    private List<ClassTimeListResponse> classTimeList;
 
-    public void setClassTimeList(List<InviteClassTimeListResponse> list) {
+    public void setClassTimeList(List<ClassTimeListResponse> list) {
         this.classTimeList = list;
     }
 }

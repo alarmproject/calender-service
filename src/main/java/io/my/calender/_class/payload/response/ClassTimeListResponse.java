@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class InviteClassTimeListResponse {
+public class ClassTimeListResponse {
     private String day;
     private Integer startHour;
     private Integer startMinutes;

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -20,5 +22,5 @@ public class SearchClassResponse {
     private String imageUrl;
     private Integer inviteUserCount;
     private Integer acceptUserCount;
-    private String day;
+    private List<ClassTimeListResponse> classTimeList;
 }
