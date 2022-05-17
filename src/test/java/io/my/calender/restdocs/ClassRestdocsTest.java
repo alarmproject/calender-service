@@ -65,7 +65,7 @@ class ClassRestdocsTest extends RestdocsBase {
                 .alarmType("class")
                 .build();
 
-        Mockito.when(classService.createClass(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+        Mockito.when(classService.createClass(Mockito.any())).thenReturn(Mono.just(new BaseExtentionResponse<>(1L)));
 
         RequestFieldsSnippet requestFieldsSnippet =
                 requestFields(
@@ -126,6 +126,10 @@ class ClassRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
                         fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue").description("수업 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer"))

@@ -20,7 +20,7 @@ public class ClassController {
 
     @Logger
     @PostMapping
-    public Mono<BaseResponse> createClass(
+    public Mono<BaseExtentionResponse<Long>> createClass(
             @RequestBody CreateClassRequest requestBody) {
         return this.classService.createClass(requestBody);
     }

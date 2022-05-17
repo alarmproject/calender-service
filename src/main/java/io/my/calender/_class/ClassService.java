@@ -42,7 +42,9 @@ public class ClassService {
     private final ClassTimeRepository classTimeRepository;
     private final ClassJoinUserRepository classJoinUserRepository;
 
-    public Mono<BaseResponse> createClass(CreateClassRequest requestBody) {
+    public Mono<BaseExtentionResponse<Long>> createClass(CreateClassRequest requestBody) {
+        AtomicLong atomicClassId = new AtomicLong();
+
         Class _class = Class.builder()
                 .title(requestBody.getTitle())
                 .collegeId(requestBody.getCollegeId())
@@ -62,6 +64,7 @@ public class ClassService {
             return this.classRepository.save(_class);
         })
         .flatMapMany(entity -> {
+            atomicClassId.set(entity.getId());
             List<ClassTime> saveClassTimeList = new ArrayList<>();
             requestBody.getClassTimeList().forEach(classTimeRequest -> {
                 ClassTime classTime = ClassTime.builder()
@@ -107,7 +110,7 @@ public class ClassService {
             calenderList.forEach(entityList::addAll);
             return this.calenderRepository.saveAll(entityList);
         })
-        .collectList().map(list -> new BaseResponse())
+        .collectList().map(list -> new BaseExtentionResponse<>(atomicClassId.get()))
         ;
     }
 
