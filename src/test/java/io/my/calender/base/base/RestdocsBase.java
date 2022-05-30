@@ -1,6 +1,7 @@
 package io.my.calender.base.base;
 
 import io.my.calender.base.context.JwtContextWebFilter;
+import io.my.calender.base.repository.dao.DualDAO;
 import io.my.calender.base.util.JwtUtil;
 import io.my.calender.calender.CalenderService;
 import io.my.calender._class.ClassService;
@@ -56,6 +57,9 @@ public class RestdocsBase {
 
     @MockBean
     protected ClassService classService;
+
+    @MockBean
+    protected DualDAO dualDAO;
 
     @MockBean
     protected PersonelService personelService;
