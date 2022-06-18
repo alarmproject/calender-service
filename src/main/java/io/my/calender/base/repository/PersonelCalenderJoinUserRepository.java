@@ -8,4 +8,6 @@ import reactor.core.publisher.Mono;
 public interface PersonelCalenderJoinUserRepository extends ReactiveCrudRepository<PersonelCalenderJoinUser, Long> {
     Mono<PersonelCalenderJoinUser> findByUserIdAndPersonelCalenderId(Long userId, Long personelCalenderId);
     Flux<PersonelCalenderJoinUser> findAllByPersonelCalenderId(Long personelCalenderId);
+
+    Mono<Integer> countByUserIdAndAccept(Long userId, int accept);
 }

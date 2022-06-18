@@ -79,5 +79,11 @@ public class PersonelController {
         return this.personelService.findPersonelCalenderDetail(id);
     }
 
+    @Logger
+    @GetMapping("/invite/count")
+    public Mono<BaseExtentionResponse<Integer>> findPersonelInviteCount() {
+        return this.personelService.findPersonelInviteCount();
+    }
+
 
 }

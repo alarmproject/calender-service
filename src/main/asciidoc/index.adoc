@@ -127,6 +127,15 @@ include::{snippets}/classrestdocstest/calenderclassdetail/http-request.adoc[]
 include::{snippets}/classrestdocstest/calenderclassdetail/http-response.adoc[]
 include::{snippets}/classrestdocstest/calenderclassdetail/curl-request.adoc[]
 
+[[resources-calender-class-find-invite-count]]
+==== 초대받은 수업 개수 조회
+
+include::{snippets}/classrestdocstest/findclassinvitecount/response-fields.adoc[]
+include::{snippets}/classrestdocstest/findclassinvitecount/http-request.adoc[]
+include::{snippets}/classrestdocstest/findclassinvitecount/http-response.adoc[]
+include::{snippets}/classrestdocstest/findclassinvitecount/curl-request.adoc[]
+
+
 === Class Time Calender
 
 [[resources-calender-class-time-modify]]
@@ -222,4 +231,12 @@ include::{snippets}/personelrestdocstest/calenderpersoneldetail/response-fields.
 include::{snippets}/personelrestdocstest/calenderpersoneldetail/http-request.adoc[]
 include::{snippets}/personelrestdocstest/calenderpersoneldetail/http-response.adoc[]
 include::{snippets}/personelrestdocstest/calenderpersoneldetail/curl-request.adoc[]
+
+[[resources-calender-personel-find-invite-count]]
+==== 초대받은 개인 일정 개수 조회
+
+include::{snippets}/personelrestdocstest/findpersonelinvitecount/response-fields.adoc[]
+include::{snippets}/personelrestdocstest/findpersonelinvitecount/http-request.adoc[]
+include::{snippets}/personelrestdocstest/findpersonelinvitecount/http-response.adoc[]
+include::{snippets}/personelrestdocstest/findpersonelinvitecount/curl-request.adoc[]
 

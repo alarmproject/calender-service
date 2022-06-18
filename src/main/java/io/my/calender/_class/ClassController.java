@@ -77,4 +77,10 @@ public class ClassController {
         return this.classService.findClassDetail(id);
     }
 
+    @Logger
+    @GetMapping("/invite/count")
+    public Mono<BaseExtentionResponse<Integer>> getClassInviteCount() {
+        return this.classService.findClassInviteCount();
+    }
+
 }

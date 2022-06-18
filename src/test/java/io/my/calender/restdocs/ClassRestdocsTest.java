@@ -732,4 +732,31 @@ class ClassRestdocsTest extends RestdocsBase {
 
     }
 
+    @Test
+    @DisplayName("초대받은 수업 개수 조회")
+    void findClassInviteCount() {
+        Mockito.when(classService.findClassInviteCount()).thenReturn(Mono.just(new BaseExtentionResponse<>(3)));
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue").description("초대받은 수업 개수")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+
+        getWebTestClient("/calender/class/invite/count").expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/findclassinvitecount", responseFieldsSnippet));
+
+    }
 }

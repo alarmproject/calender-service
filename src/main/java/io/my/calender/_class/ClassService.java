@@ -239,4 +239,10 @@ public class ClassService {
                 })
         );
     }
+
+    public Mono<BaseExtentionResponse<Integer>> findClassInviteCount() {
+        return JwtContextHolder.getMonoUserId().flatMap(userId ->
+                classJoinUserRepository.countByUserIdAndAccept(userId, 2))
+                .map(BaseExtentionResponse::new);
+    }
 }

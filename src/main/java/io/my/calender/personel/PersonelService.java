@@ -155,4 +155,10 @@ public class PersonelService {
                 })
         );
     }
+
+    public Mono<BaseExtentionResponse<Integer>> findPersonelInviteCount() {
+        return JwtContextHolder.getMonoUserId().flatMap(userId ->
+                personelCalenderJoinUserRepository.countByUserIdAndAccept(userId, 2))
+                .map(BaseExtentionResponse::new);
+    }
 }
