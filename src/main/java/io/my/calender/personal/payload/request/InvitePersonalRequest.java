@@ -1,4 +1,4 @@
-package io.my.calender.personel.payload.request;
+package io.my.calender.personal.payload.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Builder
 @AllArgsConstructor
-public class InvitePersonelRequest {
-    private Long personelCalenderId;
+public class InvitePersonalRequest {
+    private Long personalCalenderId;
     private List<Long> userList;
 }

@@ -1,6 +1,6 @@
-package io.my.calender.personel.payload.request;
+package io.my.calender.personal.payload.request;
 
-import io.my.calender.personel.payload.response.PersonelCalenderJoinUserInfoResponse;
+import io.my.calender.personal.payload.response.PersonalCalenderJoinUserInfoResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonelCalenderDetailResponse {
+public class PersonalCalenderDetailResponse {
     private Long id;
     private String title;
     private String content;
@@ -21,12 +21,12 @@ public class PersonelCalenderDetailResponse {
     private Boolean open;
     private Long startTime;
     private Long endTime;
-    private List<PersonelCalenderJoinUserInfoResponse> joinUserList;
+    private List<PersonalCalenderJoinUserInfoResponse> joinUserList;
     private Integer inviteUserCount;
     private Integer acceptUserCount;
     private Boolean isAccept;
 
-    public void setJoinUserList(List<PersonelCalenderJoinUserInfoResponse> list) {
+    public void setJoinUserList(List<PersonalCalenderJoinUserInfoResponse> list) {
         this.joinUserList = list;
     }
 

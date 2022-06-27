@@ -16,9 +16,9 @@ public class CalenderListResponse {
     private String classTitle;
     private String classLocation;
 
-    private Long personelCalenderId;
-    private String personelCalenderTitle;
-    private String personelCalenderLocation;
+    private Long personalCalenderId;
+    private String personalCalenderTitle;
+    private String personalCalenderLocation;
 
     private String userName;
     private String imageUrl;

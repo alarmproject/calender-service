@@ -4,10 +4,10 @@ import io.my.calender.base.base.RestDocAttributes;
 import io.my.calender.base.base.RestdocsBase;
 import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
-import io.my.calender.personel.payload.request.*;
-import io.my.calender.personel.payload.response.MyPersonelCalenderListResponse;
-import io.my.calender.personel.payload.response.PersonelCalenderJoinUserInfoResponse;
-import io.my.calender.personel.payload.response.SearchPersonelCalenderListResponse;
+import io.my.calender.personal.payload.request.*;
+import io.my.calender.personal.payload.response.MyPersonalCalenderListResponse;
+import io.my.calender.personal.payload.response.PersonalCalenderJoinUserInfoResponse;
+import io.my.calender.personal.payload.response.SearchPersonalCalenderListResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -23,22 +23,22 @@ import java.util.List;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 
-class PersonelRestdocsTest extends RestdocsBase {
+class PersonalRestdocsTest extends RestdocsBase {
 
     @Test
     @DisplayName("개인 일정 생성 API")
-    void createPersonel() {
-        CreatePersonelRequest requestBody = CreatePersonelRequest
+    void createPersonal() {
+        CreatePersonalRequest requestBody = CreatePersonalRequest
                 .builder()
                 .title("사진동아리 신입생 환영회")
                 .location("사진동아리 동아리실")
                 .startTime(1647652678000L)
                 .endTime(1647658613000L)
                 .open(Boolean.TRUE)
-                .alarmType("personel")
+                .alarmType("personal")
                 .build();
 
-        Mockito.when(personelService.createPersonelCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+        Mockito.when(personalService.createPersonalCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
         RequestFieldsSnippet requestFieldsSnippet =
                 requestFields(
@@ -80,30 +80,30 @@ class PersonelRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Integer"))
                 );
 
-        postWebTestClient(requestBody, "/calender/personel").expectStatus()
+        postWebTestClient(requestBody, "/calender/personal").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/createpersonel", requestFieldsSnippet, responseFieldsSnippet));
+                .consumeWith(createConsumer("/createpersonal", requestFieldsSnippet, responseFieldsSnippet));
     }
 
     @Test
     @DisplayName("일정 초대 API")
-    void invitePersonelCalener() {
+    void invitePersonalCalener() {
         List<Long> userList = new ArrayList<>();
         userList.add(1L);
         userList.add(2L);
 
-        var requestBody = InvitePersonelRequest.builder()
-                .personelCalenderId(1L)
+        var requestBody = InvitePersonalRequest.builder()
+                .personalCalenderId(1L)
                 .userList(userList)
                 .build()
                 ;
 
-        Mockito.when(personelService.invitePersonelCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+        Mockito.when(personalService.invitePersonalCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
         RequestFieldsSnippet requestFieldsSnippet =
                 requestFields(
-                        fieldWithPath("personelCalenderId").description("일정 번호")
+                        fieldWithPath("personalCalenderId").description("일정 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
@@ -125,16 +125,16 @@ class PersonelRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Integer"))
                 );
 
-        postWebTestClient(requestBody, "/calender/personel/invite").expectStatus()
+        postWebTestClient(requestBody, "/calender/personal/invite").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/invitepersonelcalender", requestFieldsSnippet, responseFieldsSnippet));
+                .consumeWith(createConsumer("/invitepersonalcalender", requestFieldsSnippet, responseFieldsSnippet));
     }
 
     @Test
     @DisplayName("개인 일정 삭제")
-    void removePersonelCalender() {
-        Mockito.when(personelService.removePersonelCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+    void removePersonalCalender() {
+        Mockito.when(personalService.removePersonalCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
         PathParametersSnippet pathParametersSnippet = pathParameters(
                 parameterWithName("id").description("개인 일정 번호")
@@ -155,27 +155,27 @@ class PersonelRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Integer"))
                 );
 
-        deleteWebTestClient(1, "/calender/personel/{id}").expectStatus()
+        deleteWebTestClient(1, "/calender/personal/{id}").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/removepersonelcalender", pathParametersSnippet, responseFieldsSnippet));
+                .consumeWith(createConsumer("/removepersonalcalender", pathParametersSnippet, responseFieldsSnippet));
     }
 
     @Test
     @DisplayName("개인 일정 수락 or 거절")
-    void acceptPersonelCalender() {
-        var requestBody = AcceptPersoneCalenderRequest.builder()
+    void acceptPersonalCalender() {
+        var requestBody = AcceptPersonalCalenderRequest.builder()
                 .accept(Boolean.FALSE)
                 .content("메모입니다.")
                 .alarmType("personnel")
-                .personelCalenderId(1L)
+                .personalCalenderId(1L)
                 .build();
 
-        Mockito.when(personelService.acceeptPersonelCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+        Mockito.when(personalService.acceeptPersonalCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
         RequestFieldsSnippet requestFieldsSnippet =
                 requestFields(
-                        fieldWithPath("personelCalenderId").description("일정 번호")
+                        fieldWithPath("personalCalenderId").description("일정 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
@@ -204,28 +204,28 @@ class PersonelRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer"))
                 );
-        patchWebTestClient(requestBody, "/calender/personel/accept").expectStatus()
+        patchWebTestClient(requestBody, "/calender/personal/accept").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/acceptpersonelcalender", requestFieldsSnippet, responseFieldsSnippet));
+                .consumeWith(createConsumer("/acceptpersonalcalender", requestFieldsSnippet, responseFieldsSnippet));
     }
 
     @Test
     @DisplayName("개인 일정 정보 수정")
-    void modifyPersonelCalenderInfo() {
-        var requestBody = ModifyPersonelCalenderRequest.builder()
-                .personelCalenderId(1L)
+    void modifyPersonalCalenderInfo() {
+        var requestBody = ModifyPersonalCalenderRequest.builder()
+                .personalCalenderId(1L)
                 .title("사진동아리 신입생 환영회")
                 .location("사진동아리 동아리실")
                 .open(Boolean.TRUE)
-                .alarmType("personel")
+                .alarmType("personal")
                 .build();
 
-        Mockito.when(personelService.modifyPersonelCalenderInfo(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+        Mockito.when(personalService.modifyPersonalCalenderInfo(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
         RequestFieldsSnippet requestFieldsSnippet =
                 requestFields(
-                        fieldWithPath("personelCalenderId").description("일정 번호")
+                        fieldWithPath("personalCalenderId").description("일정 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
@@ -241,7 +241,7 @@ class PersonelRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Boolean")),
-                        fieldWithPath("alarmType").description("알람 타입( class, personel )")
+                        fieldWithPath("alarmType").description("알람 타입( class, personal )")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String"))
@@ -258,19 +258,19 @@ class PersonelRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer"))
                 );
-        patchWebTestClient(requestBody, "/calender/personel/info").expectStatus()
+        patchWebTestClient(requestBody, "/calender/personal/info").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/modifypersonelcalenderinfo", requestFieldsSnippet, responseFieldsSnippet));
+                .consumeWith(createConsumer("/modifypersonalcalenderinfo", requestFieldsSnippet, responseFieldsSnippet));
     }
 
     @Test
     @DisplayName("내 개인 일정 목록 조회")
     void test() {
-        List<MyPersonelCalenderListResponse> list = new ArrayList<>();
+        List<MyPersonalCalenderListResponse> list = new ArrayList<>();
 
         list.add(
-                MyPersonelCalenderListResponse.builder()
+                MyPersonalCalenderListResponse.builder()
                         .id(1L)
                         .day("수")
                         .title("title")
@@ -282,13 +282,13 @@ class PersonelRestdocsTest extends RestdocsBase {
                         .name("name")
                         .nickname("nickname")
                         .email(EMAIL)
-                        .alarmType("personel")
+                        .alarmType("personal")
                         .imageUrl("http://mysend.co.kr:8080/image/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg")
                         .build()
         );
 
-        BaseExtentionResponse<List<MyPersonelCalenderListResponse>> responseBody = new BaseExtentionResponse<>(list);
-        Mockito.when(personelService.myPersonelCalenderList(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(Mono.just(responseBody));
+        BaseExtentionResponse<List<MyPersonalCalenderListResponse>> responseBody = new BaseExtentionResponse<>(list);
+        Mockito.when(personalService.myPersonalCalenderList(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(Mono.just(responseBody));
         RequestParametersSnippet requestParametersSnippet =
                 requestParameters(
                         parameterWithName("id").description("마지막 id (페이징용)").optional()
@@ -372,19 +372,19 @@ class PersonelRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("String"))
                 );
 
-        getWebTestClient("/calender/personel/my/list").expectStatus()
+        getWebTestClient("/calender/personal/my/list").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/mypersonelcalenderlist", requestParametersSnippet, responseFieldsSnippet));
+                .consumeWith(createConsumer("/mypersonalcalenderlist", requestParametersSnippet, responseFieldsSnippet));
     }
 
     @Test
     @DisplayName("개인 일정 검색")
-    void searchPersonelCalenderList() {
-        List<SearchPersonelCalenderListResponse> list = new ArrayList<>();
+    void searchPersonalCalenderList() {
+        List<SearchPersonalCalenderListResponse> list = new ArrayList<>();
 
         list.add(
-                SearchPersonelCalenderListResponse.builder()
+                SearchPersonalCalenderListResponse.builder()
                         .id(1L)
                         .title("title")
                         .location("location")
@@ -402,11 +402,11 @@ class PersonelRestdocsTest extends RestdocsBase {
                         .build()
         );
 
-        BaseExtentionResponse<List<SearchPersonelCalenderListResponse>> responseBody = new BaseExtentionResponse<>(list);
-        Mockito.when(personelService.searchPersonelCalenderList(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(Mono.just(responseBody));
+        BaseExtentionResponse<List<SearchPersonalCalenderListResponse>> responseBody = new BaseExtentionResponse<>(list);
+        Mockito.when(personalService.searchPersonalCalenderList(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(Mono.just(responseBody));
         RequestParametersSnippet requestParametersSnippet =
                 requestParameters(
-                        parameterWithName("personelCalenderId").description("마지막 id (페이징용)").optional()
+                        parameterWithName("personalCalenderId").description("마지막 id (페이징용)").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")
@@ -491,19 +491,19 @@ class PersonelRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("String"))
                 );
 
-        getWebTestClient("/calender/personel").expectStatus()
+        getWebTestClient("/calender/personal").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/searchpersonelcalenderlist", requestParametersSnippet, responseFieldsSnippet));
+                .consumeWith(createConsumer("/searchpersonalcalenderlist", requestParametersSnippet, responseFieldsSnippet));
     }
 
     @Test
     @DisplayName("개인 일정 상세 조회")
-    void findPersonelCalenderDetail() {
-        List<PersonelCalenderJoinUserInfoResponse> joinUserList = new ArrayList<>();
+    void findPersonalCalenderDetail() {
+        List<PersonalCalenderJoinUserInfoResponse> joinUserList = new ArrayList<>();
 
         joinUserList.add(
-                PersonelCalenderJoinUserInfoResponse.builder()
+                PersonalCalenderJoinUserInfoResponse.builder()
                         .userId(1L)
                         .nickname("nickname")
                         .name("name")
@@ -512,7 +512,7 @@ class PersonelRestdocsTest extends RestdocsBase {
                 .build()
         );
         joinUserList.add(
-                PersonelCalenderJoinUserInfoResponse.builder()
+                PersonalCalenderJoinUserInfoResponse.builder()
                         .userId(2L)
                         .nickname("nickname1")
                         .name("name1")
@@ -521,7 +521,7 @@ class PersonelRestdocsTest extends RestdocsBase {
                 .build()
         );
 
-        PersonelCalenderDetailResponse responseBody = PersonelCalenderDetailResponse.builder()
+        PersonalCalenderDetailResponse responseBody = PersonalCalenderDetailResponse.builder()
                 .id(3L)
                 .title("신입생 환영회 1111")
                 .content("수정수")
@@ -536,7 +536,7 @@ class PersonelRestdocsTest extends RestdocsBase {
                 .isAccept(Boolean.TRUE)
                 .build();
 
-        Mockito.when(personelService.findPersonelCalenderDetail(Mockito.any())).thenReturn(Mono.just(new BaseExtentionResponse<>(responseBody)));
+        Mockito.when(personalService.findPersonalCalenderDetail(Mockito.any())).thenReturn(Mono.just(new BaseExtentionResponse<>(responseBody)));
 
         PathParametersSnippet pathParametersSnippet = pathParameters(
                 parameterWithName("id").description("개인 일정 번호")
@@ -621,17 +621,17 @@ class PersonelRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Boolean"))
                 );
 
-        getWebTestClientPathVariable(3, "/calender/personel/detail/{id}").expectStatus()
+        getWebTestClientPathVariable(3, "/calender/personal/detail/{id}").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/calenderpersoneldetail", pathParametersSnippet, responseFieldsSnippet));
+                .consumeWith(createConsumer("/calenderpersonaldetail", pathParametersSnippet, responseFieldsSnippet));
 
 
     }
     @Test
     @DisplayName("초대받은 개인 일정 개수 조회")
     void findClassInviteCount() {
-        Mockito.when(personelService.findPersonelInviteCount()).thenReturn(Mono.just(new BaseExtentionResponse<>(3)));
+        Mockito.when(personalService.findPersonalInviteCount()).thenReturn(Mono.just(new BaseExtentionResponse<>(3)));
 
         ResponseFieldsSnippet responseFieldsSnippet =
                 responseFields(
@@ -649,10 +649,10 @@ class PersonelRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Integer"))
                 );
 
-        getWebTestClient("/calender/personel/invite/count").expectStatus()
+        getWebTestClient("/calender/personal/invite/count").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/findpersonelinvitecount", responseFieldsSnippet));
+                .consumeWith(createConsumer("/findpersonalinvitecount", responseFieldsSnippet));
 
     }
 }

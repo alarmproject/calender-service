@@ -1,4 +1,4 @@
-package io.my.calender.personel.payload.response;
+package io.my.calender.personal.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,18 +9,19 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MyPersonelCalenderListResponse {
+public class SearchPersonalCalenderListResponse {
     private Long id;
     private String day;
     private String title;
-    private String content;
     private String location;
     private Boolean open;
-    private Boolean accept;
+    private Long regDateTime;
+    private Long modDateTime;
+    private Long startTime;
+    private Long endTime;
     private Long userId;
     private String name;
     private String nickname;
     private String email;
     private String imageUrl;
-    private String alarmType;
 }

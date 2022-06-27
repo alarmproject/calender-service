@@ -104,15 +104,15 @@ class CalenderRestdocsTest extends RestdocsBase {
                         .userId(1L)
                         .startTime(1647652678000L)
                         .endTime(1647658613000L)
-                        .personelCalenderId(1L)
-                        .personelCalenderTitle("사진동아리 신입생 환영회")
-                        .personelCalenderLocation("동아리실")
+                        .personalCalenderId(1L)
+                        .personalCalenderTitle("사진동아리 신입생 환영회")
+                        .personalCalenderLocation("동아리실")
                         .userName("Kim Bosung")
                         .imageUrl(imageUrl)
                         .inviteUserCount(15)
                         .acceptUserCount(14)
                         .accept(Boolean.FALSE)
-                        .alarmType("personel")
+                        .alarmType("personal")
                         .build())
         ;
 
@@ -169,15 +169,15 @@ class CalenderRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Boolean")),
-                        fieldWithPath("returnValue.[].personelCalenderId").description("개인 일정 번호").optional()
+                        fieldWithPath("returnValue.[].personalCalenderId").description("개인 일정 번호").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("returnValue.[].personelCalenderTitle").description("개인 일정 제목").optional()
+                        fieldWithPath("returnValue.[].personalCalenderTitle").description("개인 일정 제목").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
-                        fieldWithPath("returnValue.[].personelCalenderLocation").description("개인 일정 장소").optional()
+                        fieldWithPath("returnValue.[].personalCalenderLocation").description("개인 일정 장소").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),

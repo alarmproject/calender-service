@@ -20,8 +20,8 @@ public class ActiveService {
     private final ClassTimeRepository classTimeRepository;
     private final ClassJoinUserRepository classJoinUserRepository;
     private final ActiveHistoryRepository activeHistoryRepository;
-    private final PersonelCalenderRepository personelCalenderRepository;
-    private final PersonelCalenderJoinUserRepository personelCalenderJoinUserRepository;
+    private final PersonalCalenderRepository personalCalenderRepository;
+    private final PersonalCalenderJoinUserRepository personalCalenderJoinUserRepository;
 
     public Mono<Void> modifyClassTime(Long classTimeId) {
         return this.changeClassTime(classTimeId, "의 수업 시간이 변경되었습니다.");
@@ -76,10 +76,10 @@ public class ActiveService {
                                 })
                                 .map(e -> ActiveHistory.builder().userId(e.getUserId()).content(message.get()).build());
                     } else {
-                        return this.personelCalenderRepository.findById(entity.getPersonelCalenderId())
+                        return this.personalCalenderRepository.findById(entity.getPersonalCalenderId())
                                 .flatMapMany(e -> {
                                     message.set(e.getTitle() + content);
-                                    return this.personelCalenderJoinUserRepository.findAllByPersonelCalenderId(e.getId());
+                                    return this.personalCalenderJoinUserRepository.findAllByPersonalCalenderId(e.getId());
                                 })
                                 .map(e -> ActiveHistory.builder().userId(e.getUserId()).content(message.get()).build());
                     }

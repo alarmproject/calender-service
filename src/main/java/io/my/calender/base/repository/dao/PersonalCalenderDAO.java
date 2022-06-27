@@ -3,9 +3,9 @@ package io.my.calender.base.repository.dao;
 import io.my.calender.base.properties.ServerProperties;
 import io.my.calender.base.repository.query.PersonelCalenderQuery;
 import io.my.calender.base.util.DateUtil;
-import io.my.calender.personel.payload.request.PersonelCalenderDetailResponse;
-import io.my.calender.personel.payload.response.MyPersonelCalenderListResponse;
-import io.my.calender.personel.payload.response.SearchPersonelCalenderListResponse;
+import io.my.calender.personal.payload.request.PersonalCalenderDetailResponse;
+import io.my.calender.personal.payload.response.MyPersonalCalenderListResponse;
+import io.my.calender.personal.payload.response.SearchPersonalCalenderListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
@@ -15,19 +15,19 @@ import java.time.LocalDateTime;
 
 @Repository
 @RequiredArgsConstructor
-public class PersonelCalenderDAO {
+public class PersonalCalenderDAO {
     private final DateUtil dateUtil;
     private final ServerProperties serverProperties;
     private final PersonelCalenderQuery personelCalenderQuery;
 
-    public Flux<MyPersonelCalenderListResponse> findMyPersonelCalenderList(Long userId, Long personelCalenderId, Boolean accept, Boolean open) {
-        return this.personelCalenderQuery.findMyPersonelCalenderList(userId, personelCalenderId, accept, open)
+    public Flux<MyPersonalCalenderListResponse> findMyPersonalCalenderList(Long userId, Long personalCalenderId, Boolean accept, Boolean open) {
+        return this.personelCalenderQuery.findMyPersonelCalenderList(userId, personalCalenderId, accept, open)
             .map((row, rowMetadata) -> {
 
                 String imageUrl = row.get("user_image", String.class);
                 if (imageUrl != null) imageUrl = serverProperties.getImageUrl() + serverProperties.getImagePath() + imageUrl;
 
-                return MyPersonelCalenderListResponse.builder()
+                return MyPersonalCalenderListResponse.builder()
                         .id(row.get("id", Long.class))
                         .day(row.get("day", String.class))
                         .accept(row.get("accept", Boolean.class))
@@ -46,13 +46,13 @@ public class PersonelCalenderDAO {
             .all();
     }
 
-    public Flux<SearchPersonelCalenderListResponse> searchPersonelCalenderList(Long personelCalenderId, Integer perPage, String title) {
+    public Flux<SearchPersonalCalenderListResponse> searchPersonalCalenderList(Long personelCalenderId, Integer perPage, String title) {
         return this.personelCalenderQuery.searchPersonelCalenderList(personelCalenderId, perPage, title)
                 .map((row, rowMetadata) -> {
                     String imageUrl = row.get("user_image", String.class);
                     if (imageUrl != null) imageUrl = serverProperties.getImageUrl() + serverProperties.getImagePath() + imageUrl;
 
-                    return SearchPersonelCalenderListResponse.builder()
+                    return SearchPersonalCalenderListResponse.builder()
                             .id(row.get("id", Long.class))
                             .title(row.get("title", String.class))
                             .location(row.get("location", String.class))
@@ -83,9 +83,9 @@ public class PersonelCalenderDAO {
     }
 
 
-    public Mono<PersonelCalenderDetailResponse> findPersonelCalenderDetail(Long id) {
+    public Mono<PersonalCalenderDetailResponse> findPersonalCalenderDetail(Long id) {
         return this.personelCalenderQuery.findPersonelCalenderDetail(id).map((row, rowMetadata) ->
-                PersonelCalenderDetailResponse.builder()
+                PersonalCalenderDetailResponse.builder()
                     .id(row.get("id", Long.class))
                     .title(row.get("title", String.class))
                     .content(row.get("content", String.class))

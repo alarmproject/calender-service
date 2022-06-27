@@ -6,7 +6,7 @@ import io.my.calender.base.util.JwtUtil;
 import io.my.calender.calender.CalenderService;
 import io.my.calender._class.ClassService;
 import io.my.calender._class.ClassTimeService;
-import io.my.calender.personel.PersonelService;
+import io.my.calender.personal.PersonalService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +62,7 @@ public class RestdocsBase {
     protected DualDAO dualDAO;
 
     @MockBean
-    protected PersonelService personelService;
+    protected PersonalService personalService;
 
     @MockBean
     protected CalenderService calenderService;

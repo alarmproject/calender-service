@@ -1,4 +1,4 @@
-package io.my.calender.personel.payload.response;
+package io.my.calender.personal.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonelCalenderJoinUserInfoResponse {
+public class PersonalCalenderJoinUserInfoResponse {
     private Long userId;
     private Byte accept;
     private String name;

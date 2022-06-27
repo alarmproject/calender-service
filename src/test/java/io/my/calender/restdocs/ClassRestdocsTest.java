@@ -93,7 +93,7 @@ class ClassRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("unixTime")),
-                        fieldWithPath("alarmType").description("알람 타입(class, personel)")
+                        fieldWithPath("alarmType").description("알람 타입(class, personal)")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
@@ -312,7 +312,7 @@ class ClassRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("alarmType").description("알람 타입 ( class, personel )")
+                        fieldWithPath("alarmType").description("알람 타입 ( class, personal )")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String"))

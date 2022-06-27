@@ -9,11 +9,11 @@ import org.springframework.data.relational.core.mapping.Table;
 @Getter
 @Setter
 @Table("personel_calender_join_user")
-public class PersonelCalenderJoinUser {
+public class PersonalCalenderJoinUser {
     @Id
     private Long id;
     private Long userId;
-    private Long personelCalenderId;
+    private Long personalCalenderId;
     private Byte accept;
     private String content;
     private String alarmType;
@@ -21,5 +21,5 @@ public class PersonelCalenderJoinUser {
     @Transient
     private User user;
     @Transient
-    private PersonelCalender personelCalender;
+    private PersonalCalender personalCalender;
 }

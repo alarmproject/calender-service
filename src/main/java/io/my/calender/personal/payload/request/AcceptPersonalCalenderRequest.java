@@ -1,4 +1,4 @@
-package io.my.calender.personel.payload.request;
+package io.my.calender.personal.payload.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,8 +7,8 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class AcceptPersoneCalenderRequest {
-    private Long personelCalenderId;
+public class AcceptPersonalCalenderRequest {
+    private Long personalCalenderId;
     private String content;
     private String alarmType;
     private Boolean accept;

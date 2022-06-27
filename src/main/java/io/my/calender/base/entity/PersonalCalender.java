@@ -11,7 +11,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table("personel_calender")
-public class PersonelCalender {
+public class PersonalCalender {
 
     @Id
     private Long id;
