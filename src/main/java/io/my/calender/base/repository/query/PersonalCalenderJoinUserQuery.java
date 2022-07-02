@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class PersonelCalenderJoinUserQuery {
+public class PersonalCalenderJoinUserQuery {
     private final DatabaseClient client;
 
 
-    public DatabaseClient.GenericExecuteSpec findPersonelCalenderJoinUserInfo(Long id) {
+    public DatabaseClient.GenericExecuteSpec findPersonalCalenderJoinUserInfo(Long id) {
         String query = "" +
                 "select " +
                 "pcju.user_id " +
@@ -20,10 +20,10 @@ public class PersonelCalenderJoinUserQuery {
                 ", u.nickname " +
                 ", i.file_name " +
                 "from " +
-                "personel_calender_join_user pcju " +
+                "personal_calender_join_user pcju " +
                 "join `user` u on pcju.user_id = u.id " +
                 "left join image i on u.image_id = i.id " +
-                "where pcju.personel_calender_id = :id";
+                "where pcju.personal_calender_id = :id";
 
         return this.client.sql(query).bind("id", id);
     }

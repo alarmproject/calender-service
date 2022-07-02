@@ -1,7 +1,7 @@
 package io.my.calender.base.repository.dao;
 
 import io.my.calender.base.properties.ServerProperties;
-import io.my.calender.base.repository.query.PersonelCalenderQuery;
+import io.my.calender.base.repository.query.PersonalCalenderQuery;
 import io.my.calender.base.util.DateUtil;
 import io.my.calender.personal.payload.request.PersonalCalenderDetailResponse;
 import io.my.calender.personal.payload.response.MyPersonalCalenderListResponse;
@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
 public class PersonalCalenderDAO {
     private final DateUtil dateUtil;
     private final ServerProperties serverProperties;
-    private final PersonelCalenderQuery personelCalenderQuery;
+    private final PersonalCalenderQuery personalCalenderQuery;
 
     public Flux<MyPersonalCalenderListResponse> findMyPersonalCalenderList(Long userId, Long personalCalenderId, Boolean accept, Boolean open) {
-        return this.personelCalenderQuery.findMyPersonelCalenderList(userId, personalCalenderId, accept, open)
+        return this.personalCalenderQuery.findMyPersonelCalenderList(userId, personalCalenderId, accept, open)
             .map((row, rowMetadata) -> {
 
                 String imageUrl = row.get("user_image", String.class);
@@ -47,7 +47,7 @@ public class PersonalCalenderDAO {
     }
 
     public Flux<SearchPersonalCalenderListResponse> searchPersonalCalenderList(Long personelCalenderId, Integer perPage, String title) {
-        return this.personelCalenderQuery.searchPersonelCalenderList(personelCalenderId, perPage, title)
+        return this.personalCalenderQuery.searchPersonelCalenderList(personelCalenderId, perPage, title)
                 .map((row, rowMetadata) -> {
                     String imageUrl = row.get("user_image", String.class);
                     if (imageUrl != null) imageUrl = serverProperties.getImageUrl() + serverProperties.getImagePath() + imageUrl;
@@ -84,7 +84,7 @@ public class PersonalCalenderDAO {
 
 
     public Mono<PersonalCalenderDetailResponse> findPersonalCalenderDetail(Long id) {
-        return this.personelCalenderQuery.findPersonelCalenderDetail(id).map((row, rowMetadata) ->
+        return this.personalCalenderQuery.findPersonelCalenderDetail(id).map((row, rowMetadata) ->
                 PersonalCalenderDetailResponse.builder()
                     .id(row.get("id", Long.class))
                     .title(row.get("title", String.class))

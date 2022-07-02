@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class PersonelCalenderQuery {
+public class PersonalCalenderQuery {
     private final DatabaseClient client;
 
-    public DatabaseClient.GenericExecuteSpec findMyPersonelCalenderList(Long userId, Long calenderId, Boolean accept, Boolean open) {
+    public DatabaseClient.GenericExecuteSpec findMyPersonalCalenderList(Long userId, Long calenderId, Boolean accept, Boolean open) {
 
         String query = "" +
                 "select " +
@@ -18,7 +18,7 @@ public class PersonelCalenderQuery {
                 ", pcju.content " +
                 ", pcju.alarm_type as alarm_type " +
                 ", pcju.content as content " +
-                ", pc.id as personel_calender_id " +
+                ", pc.id as personal_calender_id " +
                 ", pc.`day` as `day` " +
                 ", pc.title as title " +
                 ", pc.location as location " +
@@ -29,8 +29,8 @@ public class PersonelCalenderQuery {
                 ", u.email as user_email " +
                 ", i.file_name as user_image " +
                 "from " +
-                "personel_calender_join_user pcju " +
-                "join personel_calender pc ON pcju.personel_calender_id = pc.id " +
+                "personal_calender_join_user pcju " +
+                "join personal_calender pc ON pcju.personal_calender_id = pc.id " +
                 "join `user` u ON pc.user_id = u.id " +
                 "join image i ON i.id = u.image_id " +
                 "where " +
@@ -49,7 +49,7 @@ public class PersonelCalenderQuery {
         return sql.bind("userId", userId);
     }
 
-    public DatabaseClient.GenericExecuteSpec searchPersonelCalenderList(Long personelCalenderId, Integer perPage, String title) {
+    public DatabaseClient.GenericExecuteSpec searchPersonalCalenderList(Long personalCalenderId, Integer perPage, String title) {
         String query = "" +
                 "select " +
                 "pc.id " +
@@ -67,25 +67,25 @@ public class PersonelCalenderQuery {
                 ", u.email as user_email " +
                 ", i.file_name as user_image " +
                 "from " +
-                "personel_calender pc " +
-                "left join calender c on pc.id = c.personel_calender_id " +
+                "personal_calender pc " +
+                "left join calender c on pc.id = c.personal_calender_id " +
                 "join `user` u ON u.id = pc.user_id " +
                 "join image i ON u.image_id = i.id " +
                 "where " +
-                (personelCalenderId != null && personelCalenderId != 0 ? "pc.id < :personelCalenderId and " : "") +
+                (personalCalenderId != null && personalCalenderId != 0 ? "pc.id < :personalCalenderId and " : "") +
                 "pc.`open` = true " +
                 (title != null ? "and pc.title like concat('%', :title, '%') " : "") +
                 "order by pc.id desc limit :perPage";
 
         DatabaseClient.GenericExecuteSpec sql = this.client.sql(query);
 
-        if (personelCalenderId != null && personelCalenderId != 0) sql = sql.bind("personelCalenderId", personelCalenderId);
+        if (personalCalenderId != null && personalCalenderId != 0) sql = sql.bind("personalCalenderId", personalCalenderId);
         if (title != null) sql = sql.bind("title", title);
 
         return sql.bind("perPage", perPage);
     }
 
-    public DatabaseClient.GenericExecuteSpec findPersonelCalenderDetail(Long id) {
+    public DatabaseClient.GenericExecuteSpec findPersonalCalenderDetail(Long id) {
         String query = "" +
                 "select " +
                 "pc.id " +
@@ -97,8 +97,8 @@ public class PersonelCalenderQuery {
                 ", c.start_time " +
                 ", c.end_time " +
                 "from " +
-                "personel_calender pc " +
-                "join calender c on pc.id = c.personel_calender_id " +
+                "personal_calender pc " +
+                "join calender c on pc.id = c.personal_calender_id " +
                 "where pc.id = :id";
 
         return this.client.sql(query).bind("id", id);
