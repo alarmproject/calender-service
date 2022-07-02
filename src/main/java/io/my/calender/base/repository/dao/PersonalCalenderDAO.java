@@ -21,7 +21,7 @@ public class PersonalCalenderDAO {
     private final PersonalCalenderQuery personalCalenderQuery;
 
     public Flux<MyPersonalCalenderListResponse> findMyPersonalCalenderList(Long userId, Long personalCalenderId, Boolean accept, Boolean open) {
-        return this.personalCalenderQuery.findMyPersonelCalenderList(userId, personalCalenderId, accept, open)
+        return this.personalCalenderQuery.findMyPersonalCalenderList(userId, personalCalenderId, accept, open)
             .map((row, rowMetadata) -> {
 
                 String imageUrl = row.get("user_image", String.class);
@@ -47,7 +47,7 @@ public class PersonalCalenderDAO {
     }
 
     public Flux<SearchPersonalCalenderListResponse> searchPersonalCalenderList(Long personelCalenderId, Integer perPage, String title) {
-        return this.personalCalenderQuery.searchPersonelCalenderList(personelCalenderId, perPage, title)
+        return this.personalCalenderQuery.searchPersonalCalenderList(personelCalenderId, perPage, title)
                 .map((row, rowMetadata) -> {
                     String imageUrl = row.get("user_image", String.class);
                     if (imageUrl != null) imageUrl = serverProperties.getImageUrl() + serverProperties.getImagePath() + imageUrl;
@@ -84,7 +84,7 @@ public class PersonalCalenderDAO {
 
 
     public Mono<PersonalCalenderDetailResponse> findPersonalCalenderDetail(Long id) {
-        return this.personalCalenderQuery.findPersonelCalenderDetail(id).map((row, rowMetadata) ->
+        return this.personalCalenderQuery.findPersonalCalenderDetail(id).map((row, rowMetadata) ->
                 PersonalCalenderDetailResponse.builder()
                     .id(row.get("id", Long.class))
                     .title(row.get("title", String.class))

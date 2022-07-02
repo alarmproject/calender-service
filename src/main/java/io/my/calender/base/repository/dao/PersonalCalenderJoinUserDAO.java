@@ -15,7 +15,7 @@ public class PersonalCalenderJoinUserDAO {
     private final PersonalCalenderJoinUserQuery personalCalenderJoinUserQuery;
 
     public Flux<PersonalCalenderJoinUserInfoResponse> findPersonalCalenderJoinUserInfo(Long id) {
-        return this.personalCalenderJoinUserQuery.findPersonelCalenderJoinUserInfo(id)
+        return this.personalCalenderJoinUserQuery.findPersonalCalenderJoinUserInfo(id)
                 .map((row, rowMetadata) -> {
                     String imageUrl = row.get("file_name", String.class);
                     if (imageUrl != null) imageUrl = serverProperties.getImageUrl() + serverProperties.getImagePath() + imageUrl;
