@@ -46,8 +46,8 @@ public class PersonalCalenderDAO {
             .all();
     }
 
-    public Flux<SearchPersonalCalenderListResponse> searchPersonalCalenderList(Long personelCalenderId, Integer perPage, String title) {
-        return this.personalCalenderQuery.searchPersonalCalenderList(personelCalenderId, perPage, title)
+    public Flux<SearchPersonalCalenderListResponse> searchPersonalCalenderList(Long personalCalenderId, Integer perPage, String title) {
+        return this.personalCalenderQuery.searchPersonalCalenderList(personalCalenderId, perPage, title)
                 .map((row, rowMetadata) -> {
                     String imageUrl = row.get("user_image", String.class);
                     if (imageUrl != null) imageUrl = serverProperties.getImageUrl() + serverProperties.getImagePath() + imageUrl;

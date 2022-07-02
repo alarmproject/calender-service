@@ -29,7 +29,7 @@ public class CalenderDAO {
                             Objects.requireNonNull(row.get("end_time", LocalDateTime.class)));
 
                     Long classId = row.get("class_id", Long.class);
-                    Long personelCalenderId = row.get("personel_calender_id", Long.class);
+                    Long personalCalenderId = row.get("personal_calender_id", Long.class);
 
                     Integer inviteUserCount = 0;
                     Integer acceptUserCount = 0;
@@ -43,12 +43,12 @@ public class CalenderDAO {
                         accept = row.get("class_accept", Byte.class) == (byte)1 ? Boolean.TRUE : Boolean.FALSE;
                         userName = row.get("professor_name", String.class);
                         alarmType = row.get("class_alarm_type", String.class);
-                    } else if (personelCalenderId != null) {
-                        inviteUserCount = row.get("personel_calender_invite_count", Integer.class);
-                        acceptUserCount = row.get("personel_calender_accept_count", Integer.class);
-                        accept = row.get("personel_calender_accept", Byte.class) == (byte) 1 ? Boolean.TRUE : Boolean.FALSE;
+                    } else if (personalCalenderId != null) {
+                        inviteUserCount = row.get("personal_calender_invite_count", Integer.class);
+                        acceptUserCount = row.get("personal_calender_accept_count", Integer.class);
+                        accept = row.get("personal_calender_accept", Byte.class) == (byte) 1 ? Boolean.TRUE : Boolean.FALSE;
                         userName = row.get("user_name", String.class);
-                        alarmType = row.get("personel_calender_alarm_type", String.class);
+                        alarmType = row.get("personal_calender_alarm_type", String.class);
                     }
 
                     return CalenderListResponse.builder()
@@ -59,9 +59,9 @@ public class CalenderDAO {
                             .classId(classId)
                             .classTitle(row.get("class_title", String.class))
                             .classLocation(row.get("class_location", String.class))
-                            .personalCalenderId(personelCalenderId)
-                            .personalCalenderTitle(row.get("personel_calender_title", String.class))
-                            .personalCalenderLocation(row.get("personel_calender_location", String.class))
+                            .personalCalenderId(personalCalenderId)
+                            .personalCalenderTitle(row.get("personal_calender_title", String.class))
+                            .personalCalenderLocation(row.get("personal_calender_location", String.class))
                             .userName(userName)
                             .imageUrl(getImageUrl(row))
                             .inviteUserCount(inviteUserCount)
