@@ -8,7 +8,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
 @Setter
-@Table("personel_calender_join_user")
+@Table("personal_calender_join_user")
 public class PersonalCalenderJoinUser {
     @Id
     private Long id;

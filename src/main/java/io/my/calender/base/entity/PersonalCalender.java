@@ -10,7 +10,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table("personel_calender")
+@Table("personal_calender")
 public class PersonalCalender {
 
     @Id
