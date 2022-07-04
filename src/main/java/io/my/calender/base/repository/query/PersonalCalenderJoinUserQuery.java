@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 
 @Component
 @RequiredArgsConstructor
@@ -26,5 +28,24 @@ public class PersonalCalenderJoinUserQuery {
                 "where pcju.personal_calender_id = :id";
 
         return this.client.sql(query).bind("id", id);
+    }
+
+    public DatabaseClient.GenericExecuteSpec findPersonalInvite(Long userId, int accept) {
+        String query = "" +
+                "select " +
+                "pc.id " +
+                ", pc.title " +
+                ", pc.location " +
+                ", pc.alarm_type " +
+                ", pc.`day` " +
+                ", c.start_time " +
+                ", c.end_time " +
+                "from " +
+                "personal_calender_join_user pcju " +
+                "join personal_calender pc on pcju .personal_calender_id = pc.id " +
+                "left join calender c on pc.id = c.personal_calender_id " +
+                "where pcju.user_id = :id and pcju.accept = :accept";
+
+        return this.client.sql(query).bind("id", userId).bind("accept", accept);
     }
 }

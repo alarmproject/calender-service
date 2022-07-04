@@ -5,6 +5,7 @@ import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.personal.payload.request.*;
 import io.my.calender.personal.payload.response.MyPersonalCalenderListResponse;
+import io.my.calender.personal.payload.response.PersonalCalenderInviteResponse;
 import io.my.calender.personal.payload.response.SearchPersonalCalenderListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -83,6 +84,12 @@ public class PersonalController {
     @GetMapping("/invite/count")
     public Mono<BaseExtentionResponse<Integer>> findPersonalInviteCount() {
         return this.personalService.findPersonalInviteCount();
+    }
+
+    @Logger
+    @GetMapping("/invite")
+    public Mono<BaseExtentionResponse<List<PersonalCalenderInviteResponse>>> findPersonalInvite() {
+        return this.personalService.findPersonalInvite();
     }
 
 

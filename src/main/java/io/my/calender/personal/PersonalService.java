@@ -14,6 +14,7 @@ import io.my.calender.base.repository.dao.PersonalCalenderJoinUserDAO;
 import io.my.calender.base.util.DateUtil;
 import io.my.calender.personal.payload.request.*;
 import io.my.calender.personal.payload.response.MyPersonalCalenderListResponse;
+import io.my.calender.personal.payload.response.PersonalCalenderInviteResponse;
 import io.my.calender.personal.payload.response.PersonalCalenderJoinUserInfoResponse;
 import io.my.calender.personal.payload.response.SearchPersonalCalenderListResponse;
 import lombok.RequiredArgsConstructor;
@@ -159,6 +160,12 @@ public class PersonalService {
     public Mono<BaseExtentionResponse<Integer>> findPersonalInviteCount() {
         return JwtContextHolder.getMonoUserId().flatMap(userId ->
                 personalCalenderJoinUserRepository.countByUserIdAndAccept(userId, 2))
+                .map(BaseExtentionResponse::new);
+    }
+
+    public Mono<BaseExtentionResponse<List<PersonalCalenderInviteResponse>>> findPersonalInvite() {
+        return JwtContextHolder.getMonoUserId().flatMap(userId ->
+                personalCalenderJoinUserDAO.findPersonalInvite(userId, 2).collectList())
                 .map(BaseExtentionResponse::new);
     }
 }

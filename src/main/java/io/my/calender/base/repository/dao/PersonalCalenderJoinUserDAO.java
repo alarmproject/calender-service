@@ -3,14 +3,21 @@ package io.my.calender.base.repository.dao;
 
 import io.my.calender.base.properties.ServerProperties;
 import io.my.calender.base.repository.query.PersonalCalenderJoinUserQuery;
+import io.my.calender.base.util.DateUtil;
+import io.my.calender.personal.payload.response.PersonalCalenderInviteResponse;
 import io.my.calender.personal.payload.response.PersonalCalenderJoinUserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 public class PersonalCalenderJoinUserDAO {
+    private final DateUtil dateUtil;
     private final ServerProperties serverProperties;
     private final PersonalCalenderJoinUserQuery personalCalenderJoinUserQuery;
 
@@ -29,5 +36,28 @@ public class PersonalCalenderJoinUserDAO {
                             .build();
                 })
                 .all();
+    }
+
+    public Flux<PersonalCalenderInviteResponse> findPersonalInvite(Long userId, int accept) {
+        return this.personalCalenderJoinUserQuery.findPersonalInvite(userId, accept)
+                .map((row, rowMetadata) -> {
+                    Long startTime = null;
+                    Long endTime = null;
+                    try {
+                        startTime = dateUtil.localDateTimeToUnixTime(row.get("start_time", LocalDateTime.class));
+                        endTime = dateUtil.localDateTimeToUnixTime(row.get("end_time", LocalDateTime.class));
+                    } catch (NullPointerException e) { /* do nothing */ }
+
+                    return PersonalCalenderInviteResponse.builder()
+                            .id(row.get("id", Long.class))
+                            .title(row.get("title", String.class))
+                            .location(row.get("location", String.class))
+                            .alarmType(row.get("alarm_type", String.class))
+                            .day(row.get("day", String.class))
+                            .startTime(startTime)
+                            .endTime(endTime)
+                            .build();
+                }).all();
+
     }
 }

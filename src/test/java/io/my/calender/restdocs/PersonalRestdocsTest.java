@@ -6,6 +6,7 @@ import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.personal.payload.request.*;
 import io.my.calender.personal.payload.response.MyPersonalCalenderListResponse;
+import io.my.calender.personal.payload.response.PersonalCalenderInviteResponse;
 import io.my.calender.personal.payload.response.PersonalCalenderJoinUserInfoResponse;
 import io.my.calender.personal.payload.response.SearchPersonalCalenderListResponse;
 import org.junit.jupiter.api.DisplayName;
@@ -643,7 +644,7 @@ class PersonalRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("returnValue").description("초대받은 수업 개수")
+                        fieldWithPath("returnValue").description("초대받은 일정 개수")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer"))
@@ -653,6 +654,68 @@ class PersonalRestdocsTest extends RestdocsBase {
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/findpersonalinvitecount", responseFieldsSnippet));
+
+    }
+    @Test
+    @DisplayName("초대받은 개인 일정 조회")
+    void findClassInvite() {
+        PersonalCalenderInviteResponse firstResponse = PersonalCalenderInviteResponse
+                .builder()
+                .id(1L)
+                .title("Title")
+                .location("Location")
+                .alarmType("personal")
+                .day("수")
+                .startTime(null)
+                .endTime(null)
+                .build();
+        List<PersonalCalenderInviteResponse> responseBody = List.of(firstResponse);
+        Mockito.when(personalService.findPersonalInvite()).thenReturn(Mono.just(new BaseExtentionResponse<>(responseBody)));
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.[].id").description("초대받은 일정 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.[].title").description("초대받은 일정명")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].location").description("위치")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].alarmType").description("알람타입")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].day").description("일자")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].startTime").description("시작일시")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("unixtime")),
+                        fieldWithPath("returnValue.[].endTime").description("종료일시")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("unixtime"))
+                );
+
+        getWebTestClient("/calender/personal/invite").expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/findpersonalinvite", responseFieldsSnippet));
 
     }
 }
