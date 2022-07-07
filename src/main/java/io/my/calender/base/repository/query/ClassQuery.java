@@ -73,14 +73,14 @@ public class ClassQuery {
         return this.client.sql(query).bind("userId", userId);
     }
 
-    public DatabaseClient.GenericExecuteSpec findClassDetail(Long id) {
+    public DatabaseClient.GenericExecuteSpec findClassDetail(Long id, Long userId) {
         String query = "" +
                 "select " +
                 "c.id " +
                 ", c.title " +
                 ", c.start_date " +
                 ", c.end_date " +
-                ", c.content " +
+                ", cju.content " +
                 ", c.location " +
                 ", ct.`day` " +
                 ", ct.start_hour " +
@@ -90,7 +90,8 @@ public class ClassQuery {
                 "from " +
                 "class c " +
                 "left join class_time ct on c.id = ct.class_id " +
+                "left join class_join_user cju on c.id = cju.class_id = c.id and cju.user_id = :userId " +
                 "where c.id = :id";
-        return this.client.sql(query).bind("id", id);
+        return this.client.sql(query).bind("id", id).bind("userId", userId);
     }
 }

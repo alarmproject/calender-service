@@ -103,8 +103,8 @@ public class ClassDAO {
     }
 
 
-    public Mono<ClassDetailResponse> findClassDetail(Long id) {
-        return this.classQuery.findClassDetail(id)
+    public Mono<ClassDetailResponse> findClassDetail(Long id, Long userId) {
+        return this.classQuery.findClassDetail(id, userId)
                 .map(((row, rowMetadata) -> {
 
                     List<ClassTimeListResponse> list = new ArrayList<>();

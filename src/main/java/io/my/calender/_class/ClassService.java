@@ -215,7 +215,7 @@ public class ClassService {
         AtomicLong atomicUserId = new AtomicLong();
         return JwtContextHolder.getMonoUserId().flatMap(userId -> {
             atomicUserId.set(userId);
-            return classDAO.findClassDetail(id);
+            return classDAO.findClassDetail(id, userId);
         }).flatMap(classDetailResponse ->
             classJoinUserDAO.findClassJoinUserInfo(id)
                 .collectList()
