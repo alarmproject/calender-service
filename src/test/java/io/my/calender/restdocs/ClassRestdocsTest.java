@@ -243,6 +243,7 @@ class ClassRestdocsTest extends RestdocsBase {
                 .builder()
                 .classId(1L)
                 .accept(Boolean.TRUE)
+                .content("메모 수정입니다...")
                 .build();
 
         Mockito.when(classService.acceptClass(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
@@ -258,6 +259,16 @@ class ClassRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Boolean")
+                                ),
+                        fieldWithPath("content").description("개인 메모").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")
+                                ),
+                        fieldWithPath("alarmType").description("알람 타입")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")
                                 )
                 );
 

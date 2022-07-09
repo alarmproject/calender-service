@@ -97,7 +97,8 @@ public class PersonalService {
                 .flatMap(entity -> {
                     entity.setAccept(requestBody.getAccept() ? (byte) 1 : (byte) 0);
                     entity.setAlarmType(requestBody.getAlarmType());
-                    entity.setContent(requestBody.getContent());
+                    if (entity.getContent() != null)
+                        entity.setContent(requestBody.getContent());
                     return personalCalenderJoinUserRepository.save(entity);
                 }).map(entity -> new BaseResponse());
     }

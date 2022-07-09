@@ -27,4 +27,12 @@ public class ClassJoinUser extends BaseEntity {
     public void setAccept(Byte accept) {
         this.accept = accept;
     }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setAlarmType(String alarmType) {
+        this.alarmType = alarmType;
+    }
 }

@@ -8,4 +8,6 @@ import lombok.*;
 public class AcceptClassRequest {
     private Long classId;
     private Boolean accept;
+    private String content;
+    private String alarmType;
 }

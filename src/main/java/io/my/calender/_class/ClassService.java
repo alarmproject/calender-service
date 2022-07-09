@@ -162,6 +162,9 @@ public class ClassService {
                 classJoinUserRepository.findByUserIdAndClassId(userId, requestBody.getClassId()))
                 .flatMap(entity -> {
                     entity.setAccept(requestBody.getAccept() ? (byte) 1 : (byte) 0);
+                    entity.setAlarmType(requestBody.getAlarmType());
+                    if (requestBody.getContent() != null)
+                        entity.setContent(requestBody.getContent());
                     return classJoinUserRepository.save(entity);
                 })
         .map(o -> new BaseResponse());
