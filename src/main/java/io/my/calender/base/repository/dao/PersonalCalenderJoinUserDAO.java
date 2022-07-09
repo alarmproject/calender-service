@@ -54,6 +54,7 @@ public class PersonalCalenderJoinUserDAO {
                             .location(row.get("location", String.class))
                             .alarmType(row.get("alarm_type", String.class))
                             .day(row.get("day", String.class))
+                            .inviteUser(row.get("name", String.class))
                             .startTime(startTime)
                             .endTime(endTime)
                             .build();

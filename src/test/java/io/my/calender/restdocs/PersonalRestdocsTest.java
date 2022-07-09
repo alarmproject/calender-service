@@ -39,7 +39,7 @@ class PersonalRestdocsTest extends RestdocsBase {
                 .alarmType("personal")
                 .build();
 
-        Mockito.when(personalService.createPersonalCalender(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+        Mockito.when(personalService.createPersonalCalender(Mockito.any())).thenReturn(Mono.just(new BaseExtentionResponse<>(1L)));
 
         RequestFieldsSnippet requestFieldsSnippet =
                 requestFields(
@@ -76,6 +76,10 @@ class PersonalRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
                         fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue").description("생성된 일정 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer"))
@@ -668,6 +672,8 @@ class PersonalRestdocsTest extends RestdocsBase {
                 .day("수")
                 .startTime(null)
                 .endTime(null)
+                .inviteUser("김민수")
+                .acceptUserCount(3)
                 .build();
         List<PersonalCalenderInviteResponse> responseBody = List.of(firstResponse);
         Mockito.when(personalService.findPersonalInvite()).thenReturn(Mono.just(new BaseExtentionResponse<>(responseBody)));
@@ -709,7 +715,15 @@ class PersonalRestdocsTest extends RestdocsBase {
                         fieldWithPath("returnValue.[].endTime").description("종료일시")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("unixtime"))
+                                        RestDocAttributes.format("unixtime")),
+                        fieldWithPath("returnValue.[].inviteUser").description("초대한 사람")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].acceptUserCount").description("수락 유저 수")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
                 );
 
         getWebTestClient("/calender/personal/invite").expectStatus()

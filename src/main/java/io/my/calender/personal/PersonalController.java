@@ -21,7 +21,7 @@ public class PersonalController {
 
     @Logger
     @PostMapping
-    public Mono<BaseResponse> createPersonalCalender(
+    public Mono<BaseExtentionResponse<Long>> createPersonalCalender(
             @RequestBody CreatePersonalRequest requestBody) {
         return this.personalService.createPersonalCalender(requestBody);
     }

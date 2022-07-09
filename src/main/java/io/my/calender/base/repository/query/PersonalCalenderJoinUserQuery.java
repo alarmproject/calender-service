@@ -40,9 +40,11 @@ public class PersonalCalenderJoinUserQuery {
                 ", pc.`day` " +
                 ", c.start_time " +
                 ", c.end_time " +
+                ", u.name " +
                 "from " +
                 "personal_calender_join_user pcju " +
                 "join personal_calender pc on pcju .personal_calender_id = pc.id " +
+                "join `user` u on pc.user_id = u.id " +
                 "left join calender c on pc.id = c.personal_calender_id " +
                 "where pcju.user_id = :id and pcju.accept = :accept";
 

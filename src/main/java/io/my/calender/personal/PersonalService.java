@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @RequiredArgsConstructor
@@ -38,8 +39,9 @@ public class PersonalService {
     private final PersonalCalenderJoinUserDAO personalCalenderJoinUserDAO;
 
 
-    public Mono<BaseResponse> createPersonalCalender(
+    public Mono<BaseExtentionResponse<Long>> createPersonalCalender(
             CreatePersonalRequest requestBody) {
+        AtomicReference<Long> personalCalenderId = new AtomicReference<>();
 
         LocalDateTime startTime = dateUtil.unixTimeToLocalDateTime(requestBody.getStartTime());
         LocalDateTime endTime = dateUtil.unixTimeToLocalDateTime(requestBody.getEndTime());
@@ -57,6 +59,7 @@ public class PersonalService {
             return personalCalenderRepository.save(personalCalender);
         })
         .flatMap(entity -> {
+            personalCalenderId.set(entity.getId());
             Calender calender = Calender.builder()
                     .personalCalenderId(entity.getId())
                     .startTime(startTime)
@@ -64,7 +67,7 @@ public class PersonalService {
                     .build();
             return calenderRepository.save(calender);
         })
-        .map(entity -> new BaseResponse())
+        .map(entity -> new BaseExtentionResponse<>(personalCalenderId.get()))
         ;
     }
 
@@ -165,7 +168,14 @@ public class PersonalService {
 
     public Mono<BaseExtentionResponse<List<PersonalCalenderInviteResponse>>> findPersonalInvite() {
         return JwtContextHolder.getMonoUserId().flatMap(userId ->
-                personalCalenderJoinUserDAO.findPersonalInvite(userId, 2).collectList())
-                .map(BaseExtentionResponse::new);
+                personalCalenderJoinUserDAO.findPersonalInvite(userId, 2)
+                        .flatMap(entity ->
+                                personalCalenderJoinUserRepository.countByPersonalCalenderIdAndAccept(entity.getId(), 1)
+                                        .map(e -> {
+                                            entity.setAcceptUserCount(e - 1);
+                                            return entity;
+                                        })
+                        ).collectList()
+        ).map(BaseExtentionResponse::new);
     }
 }

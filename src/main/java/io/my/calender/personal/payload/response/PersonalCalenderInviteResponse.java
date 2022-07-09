@@ -17,4 +17,11 @@ public class PersonalCalenderInviteResponse {
     private String day;
     private Long startTime;
     private Long endTime;
+    private Integer acceptUserCount;
+    private String inviteUser;
+
+    public void setAcceptUserCount(Integer acceptUserCount) {
+        this.acceptUserCount = acceptUserCount;
+    }
+
 }
