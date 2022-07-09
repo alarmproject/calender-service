@@ -141,7 +141,7 @@ public class ClassService {
     }
 
     public Mono<BaseResponse> joinClass(JoinClassRequest requestBody) {
-        AtomicReference<Long> userId = new AtomicReference<>(0L);
+        AtomicReference<Long> userId = new AtomicReference<>();
         return JwtContextHolder.getMonoUserId().flatMap(id -> {
             userId.set(id);
             return this.classJoinUserRepository.findByUserIdAndClassId(id, requestBody.getClassId());
@@ -150,7 +150,7 @@ public class ClassService {
             entity.setAccept((byte) 1);
             return this.classJoinUserRepository.save(entity);
         })
-        .switchIfEmpty(saveClassJoinUser(requestBody, userId.get()))
+        .switchIfEmpty(Mono.defer(() -> saveClassJoinUser(requestBody, userId.get())))
         .map(entity -> new BaseResponse())
         ;
     }
