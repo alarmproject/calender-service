@@ -63,12 +63,21 @@ public class ClassService {
             _class.setUserId(userId);
             return this.classRepository.save(_class);
         })
-        .flatMapMany(entity -> {
+        .flatMap(entity -> {
             atomicClassId.set(entity.getId());
+            ClassJoinUser e = ClassJoinUser.builder()
+                    .classId(atomicClassId.get())
+                    .alarmType(requestBody.getAlarmType())
+                    .userId(entity.getUserId())
+                    .accept((byte)1)
+                    .build();
+            return classJoinUserRepository.save(e);
+        })
+        .flatMapMany(entity -> {
             List<ClassTime> saveClassTimeList = new ArrayList<>();
             requestBody.getClassTimeList().forEach(classTimeRequest -> {
                 ClassTime classTime = ClassTime.builder()
-                        .classId(entity.getId())
+                        .classId(atomicClassId.get())
                         .startHour(classTimeRequest.getStartHour())
                         .startMinutes(classTimeRequest.getStartMinutes())
                         .endHour(classTimeRequest.getEndHour())

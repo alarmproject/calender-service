@@ -60,8 +60,16 @@ public class PersonalService {
         })
         .flatMap(entity -> {
             personalCalenderId.set(entity.getId());
+            PersonalCalenderJoinUser e = new PersonalCalenderJoinUser();
+            e.setAlarmType(requestBody.getAlarmType());
+            e.setUserId(entity.getUserId());
+            e.setAccept((byte) 1);
+            e.setPersonalCalenderId(entity.getId());
+            return personalCalenderJoinUserRepository.save(e);
+        })
+        .flatMap(entity -> {
             Calender calender = Calender.builder()
-                    .personalCalenderId(entity.getId())
+                    .personalCalenderId(personalCalenderId.get())
                     .startTime(startTime)
                     .endTime(endTime)
                     .build();
