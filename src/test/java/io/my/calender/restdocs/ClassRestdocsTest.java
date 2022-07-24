@@ -391,7 +391,7 @@ class ClassRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Integer"))
                 );
 
-        patchWebTestClient(requestBody, "/calender/class/info").expectStatus()
+        putWebTestClient(requestBody, "/calender/class/info").expectStatus()
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/modifyclassinfo", requestFieldsSnippet, responseFieldsSnippet));
