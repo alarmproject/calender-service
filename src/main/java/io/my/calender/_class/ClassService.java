@@ -26,8 +26,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -88,31 +90,7 @@ public class ClassService {
             });
             return this.classTimeRepository.saveAll(saveClassTimeList);
         })
-        .map(entity -> {
-            List<Calender> calenderEntityList = new ArrayList<>();
-
-            LocalTime startTime = LocalTime.of(entity.getStartHour(), entity.getStartMinutes());
-            LocalTime endTime = LocalTime.of(entity.getEndHour(), entity.getEndMinutes());
-            DayOfWeek dayOfWeek = this.dateUtil.getDayOfWeek(entity.getDay());
-
-            LocalDate date = _class.getStartDate();
-
-            while (date != _class.getEndDate() && date.isBefore(_class.getEndDate())) {
-                if (date.getDayOfWeek() == dayOfWeek) {
-                    Calender calender = Calender.builder()
-                            .classTimeId(entity.getId())
-                            .startTime(LocalDateTime.of(date, startTime))
-                            .endTime(LocalDateTime.of(date, endTime))
-                            .build();
-
-                    calenderEntityList.add(calender);
-                    date = date.plusDays(7);
-                } else {
-                    date = date.plusDays(1);
-                }
-            }
-            return calenderEntityList;
-        })
+        .map(entity -> makeCalenderByClassTime(entity, _class))
         .collectList()
         .flatMapMany(calenderList -> {
             List<Calender> entityList = new ArrayList<>();
@@ -121,6 +99,30 @@ public class ClassService {
         })
         .collectList().map(list -> new BaseExtentionResponse<>(atomicClassId.get()))
         ;
+    }
+
+    private List<Calender> makeCalenderByClassTime(ClassTime entity, Class _class) {
+        List<Calender> calenderEntityList = new ArrayList<>();
+        LocalDate date = _class.getStartDate();
+        LocalTime startTime = LocalTime.of(entity.getStartHour(), entity.getStartMinutes());
+        LocalTime endTime = LocalTime.of(entity.getEndHour(), entity.getEndMinutes());
+        DayOfWeek dayOfWeek = this.dateUtil.getDayOfWeek(entity.getDay());
+
+        while (date != _class.getEndDate() && date.isBefore(_class.getEndDate())) {
+            if (date.getDayOfWeek() == dayOfWeek) {
+                Calender calender = Calender.builder()
+                        .classTimeId(entity.getId())
+                        .startTime(LocalDateTime.of(date, startTime))
+                        .endTime(LocalDateTime.of(date, endTime))
+                        .build();
+
+                calenderEntityList.add(calender);
+                date = date.plusDays(7);
+            } else {
+                date = date.plusDays(1);
+            }
+        }
+        return calenderEntityList;
     }
 
     public Mono<BaseResponse> inviteUser(InviteClassRequeset requestBody) {
@@ -188,6 +190,42 @@ public class ClassService {
                     entity.setAlarmType(requestBody.getAlarmType());
                     return classRepository.save(entity);
                 })
+                .flatMap(entity -> classTimeRepository.deleteByClassId(entity.getId()).thenReturn(Optional.empty()))
+                .flatMapMany(empty -> {
+                    List<ClassTime> classTimeList = requestBody.getClassTimeList().stream().map(classTimeRequest ->
+                            ClassTime.builder()
+                                .classId(requestBody.getId())
+                                .startHour(classTimeRequest.getStartHour())
+                                .startMinutes(classTimeRequest.getStartMinutes())
+                                .endHour(classTimeRequest.getEndHour())
+                                .endMinutes(classTimeRequest.getEndMinutes())
+                                .day(classTimeRequest.getDay())
+                                .build())
+                            .collect(Collectors.toList());
+                    return classTimeRepository.saveAll(classTimeList);
+                })
+                .map(entity -> {
+                    Class _class = Class.builder()
+                            .title(requestBody.getTitle())
+                            .location(requestBody.getLocation())
+                            .startDate(
+                                    this.dateUtil.unixTimeToLocalDateTime(requestBody.getStartDate()).toLocalDate()
+                            )
+                            .endDate(
+                                    this.dateUtil.unixTimeToLocalDateTime(requestBody.getEndDate()).toLocalDate()
+                            )
+                            .professorId(requestBody.getProfessorId())
+                            .alarmType(requestBody.getAlarmType())
+                            .build();
+                    return this.makeCalenderByClassTime(entity, _class);
+                })
+                .collectList()
+                .flatMapMany(list -> {
+                    List<Calender> calenderList = new ArrayList<>();
+                    list.forEach(calenderList::addAll);
+                    return calenderRepository.saveAll(calenderList);
+                })
+                .collectList()
                 .map(entity -> new BaseResponse())
                 ;
     }

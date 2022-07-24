@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @Builder
 @AllArgsConstructor
@@ -13,4 +15,8 @@ public class ModifyClassInfoRequest {
     private String location;
     private Long professorId;
     private String alarmType;
+
+    private Long startDate;
+    private Long endDate;
+    private List<ClassTimeListRequest> classTimeList;
 }

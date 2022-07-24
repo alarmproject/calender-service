@@ -47,7 +47,7 @@ public class ClassController {
     }
 
     @Logger
-    @PatchMapping("/info")
+    @PutMapping("/info")
     public Mono<BaseResponse> modifyClassInfo(
             @RequestBody ModifyClassInfoRequest requestBody) {
 

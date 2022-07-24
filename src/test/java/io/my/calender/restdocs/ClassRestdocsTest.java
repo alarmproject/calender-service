@@ -293,6 +293,25 @@ class ClassRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("수업 정보 변경")
     void modifyClassInfo() {
+        List<ClassTimeListRequest> classTimeList = new ArrayList<>();
+        classTimeList.add(
+                ClassTimeListRequest.builder()
+                        .day("수")
+                        .startHour(11)
+                        .startMinutes(0)
+                        .endHour(12)
+                        .endMinutes(0)
+                        .build()
+        );
+        classTimeList.add(
+                ClassTimeListRequest.builder()
+                        .day("목")
+                        .startHour(14)
+                        .startMinutes(0)
+                        .endHour(16)
+                        .endMinutes(0)
+                        .build()
+        );
         var requestBody = ModifyClassInfoRequest
                 .builder()
                 .id(1L)
@@ -300,6 +319,9 @@ class ClassRestdocsTest extends RestdocsBase {
                 .location("인문관 1호")
                 .title("경제학원론")
                 .alarmType("class")
+                .startDate(1647652678000L)
+                .endDate(1658193478000L)
+                .classTimeList(classTimeList)
                 .build()
                 ;
 
@@ -326,7 +348,35 @@ class ClassRestdocsTest extends RestdocsBase {
                         fieldWithPath("alarmType").description("알람 타입 ( class, personal )")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("String"))
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("startDate").description("시작일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("unixTime")),
+                        fieldWithPath("endDate").description("종료일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("unixTime")),
+                        fieldWithPath("classTimeList.[].day").description("요일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("classTimeList.[].startHour").description("시작시간")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("classTimeList.[].startMinutes").description("시작분")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("classTimeList.[].endHour").description("종료시간")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("classTimeList.[].endMinutes").description("종료분")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
                 );
 
         ResponseFieldsSnippet responseFieldsSnippet =
