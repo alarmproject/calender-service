@@ -1,11 +1,13 @@
 package io.my.calender.personal;
 
 import io.my.calender.base.context.JwtContextHolder;
+import io.my.calender.base.entity.ActiveHistory;
 import io.my.calender.base.entity.Calender;
 import io.my.calender.base.entity.PersonalCalender;
 import io.my.calender.base.entity.PersonalCalenderJoinUser;
 import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
+import io.my.calender.base.repository.ActiveHistoryRepository;
 import io.my.calender.base.repository.CalenderRepository;
 import io.my.calender.base.repository.PersonalCalenderJoinUserRepository;
 import io.my.calender.base.repository.PersonalCalenderRepository;
@@ -24,6 +26,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -32,11 +35,13 @@ import java.util.concurrent.atomic.AtomicReference;
 public class PersonalService {
     private final DateUtil dateUtil;
     private final CalenderRepository calenderRepository;
+    private final ActiveHistoryRepository activeHistoryRepository;
     private final PersonalCalenderRepository personalCalenderRepository;
     private final PersonalCalenderJoinUserRepository personalCalenderJoinUserRepository;
 
     private final PersonalCalenderDAO personalCalenderDAO;
     private final PersonalCalenderJoinUserDAO personalCalenderJoinUserDAO;
+
 
 
     public Mono<BaseExtentionResponse<Long>> createPersonalCalender(
@@ -105,13 +110,13 @@ public class PersonalService {
                 .flatMap(entity -> {
                     entity.setAccept(requestBody.getAccept() ? (byte) 1 : (byte) 0);
                     entity.setAlarmType(requestBody.getAlarmType());
-                    if (entity.getContent() != null)
-                        entity.setContent(requestBody.getContent());
+                    entity.setContent(requestBody.getContent());
                     return personalCalenderJoinUserRepository.save(entity);
                 }).map(entity -> new BaseResponse());
     }
 
     public Mono<BaseResponse> modifyPersonalCalenderInfo(ModifyPersonalCalenderRequest requestBody) {
+        AtomicReference<String> personalCalenderTitle = new AtomicReference<>();
         return personalCalenderRepository.findById(requestBody.getPersonalCalenderId())
                 .flatMap(entity -> {
                     entity.setTitle(requestBody.getTitle());
@@ -119,8 +124,31 @@ public class PersonalService {
                     entity.setOpen(requestBody.getOpen());
                     entity.setAlarmType(requestBody.getAlarmType());
                     return personalCalenderRepository.save(entity);
+                }).flatMap(entity -> calenderRepository.findByPersonalCalenderId(entity.getId()))
+                .flatMap(entity -> {
+                    LocalDateTime startTime = dateUtil.unixTimeToLocalDateTime(requestBody.getStartTime());
+                    LocalDateTime endTime = dateUtil.unixTimeToLocalDateTime(requestBody.getEndTime());
+                    entity.setStartTime(startTime);
+                    entity.setEndTime(endTime);
+                    return calenderRepository.save(entity);
                 })
-                .map(entity -> new BaseResponse());
+                .map(entity -> {
+                    if (requestBody.getIsChangeActiveHistory()) {
+                        return personalCalenderJoinUserRepository.findAllByPersonalCalenderId(requestBody.getPersonalCalenderId())
+                                .map(PersonalCalenderJoinUser::getUserId)
+                                .flatMap(userId -> {
+                                    ActiveHistory activeHistory =
+                                            ActiveHistory.builder()
+                                                    .userId(userId)
+                                                    .content("<b>" + requestBody.getTitle() + "</b>의 정보가 변경되었습니다.")
+                                                    .build();
+                                    return activeHistoryRepository.save(activeHistory);
+                                }).collectList().thenReturn(Optional.empty())
+                                ;
+                    }
+                    return Optional.empty();
+                })
+                .thenReturn(new BaseResponse());
     }
 
     public Mono<BaseExtentionResponse<List<MyPersonalCalenderListResponse>>> myPersonalCalenderList(

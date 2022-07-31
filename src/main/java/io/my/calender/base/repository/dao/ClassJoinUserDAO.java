@@ -29,6 +29,7 @@ public class ClassJoinUserDAO {
                         .accept(row.get("accept", Byte.class))
                         .name(row.get("name", String.class))
                         .nickname(row.get("nickname", String.class))
+                        .alarmType(row.get("alarm_type", String.class))
                         .imageUrl(imageUrl)
                         .build();
             }))

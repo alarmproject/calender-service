@@ -14,6 +14,7 @@ public class ClassJoinUserQuery {
                 "select " +
                 "cju.user_id " +
                 ", cju.accept " +
+                ", cju.alarm_type " +
                 ", u.name " +
                 ", u.nickname " +
                 ", i.file_name " +

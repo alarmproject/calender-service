@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Table("class_join_user")

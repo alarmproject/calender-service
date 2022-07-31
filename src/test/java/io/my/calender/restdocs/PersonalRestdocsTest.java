@@ -224,6 +224,9 @@ class PersonalRestdocsTest extends RestdocsBase {
                 .location("사진동아리 동아리실")
                 .open(Boolean.TRUE)
                 .alarmType("personal")
+                .isChangeActiveHistory(true)
+                .startTime(1659240812563L)
+                .endTime(1659240812563L)
                 .build();
 
         Mockito.when(personalService.modifyPersonalCalenderInfo(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
@@ -249,7 +252,19 @@ class PersonalRestdocsTest extends RestdocsBase {
                         fieldWithPath("alarmType").description("알람 타입( class, personal )")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("String"))
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("isChangeActiveHistory").description("활동 내역에 추가 여부")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean")),
+                        fieldWithPath("startTime").description("시작 시간")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("unixtime")),
+                        fieldWithPath("endTime").description("종료 시간")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("unixtime"))
                 );
 
         ResponseFieldsSnippet responseFieldsSnippet =

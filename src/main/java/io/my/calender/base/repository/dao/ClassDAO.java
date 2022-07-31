@@ -129,6 +129,7 @@ public class ClassDAO {
                             ))
                             .content(row.get("content", String.class))
                             .location(row.get("location", String.class))
+                            .professorName(row.get("professor_name", String.class))
                             .classTimeList(list)
                             .build();
                 })).all().collectList()

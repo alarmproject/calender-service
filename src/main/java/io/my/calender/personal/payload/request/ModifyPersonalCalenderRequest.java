@@ -13,4 +13,9 @@ public class ModifyPersonalCalenderRequest {
     private String location;
     private Boolean open;
     private String alarmType;
+
+    private Long startTime;
+    private Long endTime;
+
+    private Boolean isChangeActiveHistory;
 }

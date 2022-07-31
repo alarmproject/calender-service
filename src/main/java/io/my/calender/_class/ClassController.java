@@ -2,6 +2,7 @@ package io.my.calender._class;
 
 import io.my.calender._class.payload.request.*;
 import io.my.calender._class.payload.response.SearchClassResponse;
+import io.my.calender.active.service.ActiveService;
 import io.my.calender.base.annotation.Logger;
 import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping("/calender/class")
 public class ClassController {
     private final ClassService classService;
+    private final ActiveService activeService;
 
     @Logger
     @PostMapping
@@ -81,6 +83,13 @@ public class ClassController {
     @GetMapping("/invite/count")
     public Mono<BaseExtentionResponse<Integer>> getClassInviteCount() {
         return this.classService.findClassInviteCount();
+    }
+
+    @Logger
+    @DeleteMapping("/{id}")
+    public Mono<BaseResponse> removeClass(@PathVariable("id") Long id) {
+        return this.activeService.removeClass(id)
+                .then(this.classService.removeClass(id));
     }
 
 }

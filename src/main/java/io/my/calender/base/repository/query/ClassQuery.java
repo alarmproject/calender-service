@@ -68,7 +68,7 @@ public class ClassQuery {
                 "join class c on cju.class_id = c.id " +
                 "left join professor p on c.professor_id = p.id " +
                 "left join image i on p.image_id = i.id " +
-                "where cju.user_id = :userId and (cju.accept != 0)";
+                "where cju.user_id = :userId and (cju.accept = 2)";
 
         return this.client.sql(query).bind("userId", userId);
     }
@@ -87,10 +87,12 @@ public class ClassQuery {
                 ", ct.end_hour " +
                 ", ct.start_minutes " +
                 ", ct.end_minutes " +
+                ", p.name as professor_name " +
                 "from " +
                 "class c " +
                 "left join class_time ct on c.id = ct.class_id " +
                 "left join class_join_user cju on c.id = cju.class_id = c.id and cju.user_id = :userId " +
+                "left join professor p on c.professor_id = p.id " +
                 "where c.id = :id";
         return this.client.sql(query).bind("id", id).bind("userId", userId);
     }

@@ -15,4 +15,5 @@ public class ClassJoinUserInfoResponse {
     private String imageUrl;
     private String name;
     private String nickname;
+    private String alarmType;
 }

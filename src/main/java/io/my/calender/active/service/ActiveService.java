@@ -23,6 +23,28 @@ public class ActiveService {
     private final PersonalCalenderRepository personalCalenderRepository;
     private final PersonalCalenderJoinUserRepository personalCalenderJoinUserRepository;
 
+    public Mono<Void> removeClass(Long classId) {
+        AtomicReference<String> classTitle = new AtomicReference<>();
+        return this.classRepository.findById(classId)
+                .flatMapMany(entity -> {
+                    classTitle.set(entity.getTitle());
+                    return classJoinUserRepository.findAllByClassId(classId);
+                }).collectList().flatMapMany(list -> {
+                    List<ActiveHistory> entityList = new ArrayList<>();
+                    String message = "<b>" + classTitle.get() + "</b>의 수업이 삭제되었습니다.";
+
+                    list.forEach(entity ->
+                            entityList.add(
+                                    ActiveHistory.builder()
+                                            .content(message)
+                                            .userId(entity.getUserId())
+                                            .build())
+                    );
+
+                    return this.activeHistoryRepository.saveAll(entityList);
+                }).then();
+    }
+
     public Mono<Void> modifyClassTime(Long classTimeId) {
         return this.changeClassTime(classTimeId, "의 수업 시간이 변경되었습니다.");
     }
@@ -40,7 +62,7 @@ public class ActiveService {
             return this.classJoinUserRepository.findAllByClassId(entity.getId());
         }).collectList().flatMapMany(list -> {
             List<ActiveHistory> entityList = new ArrayList<>();
-            String message = classTitle.get() + content;
+            String message = "<b>" + classTitle.get() + "</b>" + content;
 
             list.forEach(entity ->
                     entityList.add(
@@ -78,7 +100,7 @@ public class ActiveService {
                     } else {
                         return this.personalCalenderRepository.findById(entity.getPersonalCalenderId())
                                 .flatMapMany(e -> {
-                                    message.set(e.getTitle() + content);
+                                    message.set("<b>" + e.getTitle() + "</b>" + content);
                                     return this.personalCalenderJoinUserRepository.findAllByPersonalCalenderId(e.getId());
                                 })
                                 .map(e -> ActiveHistory.builder().userId(e.getUserId()).content(message.get()).build());

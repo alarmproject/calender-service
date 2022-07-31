@@ -23,18 +23,19 @@ public class CalenderService {
     private final CalenderDAO calenderDAO;
     private final CalenderRepository calenderRepository;
 
-    public Mono<BaseExtentionResponse<List<CalenderListResponse>>> getCalender(String type) {
+    public Mono<BaseExtentionResponse<List<CalenderListResponse>>> getCalender(String type, Integer year, Integer month) {
         return JwtContextHolder.getMonoUserId().flatMapMany(userId -> {
-            LocalDate now = LocalDate.now();
+            LocalDate date = LocalDate.now();
             LocalDate startDate;
             LocalDate endDate;
 
             if (type.equals("week")) {
-                startDate = dateUtil.findWeekStart(now);
-                endDate = dateUtil.findWeekEnd(now).plusDays(1);
+                startDate = dateUtil.findWeekStart(date);
+                endDate = dateUtil.findWeekEnd(date).plusDays(1);
             } else if (type.equals("month")) {
-                startDate = dateUtil.findMonthStart(now);
-                endDate = dateUtil.findMonthEnd(now).plusDays(1);
+                date = getDate(date, year, month);
+                startDate = dateUtil.findMonthStart(date);
+                endDate = dateUtil.findMonthEnd(date).plusDays(1);
             } else {
                 throw new IllegalArgumentException();
             }
@@ -48,7 +49,17 @@ public class CalenderService {
             responseBody.setReturnValue(list);
             return responseBody;
         });
+    }
 
+    private LocalDate getDate(LocalDate date, Integer year, Integer month) {
+        if (month == null) return date;
+
+        if (year != null) {
+            date = LocalDate.of(year, month, 1);
+        } else {
+            date = date.withMonth(month);
+        }
+        return date;
     }
 
     public Mono<BaseResponse> modifyCalender(ModifyCalender requestBody) {

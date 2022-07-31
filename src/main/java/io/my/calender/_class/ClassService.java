@@ -6,10 +6,8 @@ import io.my.calender._class.payload.response.InviteClassListResponse;
 import io.my.calender._class.payload.response.ClassTimeListResponse;
 import io.my.calender._class.payload.response.SearchClassResponse;
 import io.my.calender.base.context.JwtContextHolder;
-import io.my.calender.base.entity.Calender;
+import io.my.calender.base.entity.*;
 import io.my.calender.base.entity.Class;
-import io.my.calender.base.entity.ClassJoinUser;
-import io.my.calender.base.entity.ClassTime;
 import io.my.calender.base.payload.BaseExtentionResponse;
 import io.my.calender.base.payload.BaseResponse;
 import io.my.calender.base.repository.*;
@@ -43,6 +41,7 @@ public class ClassService {
     private final CalenderRepository calenderRepository;
     private final ClassTimeRepository classTimeRepository;
     private final ClassJoinUserRepository classJoinUserRepository;
+    private final ActiveHistoryRepository activeHistoryRepository;
 
     public Mono<BaseExtentionResponse<Long>> createClass(CreateClassRequest requestBody) {
         AtomicLong atomicClassId = new AtomicLong();
@@ -71,6 +70,7 @@ public class ClassService {
                     .classId(atomicClassId.get())
                     .alarmType(requestBody.getAlarmType())
                     .userId(entity.getUserId())
+                    .content(requestBody.getContent())
                     .accept((byte)1)
                     .build();
             return classJoinUserRepository.save(e);
@@ -182,7 +182,22 @@ public class ClassService {
     }
 
     public Mono<BaseResponse> modifyClassInfo(ModifyClassInfoRequest requestBody) {
-        return classRepository.findById(requestBody.getId())
+
+        return JwtContextHolder.getMonoUserId()
+                .flatMap(userId -> classJoinUserRepository.findByUserIdAndClassId(userId, requestBody.getId()))
+                .flatMap(entity -> classJoinUserRepository.save(entity.toBuilder().content(requestBody.getContent()).build()))
+                .flatMap(entity -> {
+                    if (requestBody.getIsChangeActiveHistory()) {
+                        return classJoinUserRepository.findAllByClassId(requestBody.getId())
+                                .map(ClassJoinUser::getUserId)
+                                .flatMap(userId -> {
+                                    ActiveHistory activeHistory = ActiveHistory.builder().userId(userId).content("<b>" + requestBody.getTitle() + "</b>의 수업이 변경되었습니다.").build();
+                                    return activeHistoryRepository.save(activeHistory);
+                                }).collectList().thenReturn(Optional.empty());
+                    }
+                    return Mono.just(Optional.empty());
+                })
+                .flatMap(optional -> classRepository.findById(requestBody.getId()))
                 .flatMap(entity -> {
                     entity.setTitle(requestBody.getTitle());
                     entity.setLocation(requestBody.getLocation());
@@ -270,6 +285,7 @@ public class ClassService {
             classJoinUserDAO.findClassJoinUserInfo(id)
                 .collectList()
                 .map(list -> {
+                    ClassDetailResponse responseBody = classDetailResponse;
                     Integer acceptUserCount = 0;
                     boolean isAccept = false;
                     for (ClassJoinUserInfoResponse joinUser : list) {
@@ -280,13 +296,19 @@ public class ClassService {
                         if (joinUser.getUserId() == atomicUserId.get()) {
                             isAccept = joinUser.getAccept() == 1;
                         }
+
+                        if (joinUser.getUserId() == atomicUserId.get()) {
+                            responseBody = classDetailResponse.toBuilder().alarmType(joinUser.getAlarmType()).build();
+                        }
                     }
-                    classDetailResponse.setIsAccept(isAccept);
-                    classDetailResponse.setAcceptUserCount(acceptUserCount);
-                    classDetailResponse.setInviteUserCount(list.size());
-                    classDetailResponse.setJoinUserList(list);
-                    return new BaseExtentionResponse<>(classDetailResponse);
-                })
+
+                    responseBody = responseBody.toBuilder().isAccept(isAccept)
+                            .acceptUserCount(acceptUserCount)
+                            .inviteUserCount(list.size())
+                            .joinUserList(list).build();
+                    return new BaseExtentionResponse<>(responseBody);
+                }
+            )
         );
     }
 
@@ -294,5 +316,9 @@ public class ClassService {
         return JwtContextHolder.getMonoUserId().flatMap(userId ->
                 classJoinUserRepository.countByUserIdAndAccept(userId, 2))
                 .map(BaseExtentionResponse::new);
+    }
+
+    public Mono<BaseResponse> removeClass(Long id) {
+        return classRepository.deleteById(id).thenReturn(new BaseResponse());
     }
 }

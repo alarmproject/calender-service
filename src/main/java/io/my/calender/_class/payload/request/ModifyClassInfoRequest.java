@@ -18,5 +18,7 @@ public class ModifyClassInfoRequest {
 
     private Long startDate;
     private Long endDate;
+    private String content;
     private List<ClassTimeListRequest> classTimeList;
+    private Boolean isChangeActiveHistory;
 }

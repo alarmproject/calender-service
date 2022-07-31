@@ -20,6 +20,7 @@ public class CreateClassRequest {
     private Long professorId;
 
     private String alarmType;
+    private String content;
 
     private List<CreateClassTimeRequest> classTimeList;
 }

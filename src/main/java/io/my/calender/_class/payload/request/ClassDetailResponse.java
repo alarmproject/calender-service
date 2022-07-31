@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClassDetailResponse {
@@ -26,6 +26,9 @@ public class ClassDetailResponse {
     private Integer inviteUserCount;
     private Integer acceptUserCount;
     private Boolean isAccept;
+
+    private String professorName;
+    private String alarmType;
 
     public void setJoinUserList(List<ClassJoinUserInfoResponse> list) {
         this.joinUserList = list;

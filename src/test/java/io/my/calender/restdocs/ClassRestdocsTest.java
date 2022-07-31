@@ -56,6 +56,7 @@ class ClassRestdocsTest extends RestdocsBase {
         CreateClassRequest requestBody = CreateClassRequest
                 .builder()
                 .title("경제학원론")
+                .content("메모메모메모")
                 .location("인문관 101호")
                 .collegeId(1L)
                 .startDate(1647652678000L)
@@ -70,6 +71,10 @@ class ClassRestdocsTest extends RestdocsBase {
         RequestFieldsSnippet requestFieldsSnippet =
                 requestFields(
                         fieldWithPath("title").description("수업명")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("content").description("메모").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
@@ -319,6 +324,8 @@ class ClassRestdocsTest extends RestdocsBase {
                 .location("인문관 1호")
                 .title("경제학원론")
                 .alarmType("class")
+                .content("메모메모")
+                .isChangeActiveHistory(true)
                 .startDate(1647652678000L)
                 .endDate(1658193478000L)
                 .classTimeList(classTimeList)
@@ -349,6 +356,14 @@ class ClassRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
+                        fieldWithPath("content").description("개인 메모")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("isChangeActiveHistory").description("활동 내역에 추가 여부")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean")),
                         fieldWithPath("startDate").description("시작일")
                                 .attributes(
                                         RestDocAttributes.length(0),
@@ -642,6 +657,7 @@ class ClassRestdocsTest extends RestdocsBase {
                         .nickname("nickname")
                         .name("name")
                         .accept((byte)1)
+                        .alarmType("class")
                         .imageUrl("http://mysend.co.kr:8080/image/image?fileName=c91a6281-d9bd-4119-95ac-d57c17c0451a_charactor.jpeg")
                 .build()
         );
@@ -651,6 +667,7 @@ class ClassRestdocsTest extends RestdocsBase {
                         .nickname("nickname1")
                         .name("name1")
                         .accept((byte)1)
+                        .alarmType("class")
                         .imageUrl("http://mysend.co.kr:8080/image/image?fileName=c91a6281-d9bd-4119-95ac-d57c17c0451a_charactor.jpeg")
                         .build()
         );
@@ -687,6 +704,8 @@ class ClassRestdocsTest extends RestdocsBase {
                 .inviteUserCount(2)
                 .acceptUserCount(2)
                 .isAccept(Boolean.TRUE)
+                .professorName("김교수")
+                .alarmType("class")
                 .build();
 
         Mockito.when(classService.findClassDetail(Mockito.any())).thenReturn(Mono.just(new BaseExtentionResponse<>(responseBody)));
@@ -721,6 +740,14 @@ class ClassRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
                         fieldWithPath("returnValue.location").description("수업 위치")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.professorName").description("교수명")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.alarmType").description("알람 타입")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
@@ -769,6 +796,10 @@ class ClassRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
                         fieldWithPath("returnValue.joinUserList.[].nickname").description("사용자 닉네임")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.joinUserList.[].alarmType").description("알람 타입")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
