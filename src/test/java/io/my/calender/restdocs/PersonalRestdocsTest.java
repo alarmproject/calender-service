@@ -685,6 +685,7 @@ class PersonalRestdocsTest extends RestdocsBase {
                 .location("Location")
                 .alarmType("personal")
                 .day("수")
+                .imageUrl("http://mysend.co.kr:8080/image/image?fileName=c91a6281-d9bd-4119-95ac-d57c17c0451a_charactor.jpeg")
                 .startTime(null)
                 .endTime(null)
                 .inviteUser("김민수")
@@ -720,6 +721,10 @@ class PersonalRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
                         fieldWithPath("returnValue.[].day").description("일자")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].imageUrl").description("일정 만든사람 이미지")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),

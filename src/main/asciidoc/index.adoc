@@ -135,6 +135,15 @@ include::{snippets}/classrestdocstest/findclassinvitecount/http-request.adoc[]
 include::{snippets}/classrestdocstest/findclassinvitecount/http-response.adoc[]
 include::{snippets}/classrestdocstest/findclassinvitecount/curl-request.adoc[]
 
+[[resources-calender-class-time-remove]]
+==== 수업 삭제
+
+include::{snippets}/classrestdocstest/removeclass/path-parameters.adoc[]
+include::{snippets}/classrestdocstest/removeclass/response-fields.adoc[]
+include::{snippets}/classrestdocstest/removeclass/http-request.adoc[]
+include::{snippets}/classrestdocstest/removeclass/http-response.adoc[]
+include::{snippets}/classrestdocstest/removeclass/curl-request.adoc[]
+
 
 === Class Time Calender
 

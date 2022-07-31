@@ -19,6 +19,7 @@ public class PersonalCalenderInviteResponse {
     private Long endTime;
     private Integer acceptUserCount;
     private String inviteUser;
+    private String imageUrl;
 
     public void setAcceptUserCount(Integer acceptUserCount) {
         this.acceptUserCount = acceptUserCount;

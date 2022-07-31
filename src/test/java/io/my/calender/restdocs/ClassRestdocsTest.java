@@ -851,4 +851,34 @@ class ClassRestdocsTest extends RestdocsBase {
                 .consumeWith(createConsumer("/findclassinvitecount", responseFieldsSnippet));
 
     }
+
+    @Test
+    @DisplayName("수업 삭제 API")
+    void removeClassTime() {
+        Mockito.when(classService.removeClass(Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
+
+        PathParametersSnippet pathParametersSnippet = pathParameters(
+                parameterWithName("id").description("수업 번호")
+                        .attributes(
+                                RestDocAttributes.length(0),
+                                RestDocAttributes.format("Integer"))
+        );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+
+        deleteWebTestClient(1, "/calender/class/{id}").expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/removeclass", pathParametersSnippet, responseFieldsSnippet));
+    }
 }

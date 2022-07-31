@@ -41,6 +41,9 @@ public class PersonalCalenderJoinUserDAO {
     public Flux<PersonalCalenderInviteResponse> findPersonalInvite(Long userId, int accept) {
         return this.personalCalenderJoinUserQuery.findPersonalInvite(userId, accept)
                 .map((row, rowMetadata) -> {
+                    String imageUrl = row.get("file_name", String.class);
+                    if (imageUrl != null) imageUrl = serverProperties.getImageUrl() + serverProperties.getImagePath() + imageUrl;
+
                     Long startTime = null;
                     Long endTime = null;
                     try {
@@ -55,6 +58,7 @@ public class PersonalCalenderJoinUserDAO {
                             .alarmType(row.get("alarm_type", String.class))
                             .day(row.get("day", String.class))
                             .inviteUser(row.get("name", String.class))
+                            .imageUrl(imageUrl)
                             .startTime(startTime)
                             .endTime(endTime)
                             .build();
