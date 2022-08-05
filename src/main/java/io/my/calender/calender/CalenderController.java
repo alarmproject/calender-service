@@ -23,8 +23,9 @@ public class CalenderController {
     public Mono<BaseExtentionResponse<List<CalenderListResponse>>> getCalender(
             @RequestParam("type") String type,
             @RequestParam(name = "year", required = false) Integer year,
-            @RequestParam(name = "month", required = false) Integer month) {
-        return this.calenderService.getCalender(type, year, month);
+            @RequestParam(name = "month", required = false) Integer month,
+            @RequestParam(name = "day", required = false) Long day) {
+        return this.calenderService.getCalender(type, day, year, month);
     }
 
     @PatchMapping

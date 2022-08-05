@@ -116,7 +116,7 @@ class CalenderRestdocsTest extends RestdocsBase {
                         .build())
         ;
 
-        Mockito.when(calenderService.getCalender(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(Mono.just(new BaseExtentionResponse<>(list)));
+        Mockito.when(calenderService.getCalender(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(Mono.just(new BaseExtentionResponse<>(list)));
 
         RequestParametersSnippet requestParametersSnippet =
                 requestParameters(
@@ -125,15 +125,20 @@ class CalenderRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")
                                 ),
-                        parameterWithName("year").description("연도").optional()
+                        parameterWithName("year").description("연도 (type=month)").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")
                                 ),
-                        parameterWithName("month").description("달").optional()
+                        parameterWithName("month").description("달 (type=month)").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")
+                                ),
+                        parameterWithName("day").description("날짜 (type=week)").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("unixtime")
                                 )
                 );
 
@@ -213,7 +218,7 @@ class CalenderRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Integer"))
                 );
 
-        String params = "?type=month&year=2022&month=8";
+        String params = "?type=month&year=2022&month=8&day=1648609200000";
 
         getWebTestClient("/calender" + params).expectStatus()
                 .isOk()

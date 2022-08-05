@@ -23,13 +23,14 @@ public class CalenderService {
     private final CalenderDAO calenderDAO;
     private final CalenderRepository calenderRepository;
 
-    public Mono<BaseExtentionResponse<List<CalenderListResponse>>> getCalender(String type, Integer year, Integer month) {
+    public Mono<BaseExtentionResponse<List<CalenderListResponse>>> getCalender(String type, Long day, Integer year, Integer month) {
         return JwtContextHolder.getMonoUserId().flatMapMany(userId -> {
             LocalDate date = LocalDate.now();
             LocalDate startDate;
             LocalDate endDate;
 
             if (type.equals("week")) {
+                date = getDate(date, day);
                 startDate = dateUtil.findWeekStart(date);
                 endDate = dateUtil.findWeekEnd(date).plusDays(1);
             } else if (type.equals("month")) {
@@ -49,6 +50,11 @@ public class CalenderService {
             responseBody.setReturnValue(list);
             return responseBody;
         });
+    }
+
+    private LocalDate getDate(LocalDate date, Long day) {
+        if (day == null) return date;
+        return dateUtil.unixTimeToLocalDateTime(day).toLocalDate();
     }
 
     private LocalDate getDate(LocalDate date, Integer year, Integer month) {
