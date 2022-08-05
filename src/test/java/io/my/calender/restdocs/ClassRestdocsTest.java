@@ -704,6 +704,7 @@ class ClassRestdocsTest extends RestdocsBase {
                 .inviteUserCount(2)
                 .acceptUserCount(2)
                 .isAccept(Boolean.TRUE)
+                .professorId(1L)
                 .professorName("김교수")
                 .alarmType("class")
                 .build();
@@ -743,6 +744,10 @@ class ClassRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.professorId").description("교수 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
                         fieldWithPath("returnValue.professorName").description("교수명")
                                 .attributes(
                                         RestDocAttributes.length(0),

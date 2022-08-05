@@ -27,6 +27,7 @@ public class ClassDetailResponse {
     private Integer acceptUserCount;
     private Boolean isAccept;
 
+    private Long professorId;
     private String professorName;
     private String alarmType;
 

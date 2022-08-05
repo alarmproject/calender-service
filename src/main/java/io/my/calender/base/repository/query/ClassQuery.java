@@ -87,6 +87,7 @@ public class ClassQuery {
                 ", ct.end_hour " +
                 ", ct.start_minutes " +
                 ", ct.end_minutes " +
+                ", p.id as professor_id " +
                 ", p.name as professor_name " +
                 "from " +
                 "class c " +
