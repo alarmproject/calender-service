@@ -51,7 +51,7 @@ public class CalenderQuery {
                 "and " +
                 "c.end_time < :endDate " +
                 "and " +
-                "(cju.accept == 1 or pcju.accept == 1)";
+                "(cju.accept = 1 or pcju.accept = 1)";
 
         return client.sql(query)
                 .bind("userId", userId)
