@@ -92,7 +92,7 @@ public class ClassQuery {
                 "from " +
                 "class c " +
                 "left join class_time ct on c.id = ct.class_id " +
-                "left join class_join_user cju on c.id = cju.class_id = c.id and cju.user_id = :userId " +
+                "left join class_join_user cju on cju.class_id = c.id and cju.user_id = :userId " +
                 "left join professor p on c.professor_id = p.id " +
                 "where c.id = :id";
         return this.client.sql(query).bind("id", id).bind("userId", userId);
