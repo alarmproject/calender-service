@@ -185,7 +185,10 @@ public class ClassService {
 
         return JwtContextHolder.getMonoUserId()
                 .flatMap(userId -> classJoinUserRepository.findByUserIdAndClassId(userId, requestBody.getId()))
-                .flatMap(entity -> classJoinUserRepository.save(entity.toBuilder().content(requestBody.getContent()).build()))
+                .flatMap(entity -> {
+                    entity.setContent(requestBody.getContent());
+                    return classJoinUserRepository.save(entity);
+                })
                 .flatMap(entity -> {
                     if (requestBody.getIsChangeActiveHistory()) {
                         return classJoinUserRepository.findAllByClassId(requestBody.getId())
