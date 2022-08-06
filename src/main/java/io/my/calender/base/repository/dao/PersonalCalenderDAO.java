@@ -87,6 +87,7 @@ public class PersonalCalenderDAO {
         return this.personalCalenderQuery.findPersonalCalenderDetail(id).map((row, rowMetadata) ->
                 PersonalCalenderDetailResponse.builder()
                     .id(row.get("id", Long.class))
+                    .userId(row.get("user_id", Long.class))
                     .title(row.get("title", String.class))
                     .content(row.get("content", String.class))
                     .location(row.get("location", String.class))

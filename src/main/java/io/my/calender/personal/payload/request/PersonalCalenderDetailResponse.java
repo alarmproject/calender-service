@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PersonalCalenderDetailResponse {
     private Long id;
+    private Long userId;
     private String title;
     private String content;
     private String location;

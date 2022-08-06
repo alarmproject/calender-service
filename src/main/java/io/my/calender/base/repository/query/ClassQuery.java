@@ -77,6 +77,7 @@ public class ClassQuery {
         String query = "" +
                 "select " +
                 "c.id " +
+                ", c.user_id " +
                 ", c.title " +
                 ", c.start_date " +
                 ", c.end_date " +

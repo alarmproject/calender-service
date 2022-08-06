@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ClassDetailResponse {
     private Long id;
+    private Long userId;
     private String title;
     private Long startDate;
     private Long endDate;

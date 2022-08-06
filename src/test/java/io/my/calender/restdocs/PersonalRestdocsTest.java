@@ -543,6 +543,7 @@ class PersonalRestdocsTest extends RestdocsBase {
 
         PersonalCalenderDetailResponse responseBody = PersonalCalenderDetailResponse.builder()
                 .id(3L)
+                .userId(1L)
                 .title("신입생 환영회 1111")
                 .content("수정수")
                 .location("수정입문학과 101호")
@@ -576,6 +577,10 @@ class PersonalRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
                         fieldWithPath("returnValue.id").description("일정 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.userId").description("유저 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),

@@ -120,6 +120,7 @@ public class ClassDAO {
 
                     return ClassDetailResponse.builder()
                             .id(row.get("id", Long.class))
+                            .userId(row.get("user_id", Long.class))
                             .title(row.get("title", String.class))
                             .startDate(dateUtil.localDateTimeToUnixTime(
                                     row.get("start_date", LocalDateTime.class)

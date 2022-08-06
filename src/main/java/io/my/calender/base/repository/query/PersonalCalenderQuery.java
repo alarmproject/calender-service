@@ -89,6 +89,7 @@ public class PersonalCalenderQuery {
         String query = "" +
                 "select " +
                 "pc.id " +
+                ", pc.user_id " +
                 ", pc.title " +
                 ", pc.content " +
                 ", pc.location " +

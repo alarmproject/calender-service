@@ -694,6 +694,7 @@ class ClassRestdocsTest extends RestdocsBase {
 
         ClassDetailResponse responseBody = ClassDetailResponse.builder()
                 .id(1L)
+                .userId(1L)
                 .title("화학입문학")
                 .startDate(1647652678000L)
                 .endDate(1658193478000L)
@@ -729,6 +730,10 @@ class ClassRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
                         fieldWithPath("returnValue.id").description("수업 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.userId").description("유저 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
