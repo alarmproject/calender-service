@@ -247,7 +247,7 @@ class ClassRestdocsTest extends RestdocsBase {
         AcceptClassRequest requestBody = AcceptClassRequest
                 .builder()
                 .classId(1L)
-                .accept(Boolean.TRUE)
+                .accept((byte) 2)
                 .content("메모 수정입니다...")
                 .build();
 
@@ -263,7 +263,7 @@ class ClassRestdocsTest extends RestdocsBase {
                         fieldWithPath("accept").description("승낙 여부")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("Boolean")
+                                        RestDocAttributes.format("Integer")
                                 ),
                         fieldWithPath("content").description("개인 메모").optional()
                                 .attributes(

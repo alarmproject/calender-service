@@ -172,7 +172,7 @@ public class ClassService {
         return JwtContextHolder.getMonoUserId().flatMap(userId ->
                 classJoinUserRepository.findByUserIdAndClassId(userId, requestBody.getClassId()))
                 .flatMap(entity -> {
-                    entity.setAccept(requestBody.getAccept() ? (byte) 1 : (byte) 0);
+                    entity.setAccept(requestBody.getAccept());
                     entity.setAlarmType(requestBody.getAlarmType());
                     if (requestBody.getContent() != null)
                         entity.setContent(requestBody.getContent());

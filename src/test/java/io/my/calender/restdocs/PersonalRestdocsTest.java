@@ -175,7 +175,7 @@ class PersonalRestdocsTest extends RestdocsBase {
     @DisplayName("개인 일정 수락 or 거절")
     void acceptPersonalCalender() {
         var requestBody = AcceptPersonalCalenderRequest.builder()
-                .accept(Boolean.FALSE)
+                .accept((byte)1)
                 .content("메모입니다.")
                 .alarmType("personnel")
                 .personalCalenderId(1L)
@@ -192,7 +192,7 @@ class PersonalRestdocsTest extends RestdocsBase {
                         fieldWithPath("accept").description("수락 여부")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("Boolean")),
+                                        RestDocAttributes.format("Integer")),
                         fieldWithPath("content").description("메모")
                                 .attributes(
                                         RestDocAttributes.length(0),

@@ -109,7 +109,7 @@ public class PersonalService {
         return JwtContextHolder.getMonoUserId().flatMap(userId ->
                 personalCalenderJoinUserRepository.findByUserIdAndPersonalCalenderId(userId, requestBody.getPersonalCalenderId()))
                 .flatMap(entity -> {
-                    entity.setAccept(requestBody.getAccept() ? (byte) 1 : (byte) 0);
+                    entity.setAccept(requestBody.getAccept());
                     entity.setAlarmType(requestBody.getAlarmType());
                     entity.setContent(requestBody.getContent());
                     return personalCalenderJoinUserRepository.save(entity);

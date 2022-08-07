@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 public class AcceptClassRequest {
     private Long classId;
-    private Boolean accept;
+    private Byte accept;
     private String content;
     private String alarmType;
 }

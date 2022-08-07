@@ -11,5 +11,5 @@ public class AcceptPersonalCalenderRequest {
     private Long personalCalenderId;
     private String content;
     private String alarmType;
-    private Boolean accept;
+    private Byte accept;
 }
