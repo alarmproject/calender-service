@@ -32,6 +32,7 @@ class PersonalRestdocsTest extends RestdocsBase {
         CreatePersonalRequest requestBody = CreatePersonalRequest
                 .builder()
                 .title("사진동아리 신입생 환영회")
+                .content("메모메모")
                 .location("사진동아리 동아리실")
                 .startTime(1647652678000L)
                 .endTime(1647658613000L)
@@ -48,6 +49,10 @@ class PersonalRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
                         fieldWithPath("location").description("수업 장소")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("content").description("메모")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
@@ -222,6 +227,7 @@ class PersonalRestdocsTest extends RestdocsBase {
                 .personalCalenderId(1L)
                 .title("사진동아리 신입생 환영회")
                 .location("사진동아리 동아리실")
+                .content("메모메모")
                 .open(Boolean.TRUE)
                 .alarmType("personal")
                 .isChangeActiveHistory(true)
@@ -242,6 +248,10 @@ class PersonalRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
                         fieldWithPath("location").description("장소")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("content").description("메모")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),

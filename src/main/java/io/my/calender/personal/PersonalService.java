@@ -70,6 +70,7 @@ public class PersonalService {
             e.setUserId(entity.getUserId());
             e.setAccept((byte) 1);
             e.setPersonalCalenderId(entity.getId());
+            e.setContent(requestBody.getContent());
             return personalCalenderJoinUserRepository.save(e);
         })
         .flatMap(entity -> {
@@ -116,8 +117,13 @@ public class PersonalService {
     }
 
     public Mono<BaseResponse> modifyPersonalCalenderInfo(ModifyPersonalCalenderRequest requestBody) {
-        AtomicReference<String> personalCalenderTitle = new AtomicReference<>();
-        return personalCalenderRepository.findById(requestBody.getPersonalCalenderId())
+        return JwtContextHolder.getMonoUserId()
+                .flatMap(userId -> personalCalenderJoinUserRepository.findByUserIdAndPersonalCalenderId(userId, requestBody.getPersonalCalenderId()))
+                .flatMap(entity -> {
+                    entity.setContent(requestBody.getContent());
+                    return personalCalenderJoinUserRepository.save(entity);
+                })
+                .flatMap(entity -> personalCalenderRepository.findById(requestBody.getPersonalCalenderId()))
                 .flatMap(entity -> {
                     entity.setTitle(requestBody.getTitle());
                     entity.setLocation(requestBody.getLocation());

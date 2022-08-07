@@ -17,5 +17,7 @@ public class ModifyPersonalCalenderRequest {
     private Long startTime;
     private Long endTime;
 
+    private String content;
+
     private Boolean isChangeActiveHistory;
 }

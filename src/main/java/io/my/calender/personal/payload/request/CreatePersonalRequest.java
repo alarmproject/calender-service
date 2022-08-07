@@ -12,6 +12,7 @@ public class CreatePersonalRequest {
     private String location;
     private Boolean open;
     private String alarmType;
+    private String content;
 
     private Long startTime;
     private Long endTime;
