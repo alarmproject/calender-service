@@ -100,7 +100,7 @@ public class PersonalCalenderQuery {
                 "from " +
                 "personal_calender pc " +
                 "join calender c on pc.id = c.personal_calender_id " +
-                "left outer join personal_calender_join_user pcju on pc.id = pcju.personal_calender_id and pcju.user_id = :userId" +
+                "left outer join personal_calender_join_user pcju on pc.id = pcju.personal_calender_id and pcju.user_id = :userId " +
                 "where pc.id = :id";
 
         return this.client.sql(query).bind("id", id).bind("userId", userId);
