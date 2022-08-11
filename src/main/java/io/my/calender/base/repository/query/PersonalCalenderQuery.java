@@ -85,13 +85,13 @@ public class PersonalCalenderQuery {
         return sql.bind("perPage", perPage);
     }
 
-    public DatabaseClient.GenericExecuteSpec findPersonalCalenderDetail(Long id) {
+    public DatabaseClient.GenericExecuteSpec findPersonalCalenderDetail(Long id, Long userId) {
         String query = "" +
                 "select " +
                 "pc.id " +
                 ", pc.user_id " +
                 ", pc.title " +
-                ", pc.content " +
+                ", pcju.content " +
                 ", pc.location " +
                 ", pc.`day` " +
                 ", pc.`open` " +
@@ -100,8 +100,9 @@ public class PersonalCalenderQuery {
                 "from " +
                 "personal_calender pc " +
                 "join calender c on pc.id = c.personal_calender_id " +
+                "left outer join personal_calender_join_user pcju on pc.id = pcju.personal_calender_id and pcju.user_id = :userId" +
                 "where pc.id = :id";
 
-        return this.client.sql(query).bind("id", id);
+        return this.client.sql(query).bind("id", id).bind("userId", userId);
     }
 }

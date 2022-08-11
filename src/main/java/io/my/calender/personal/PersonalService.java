@@ -176,7 +176,7 @@ public class PersonalService {
         AtomicLong atomicUserId = new AtomicLong();
         return JwtContextHolder.getMonoUserId().flatMap(userId -> {
             atomicUserId.set(userId);
-            return personalCalenderDAO.findPersonalCalenderDetail(id);
+            return personalCalenderDAO.findPersonalCalenderDetail(id, userId);
         }).flatMap(personalCalenderDetailResponse ->
                 personalCalenderJoinUserDAO.findPersonalCalenderJoinUserInfo(id)
                 .collectList()

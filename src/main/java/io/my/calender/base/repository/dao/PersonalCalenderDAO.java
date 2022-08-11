@@ -83,8 +83,8 @@ public class PersonalCalenderDAO {
     }
 
 
-    public Mono<PersonalCalenderDetailResponse> findPersonalCalenderDetail(Long id) {
-        return this.personalCalenderQuery.findPersonalCalenderDetail(id).map((row, rowMetadata) ->
+    public Mono<PersonalCalenderDetailResponse> findPersonalCalenderDetail(Long id, Long userId) {
+        return this.personalCalenderQuery.findPersonalCalenderDetail(id, userId).map((row, rowMetadata) ->
                 PersonalCalenderDetailResponse.builder()
                     .id(row.get("id", Long.class))
                     .userId(row.get("user_id", Long.class))
