@@ -54,7 +54,7 @@ public class ClassService {
                         this.dateUtil.unixTimeToLocalDateTime(requestBody.getStartDate()).toLocalDate()
                 )
                 .endDate(
-                        this.dateUtil.unixTimeToLocalDateTime(requestBody.getEndDate()).toLocalDate()
+                        this.dateUtil.unixTimeToLocalDateTime(requestBody.getEndDate()).toLocalDate().plusDays(1L)
                 )
                 .professorId(requestBody.getProfessorId())
                 .alarmType(requestBody.getAlarmType())
