@@ -250,7 +250,7 @@ public class ClassService {
 
     public Mono<BaseExtentionResponse<List<SearchClassResponse>>> searchClasses(Long classId, Integer perPage, String title) {
         return JwtContextHolder.getMonoUserId().flatMap(userRepository::findById)
-                .flatMap(user -> classDAO.searchClasses(classId, user.getCollegeId(), title, perPage))
+                .flatMap(user -> classDAO.searchClasses(classId, user.getCollegeId(), user.getId(), title, perPage))
                 .map(BaseExtentionResponse::new)
         ;
     }

@@ -11,7 +11,7 @@ import java.util.Optional;
 public class ClassQuery {
     private final DatabaseClient client;
 
-    public DatabaseClient.GenericExecuteSpec searchClasses(Long classId, Long collegeId, String title, Integer perPage) {
+    public DatabaseClient.GenericExecuteSpec searchClasses(Long classId, Long collegeId, Long userId, String title, Integer perPage) {
         String query = "" +
                 "select " +
                 "c.id " +
@@ -34,12 +34,15 @@ public class ClassQuery {
                 "left join professor p ON c.professor_id = p.id " +
                 "left join image i on p.image_id = i.id " +
                 "left outer join class_time ct on c.id = ct.class_id " +
+                "left outer join class_join_user cju on cju.class_id = c.id and cju.user_id = :userId " +
                 "where " +
                 (
                     classId != null && classId != 0 ? "c.id < :id and " : ""
                 ) +
                 "c.college_id = :collegeId and " +
+                "cju.user_id is null and " +
                 "c.title like CONCAT('%', :title, '%') " +
+                "group by ct.id " +
                 "order by c.id desc limit :perPage"
                 ;
 
@@ -50,6 +53,7 @@ public class ClassQuery {
         return sql.bind("collegeId", collegeId)
                 .bind("title", title)
                 .bind("perPage", perPage)
+                .bind("userId", userId)
                 ;
     }
 

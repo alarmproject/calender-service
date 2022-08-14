@@ -24,8 +24,8 @@ public class ClassDAO {
     private final ClassQuery classQuery;
     private final ServerProperties serverProperties;
 
-    public Mono<List<SearchClassResponse>> searchClasses(Long classId, Long collegeId, String title, Integer perPage) {
-        return this.classQuery.searchClasses(classId, collegeId, title, perPage)
+    public Mono<List<SearchClassResponse>> searchClasses(Long classId, Long collegeId, Long userId, String title, Integer perPage) {
+        return this.classQuery.searchClasses(classId, collegeId, userId, title, perPage)
                 .map(((row, rowMetadata) -> {
                     String imageUrl = row.get("file_name", String.class);
 

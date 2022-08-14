@@ -49,7 +49,7 @@ public class PersonalCalenderQuery {
         return sql.bind("userId", userId);
     }
 
-    public DatabaseClient.GenericExecuteSpec searchPersonalCalenderList(Long personalCalenderId, Integer perPage, String title) {
+    public DatabaseClient.GenericExecuteSpec searchPersonalCalenderList(Long personalCalenderId, Long userId, Integer perPage, String title) {
         String query = "" +
                 "select " +
                 "pc.id " +
@@ -71,10 +71,13 @@ public class PersonalCalenderQuery {
                 "left join calender c on pc.id = c.personal_calender_id " +
                 "join `user` u ON u.id = pc.user_id " +
                 "join image i ON u.image_id = i.id " +
+                "left outer join personal_calender_join_user pcju on pc.id = pcju.personal_calender_id and pcju.user_id = :userId " +
                 "where " +
                 (personalCalenderId != null && personalCalenderId != 0 ? "pc.id < :personalCalenderId and " : "") +
                 "pc.`open` = true " +
                 (title != null ? "and pc.title like concat('%', :title, '%') " : "") +
+                "and pcju.id is null " +
+                "group by pc.id " +
                 "order by pc.id desc limit :perPage";
 
         DatabaseClient.GenericExecuteSpec sql = this.client.sql(query);
@@ -82,7 +85,7 @@ public class PersonalCalenderQuery {
         if (personalCalenderId != null && personalCalenderId != 0) sql = sql.bind("personalCalenderId", personalCalenderId);
         if (title != null) sql = sql.bind("title", title);
 
-        return sql.bind("perPage", perPage);
+        return sql.bind("perPage", perPage).bind("userId", userId);
     }
 
     public DatabaseClient.GenericExecuteSpec findPersonalCalenderDetail(Long id, Long userId) {

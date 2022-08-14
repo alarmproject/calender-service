@@ -167,9 +167,12 @@ public class PersonalService {
     }
 
     public Mono<BaseExtentionResponse<List<SearchPersonalCalenderListResponse>>> searchPersonalCalenderList(Long personalCalenderId, Integer perPage, String title) {
-        return personalCalenderDAO.searchPersonalCalenderList(personalCalenderId, perPage, title)
-                .collectList()
-                .map(BaseExtentionResponse::new);
+        return JwtContextHolder.getMonoUserId().flatMap(userId ->
+                personalCalenderDAO.searchPersonalCalenderList(personalCalenderId, userId, perPage, title)
+                        .collectList()
+                        .map(BaseExtentionResponse::new)
+        );
+
     }
 
     public Mono<BaseExtentionResponse<PersonalCalenderDetailResponse>> findPersonalCalenderDetail(Long id) {
