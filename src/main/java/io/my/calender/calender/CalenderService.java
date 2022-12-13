@@ -23,33 +23,38 @@ public class CalenderService {
     private final CalenderDAO calenderDAO;
     private final CalenderRepository calenderRepository;
 
-    public Mono<BaseExtentionResponse<List<CalenderListResponse>>> getCalender(String type, Long day, Integer year, Integer month) {
-        return JwtContextHolder.getMonoUserId().flatMapMany(userId -> {
-            LocalDate date = LocalDate.now();
-            LocalDate startDate;
-            LocalDate endDate;
+    public Mono<BaseExtentionResponse<List<CalenderListResponse>>> getCalender(Long userId, String type, Long day, Integer year, Integer month) {
+        if (userId == null) {
+            return JwtContextHolder.getMonoUserId().flatMap(id -> this.getCalenders(id, type, day, year, month));
+        } else {
+            return this.getCalenders(userId, type, day, year, month);
+        }
+    }
 
-            if (type.equals("week")) {
-                date = getDate(date, day);
-                startDate = dateUtil.findWeekStart(date);
-                endDate = dateUtil.findWeekEnd(date).plusDays(1);
-            } else if (type.equals("month")) {
-                date = getDate(date, year, month);
-                startDate = dateUtil.findMonthStart(date);
-                endDate = dateUtil.findMonthEnd(date).plusDays(1);
-            } else {
-                throw new IllegalArgumentException();
-            }
+    private Mono<BaseExtentionResponse<List<CalenderListResponse>>> getCalenders(Long userId, String type, Long day, Integer year, Integer month) {
+        LocalDate date = LocalDate.now();
+        LocalDate startDate;
+        LocalDate endDate;
 
-            return calenderDAO.findCalenderListResponse(userId, startDate, endDate);
-        })
-        .switchIfEmpty(Flux.empty())
-        .collectList()
-        .map(list -> {
-            var responseBody = new BaseExtentionResponse<List<CalenderListResponse>>();
-            responseBody.setReturnValue(list);
-            return responseBody;
-        });
+        if (type.equals("week")) {
+            date = getDate(date, day);
+            startDate = dateUtil.findWeekStart(date);
+            endDate = dateUtil.findWeekEnd(date).plusDays(1);
+        } else if (type.equals("month")) {
+            date = getDate(date, year, month);
+            startDate = dateUtil.findMonthStart(date);
+            endDate = dateUtil.findMonthEnd(date).plusDays(1);
+        } else {
+            throw new IllegalArgumentException();
+        }
+        return calenderDAO.findCalenderListResponse(userId, startDate, endDate)
+                .switchIfEmpty(Flux.empty())
+                .collectList()
+                .map(list -> {
+                    var responseBody = new BaseExtentionResponse<List<CalenderListResponse>>();
+                    responseBody.setReturnValue(list);
+                    return responseBody;
+                });
     }
 
     private LocalDate getDate(LocalDate date, Long day) {

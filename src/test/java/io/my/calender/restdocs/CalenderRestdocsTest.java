@@ -116,10 +116,15 @@ class CalenderRestdocsTest extends RestdocsBase {
                         .build())
         ;
 
-        Mockito.when(calenderService.getCalender(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(Mono.just(new BaseExtentionResponse<>(list)));
+        Mockito.when(calenderService.getCalender(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(Mono.just(new BaseExtentionResponse<>(list)));
 
         RequestParametersSnippet requestParametersSnippet =
                 requestParameters(
+                        parameterWithName("userId").description("사용자 index - 타 유저 일정 조회시").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")
+                                ),
                         parameterWithName("type").description("기간 (week, month)")
                                 .attributes(
                                         RestDocAttributes.length(0),
@@ -218,7 +223,7 @@ class CalenderRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Integer"))
                 );
 
-        String params = "?type=month&year=2022&month=8&day=1648609200000";
+        String params = "?type=month&year=2022&month=8&day=1648609200000&userId=124";
 
         getWebTestClient("/calender" + params).expectStatus()
                 .isOk()
