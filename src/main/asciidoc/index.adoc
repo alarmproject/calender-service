@@ -25,3 +25,235 @@ include::{snippets}/healthcheckrestdocstest/healthcheck/http-request.adoc[]
 include::{snippets}/healthcheckrestdocstest/healthcheck/http-response.adoc[]
 include::{snippets}/healthcheckrestdocstest/healthcheck/curl-request.adoc[]
 
+=== Calender
+
+[[resources-get-calender]]
+==== 일정 조회
+
+include::{snippets}/calenderrestdocstest/getcalender/request-parameters.adoc[]
+include::{snippets}/calenderrestdocstest/getcalender/response-fields.adoc[]
+include::{snippets}/calenderrestdocstest/getcalender/http-request.adoc[]
+include::{snippets}/calenderrestdocstest/getcalender/http-response.adoc[]
+include::{snippets}/calenderrestdocstest/getcalender/curl-request.adoc[]
+
+[[resources-calender-modify]]
+==== 일정 수정
+
+include::{snippets}/calenderrestdocstest/modifycalender/request-fields.adoc[]
+include::{snippets}/calenderrestdocstest/modifycalender/response-fields.adoc[]
+include::{snippets}/calenderrestdocstest/modifycalender/http-request.adoc[]
+include::{snippets}/calenderrestdocstest/modifycalender/http-response.adoc[]
+include::{snippets}/calenderrestdocstest/modifycalender/curl-request.adoc[]
+
+[[resources-calender-remove]]
+==== 일정 삭제
+
+include::{snippets}/calenderrestdocstest/removecalender/path-parameters.adoc[]
+include::{snippets}/calenderrestdocstest/removecalender/response-fields.adoc[]
+include::{snippets}/calenderrestdocstest/removecalender/http-request.adoc[]
+include::{snippets}/calenderrestdocstest/removecalender/http-response.adoc[]
+include::{snippets}/calenderrestdocstest/removecalender/curl-request.adoc[]
+
+=== Class Calender
+
+[[resources-search-classes]]
+==== 수업 검색
+
+include::{snippets}/classrestdocstest/searchclasses/request-parameters.adoc[]
+include::{snippets}/classrestdocstest/searchclasses/response-fields.adoc[]
+include::{snippets}/classrestdocstest/searchclasses/http-request.adoc[]
+include::{snippets}/classrestdocstest/searchclasses/http-response.adoc[]
+include::{snippets}/classrestdocstest/searchclasses/curl-request.adoc[]
+
+[[resources-calender-class]]
+==== 수업 생성
+
+include::{snippets}/classrestdocstest/createclass/request-fields.adoc[]
+include::{snippets}/classrestdocstest/createclass/response-fields.adoc[]
+include::{snippets}/classrestdocstest/createclass/http-request.adoc[]
+include::{snippets}/classrestdocstest/createclass/http-response.adoc[]
+include::{snippets}/classrestdocstest/createclass/curl-request.adoc[]
+
+[[resources-calender-class-info-modify]]
+==== 수업 정보 수정
+
+include::{snippets}/classrestdocstest/modifyclassinfo/request-fields.adoc[]
+include::{snippets}/classrestdocstest/modifyclassinfo/response-fields.adoc[]
+include::{snippets}/classrestdocstest/modifyclassinfo/http-request.adoc[]
+include::{snippets}/classrestdocstest/modifyclassinfo/http-response.adoc[]
+include::{snippets}/classrestdocstest/modifyclassinfo/curl-request.adoc[]
+
+[[resources-calender-class-find-invite-list]]
+==== 초대받은 수업 목록 조회
+
+include::{snippets}/classrestdocstest/findinviteclasslist/response-fields.adoc[]
+include::{snippets}/classrestdocstest/findinviteclasslist/http-request.adoc[]
+include::{snippets}/classrestdocstest/findinviteclasslist/http-response.adoc[]
+include::{snippets}/classrestdocstest/findinviteclasslist/curl-request.adoc[]
+
+[[resources-calender-class-invite]]
+==== 수업 초대
+
+include::{snippets}/classrestdocstest/inviteclass/request-fields.adoc[]
+include::{snippets}/classrestdocstest/inviteclass/response-fields.adoc[]
+include::{snippets}/classrestdocstest/inviteclass/http-request.adoc[]
+include::{snippets}/classrestdocstest/inviteclass/http-response.adoc[]
+include::{snippets}/classrestdocstest/inviteclass/curl-request.adoc[]
+
+[[resources-calender-class-join]]
+==== 수업 참가
+
+include::{snippets}/classrestdocstest/joinclass/request-fields.adoc[]
+include::{snippets}/classrestdocstest/joinclass/response-fields.adoc[]
+include::{snippets}/classrestdocstest/joinclass/http-request.adoc[]
+include::{snippets}/classrestdocstest/joinclass/http-response.adoc[]
+include::{snippets}/classrestdocstest/joinclass/curl-request.adoc[]
+
+[[resources-calender-class-accept]]
+==== 수업 참가 승낙 or 거절
+
+include::{snippets}/classrestdocstest/acceptclass/request-fields.adoc[]
+include::{snippets}/classrestdocstest/acceptclass/response-fields.adoc[]
+include::{snippets}/classrestdocstest/acceptclass/http-request.adoc[]
+include::{snippets}/classrestdocstest/acceptclass/http-response.adoc[]
+include::{snippets}/classrestdocstest/acceptclass/curl-request.adoc[]
+
+[[resources-calender-class-detail]]
+==== 수업 상세
+
+include::{snippets}/classrestdocstest/calenderclassdetail/path-parameters.adoc[]
+include::{snippets}/classrestdocstest/calenderclassdetail/response-fields.adoc[]
+include::{snippets}/classrestdocstest/calenderclassdetail/http-request.adoc[]
+include::{snippets}/classrestdocstest/calenderclassdetail/http-response.adoc[]
+include::{snippets}/classrestdocstest/calenderclassdetail/curl-request.adoc[]
+
+[[resources-calender-class-find-invite-count]]
+==== 초대받은 수업 개수 조회
+
+include::{snippets}/classrestdocstest/findclassinvitecount/response-fields.adoc[]
+include::{snippets}/classrestdocstest/findclassinvitecount/http-request.adoc[]
+include::{snippets}/classrestdocstest/findclassinvitecount/http-response.adoc[]
+include::{snippets}/classrestdocstest/findclassinvitecount/curl-request.adoc[]
+
+[[resources-calender-class-remove]]
+==== 수업 삭제
+
+include::{snippets}/classrestdocstest/removeclass/path-parameters.adoc[]
+include::{snippets}/classrestdocstest/removeclass/response-fields.adoc[]
+include::{snippets}/classrestdocstest/removeclass/http-request.adoc[]
+include::{snippets}/classrestdocstest/removeclass/http-response.adoc[]
+include::{snippets}/classrestdocstest/removeclass/curl-request.adoc[]
+
+
+=== Class Time Calender
+
+[[resources-calender-class-time-modify]]
+==== 수업 요일 및 시간 수정
+
+include::{snippets}/classtimerestdocstest/modifyclasstime/request-fields.adoc[]
+include::{snippets}/classtimerestdocstest/modifyclasstime/response-fields.adoc[]
+include::{snippets}/classtimerestdocstest/modifyclasstime/http-request.adoc[]
+include::{snippets}/classtimerestdocstest/modifyclasstime/http-response.adoc[]
+include::{snippets}/classtimerestdocstest/modifyclasstime/curl-request.adoc[]
+
+[[resources-calender-class-time-remove]]
+==== 수업 일정 삭제
+
+include::{snippets}/classtimerestdocstest/removeclasstime/path-parameters.adoc[]
+include::{snippets}/classtimerestdocstest/removeclasstime/response-fields.adoc[]
+include::{snippets}/classtimerestdocstest/removeclasstime/http-request.adoc[]
+include::{snippets}/classtimerestdocstest/removeclasstime/http-response.adoc[]
+include::{snippets}/classtimerestdocstest/removeclasstime/curl-request.adoc[]
+
+
+
+=== Personal Calender
+
+[[resources-calender-personal-calender]]
+==== 개인 일정 생성
+
+include::{snippets}/personalrestdocstest/createpersonal/request-fields.adoc[]
+include::{snippets}/personalrestdocstest/createpersonal/response-fields.adoc[]
+include::{snippets}/personalrestdocstest/createpersonal/http-request.adoc[]
+include::{snippets}/personalrestdocstest/createpersonal/http-response.adoc[]
+include::{snippets}/personalrestdocstest/createpersonal/curl-request.adoc[]
+
+[[resources-calender-personal-invite]]
+==== 일정 초대
+
+include::{snippets}/personalrestdocstest/invitepersonalcalender/request-fields.adoc[]
+include::{snippets}/personalrestdocstest/invitepersonalcalender/response-fields.adoc[]
+include::{snippets}/personalrestdocstest/invitepersonalcalender/http-request.adoc[]
+include::{snippets}/personalrestdocstest/invitepersonalcalender/http-response.adoc[]
+include::{snippets}/personalrestdocstest/invitepersonalcalender/curl-request.adoc[]
+
+[[resources-calender-personal-my-list]]
+==== 내 개인 일정 목록
+
+include::{snippets}/personalrestdocstest/mypersonalcalenderlist/request-parameters.adoc[]
+include::{snippets}/personalrestdocstest/mypersonalcalenderlist/response-fields.adoc[]
+include::{snippets}/personalrestdocstest/mypersonalcalenderlist/http-request.adoc[]
+include::{snippets}/personalrestdocstest/mypersonalcalenderlist/http-response.adoc[]
+include::{snippets}/personalrestdocstest/mypersonalcalenderlist/curl-request.adoc[]
+
+[[resources-calender-personal-accept]]
+==== 일정 수락 or 거절
+
+include::{snippets}/personalrestdocstest/acceptpersonalcalender/request-fields.adoc[]
+include::{snippets}/personalrestdocstest/acceptpersonalcalender/response-fields.adoc[]
+include::{snippets}/personalrestdocstest/acceptpersonalcalender/http-request.adoc[]
+include::{snippets}/personalrestdocstest/acceptpersonalcalender/http-response.adoc[]
+include::{snippets}/personalrestdocstest/acceptpersonalcalender/curl-request.adoc[]
+
+[[resources-calender-personal-remove]]
+==== 개인 일정 삭제
+
+include::{snippets}/personalrestdocstest/removepersonalcalender/path-parameters.adoc[]
+include::{snippets}/personalrestdocstest/removepersonalcalender/response-fields.adoc[]
+include::{snippets}/personalrestdocstest/removepersonalcalender/http-request.adoc[]
+include::{snippets}/personalrestdocstest/removepersonalcalender/http-response.adoc[]
+include::{snippets}/personalrestdocstest/removepersonalcalender/curl-request.adoc[]
+
+[[resources-calender-personal-info-modify]]
+==== 개인 일정 정보 수정
+
+include::{snippets}/personalrestdocstest/modifypersonalcalenderinfo/request-fields.adoc[]
+include::{snippets}/personalrestdocstest/modifypersonalcalenderinfo/response-fields.adoc[]
+include::{snippets}/personalrestdocstest/modifypersonalcalenderinfo/http-request.adoc[]
+include::{snippets}/personalrestdocstest/modifypersonalcalenderinfo/http-response.adoc[]
+include::{snippets}/personalrestdocstest/modifypersonalcalenderinfo/curl-request.adoc[]
+
+[[resources-calender-personal-search]]
+==== 공개된 개인 일정 검색
+
+include::{snippets}/personalrestdocstest/searchpersonalcalenderlist/request-parameters.adoc[]
+include::{snippets}/personalrestdocstest/searchpersonalcalenderlist/response-fields.adoc[]
+include::{snippets}/personalrestdocstest/searchpersonalcalenderlist/http-request.adoc[]
+include::{snippets}/personalrestdocstest/searchpersonalcalenderlist/http-response.adoc[]
+include::{snippets}/personalrestdocstest/searchpersonalcalenderlist/curl-request.adoc[]
+
+[[resources-calender-personal-detail]]
+==== 개인 일정 상세 조회
+
+include::{snippets}/personalrestdocstest/calenderpersonaldetail/path-parameters.adoc[]
+include::{snippets}/personalrestdocstest/calenderpersonaldetail/response-fields.adoc[]
+include::{snippets}/personalrestdocstest/calenderpersonaldetail/http-request.adoc[]
+include::{snippets}/personalrestdocstest/calenderpersonaldetail/http-response.adoc[]
+include::{snippets}/personalrestdocstest/calenderpersonaldetail/curl-request.adoc[]
+
+[[resources-calender-personal-find-invite-count]]
+==== 초대받은 개인 일정 개수 조회
+
+include::{snippets}/personalrestdocstest/findpersonalinvitecount/response-fields.adoc[]
+include::{snippets}/personalrestdocstest/findpersonalinvitecount/http-request.adoc[]
+include::{snippets}/personalrestdocstest/findpersonalinvitecount/http-response.adoc[]
+include::{snippets}/personalrestdocstest/findpersonalinvitecount/curl-request.adoc[]
+
+[[resources-calender-personal-find-invite]]
+==== 초대받은 개인 일정 목록 조회
+
+include::{snippets}/personalrestdocstest/findpersonalinvite/response-fields.adoc[]
+include::{snippets}/personalrestdocstest/findpersonalinvite/http-request.adoc[]
+include::{snippets}/personalrestdocstest/findpersonalinvite/http-response.adoc[]
+include::{snippets}/personalrestdocstest/findpersonalinvite/curl-request.adoc[]
+

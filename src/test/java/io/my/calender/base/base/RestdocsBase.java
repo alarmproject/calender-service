@@ -1,11 +1,17 @@
 package io.my.calender.base.base;
 
 import io.my.calender.base.context.JwtContextWebFilter;
+import io.my.calender.base.repository.dao.DualDAO;
 import io.my.calender.base.util.JwtUtil;
+import io.my.calender.calender.CalenderService;
+import io.my.calender._class.ClassService;
+import io.my.calender._class.ClassTimeService;
+import io.my.calender.personal.PersonalService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -14,6 +20,7 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.payload.RequestFieldsSnippet;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
+import org.springframework.restdocs.request.PathParametersSnippet;
 import org.springframework.restdocs.request.RequestParametersSnippet;
 import org.springframework.restdocs.request.RequestPartsSnippet;
 import org.springframework.restdocs.snippet.Snippet;
@@ -47,6 +54,21 @@ public class RestdocsBase {
 
     @Autowired
     protected JwtContextWebFilter jwtContextWebFilter;
+
+    @MockBean
+    protected ClassService classService;
+
+    @MockBean
+    protected DualDAO dualDAO;
+
+    @MockBean
+    protected PersonalService personalService;
+
+    @MockBean
+    protected CalenderService calenderService;
+
+    @MockBean
+    protected ClassTimeService classTimeService;
 
     @BeforeEach
     void setUp(ApplicationContext applicationContext,
@@ -83,6 +105,10 @@ public class RestdocsBase {
         return this.webTestClient.method(HttpMethod.GET).uri(uri).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).bodyValue(body).exchange();
     }
 
+    protected WebTestClient.ResponseSpec getWebTestClientPathVariable(Object body, String uri) {
+        return this.webTestClient.method(HttpMethod.GET).uri(uri, body).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).exchange();
+    }
+
     protected WebTestClient.ResponseSpec postWebTestClient(Object body, String uri) {
         return this.webTestClient.post().uri(uri).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).bodyValue(body).exchange();
     }
@@ -117,6 +143,10 @@ public class RestdocsBase {
 
     protected WebTestClient.ResponseSpec deleteWebTestClient(String uri) {
         return this.webTestClient.delete().uri(uri).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).exchange();
+    }
+
+    protected WebTestClient.ResponseSpec deleteWebTestClient(Object body, String uri) {
+        return this.webTestClient.delete().uri(uri, body).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).exchange();
     }
 
     protected WebTestClient.ResponseSpec getWebTestClientNotAuth(String uri) {
@@ -228,6 +258,19 @@ public class RestdocsBase {
                 defaultRequestHeader,
                 responseHeader,
                 responseSnippet);
+    }
+
+    protected Consumer<EntityExchangeResult<byte[]>> createConsumer(
+            String fileName,
+            PathParametersSnippet pathParametersSnippet,
+            ResponseFieldsSnippet responseFieldsSnippet) {
+        return document(
+                this.getClass().getSimpleName().toLowerCase() + fileName,
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                defaultRequestHeader,
+                pathParametersSnippet,
+                responseFieldsSnippet);
     }
 
 

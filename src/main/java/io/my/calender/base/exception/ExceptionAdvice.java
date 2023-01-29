@@ -1,27 +1,38 @@
 package io.my.calender.base.exception;
 
-import io.my.calender.base.exception.object.JwtException;
+import io.my.calender.base.exception.object.DatabaseException;
 import io.my.calender.base.payload.BaseResponse;
-import org.springframework.http.HttpStatus;
+import io.my.calender.slack.SlackService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.reactive.function.server.EntityResponse;
-import reactor.core.publisher.Mono;
 
 @RestControllerAdvice
+@RequiredArgsConstructor
 public class ExceptionAdvice {
+    private final SlackService slackService;
 
     @ExceptionHandler(Exception.class)
-    protected Mono<EntityResponse<BaseResponse>> exceptionAdvice(Exception e) {
+    protected ResponseEntity<BaseResponse> exceptionAdvice(Exception e) {
+        slackService.sendSlackException(e);
         e.printStackTrace();
-        return EntityResponse.fromObject(new BaseResponse(1, "Server Error")).status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        return ResponseEntity.internalServerError().body(
+                new BaseResponse(
+                        ErrorTypeEnum.SERVER_ERROR.getCode(),
+                        ErrorTypeEnum.SERVER_ERROR.getResult()));
     }
 
-    @ExceptionHandler(JwtException.class)
-    protected Mono<EntityResponse<BaseResponse>> exceptionAdvice(JwtException e) {
-        e.printStackTrace();
-        return EntityResponse.fromObject(new BaseResponse(2, "Don't have jwt or jwt is wrong")).status(HttpStatus.BAD_REQUEST).build();
+    @ExceptionHandler(DatabaseException.class)
+    protected ResponseEntity<BaseResponse> exceptionAdvice(DatabaseException e) {
+        slackService.sendSlackException(e);
+        return ResponseEntity.internalServerError()
+                .body(new BaseResponse(
+                        ErrorTypeEnum.DATABASE_EXCEPTION.getCode(),
+                        ErrorTypeEnum.DATABASE_EXCEPTION.getResult()
+                ));
     }
+
 
 
 }
